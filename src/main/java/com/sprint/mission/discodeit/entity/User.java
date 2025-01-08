@@ -25,6 +25,18 @@ public class User {
         return password;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void update(String password) {
         this.password = password;
         this.updatedAt = System.currentTimeMillis();

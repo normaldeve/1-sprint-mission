@@ -25,6 +25,18 @@ public class Message {
         return toUser;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void update(String content) {
         this.content = content;
         this.updatedAt = System.currentTimeMillis();

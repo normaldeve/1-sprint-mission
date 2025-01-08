@@ -26,6 +26,18 @@ public class Channel {
         return name;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void update(String name, List<User> members) {
         this.name = name;
         this.members = members;
