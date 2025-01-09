@@ -10,7 +10,7 @@ public class Message {
     private User fromUser;
     private User toUser;
 
-    public Message(String content, User fromUser ,User toUser) {
+    public Message(String content, User fromUser , User toUser) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = null;
@@ -46,5 +46,17 @@ public class Message {
     public void update(String content) {
         this.content = content;
         this.updatedAt = System.currentTimeMillis();
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", content='" + content + '\'' +
+                ", fromUser=" + fromUser +
+                ", toUser=" + toUser +
+                '}';
     }
 }

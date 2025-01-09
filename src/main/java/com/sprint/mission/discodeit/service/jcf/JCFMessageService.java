@@ -1,28 +1,33 @@
 package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.Message;
+import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.service.MessageService;
+import com.sprint.mission.discodeit.service.UserService;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 public class JCFMessageService implements MessageService {
     private final Map<UUID, Message> messageRepository;
+    private UserService userService;
 
-    public JCFMessageService() {
+    public JCFMessageService(UserService userService) {
         this.messageRepository = new HashMap<>();
+        this.userService = userService;
     }
 
     @Override
-    public void createMessage(Message message) {
-        if (messageRepository.get(message.getId()) == null) {
-            messageRepository.put(message.getId(), message);
-            System.out.println("메시지 생성이 완료되었습니다");
-        } else {
-            System.out.println("이미 존재하는 메시지입니다");
+    public Message createMessage(String content, User fromUser, User toUser) {
+        List<User> users = userService.getAllUser();
+        if (!(users.contains(fromUser) && users.contains(toUser))) {
+            System.out.println("수신자와 송신자를 확인해주세요");
+            return null;
         }
+        Message message = new Message(content, fromUser, toUser);
+        messageRepository.put(message.getId(), message);
+        System.out.println("메시지 생성이 완료되었습니다");
+        return message;
     }
 
     @Override
@@ -45,6 +50,11 @@ public class JCFMessageService implements MessageService {
             System.out.println("유효하지 않는 ID이거나 존재하지 않는 메시지입니다");
             return null;
         }
+    }
+
+    @Override
+    public List<Message> getAllMessages() {
+        return new ArrayList<>(messageRepository.values());
     }
 
     @Override
