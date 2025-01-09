@@ -7,13 +7,15 @@ public class Message {
     private Long createdAt;
     private Long updatedAt;
     private String content;
+    private User fromUser;
     private User toUser;
 
-    public Message(String content, User toUser) {
+    public Message(String content, User fromUser ,User toUser) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = null;
         this.content = content;
+        this.fromUser = fromUser;
         this.toUser = toUser;
     }
 
@@ -35,6 +37,10 @@ public class Message {
 
     public Long getUpdatedAt() {
         return updatedAt;
+    }
+
+    public User getFromUser() {
+        return fromUser;
     }
 
     public void update(String content) {
