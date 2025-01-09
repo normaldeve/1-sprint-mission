@@ -38,9 +38,8 @@ public class Channel {
         return updatedAt;
     }
 
-    public void update(String name, List<User> members) {
-        this.name = name;
-        this.members = members;
+    public void update(User user) {
+        members.add(user);
         this.updatedAt = System.currentTimeMillis();
     }
 }
