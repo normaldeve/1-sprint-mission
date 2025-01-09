@@ -48,7 +48,5 @@ public class JavaApplication {
         User addUser = userService.createUser("5", "010-7777-3333", "1234");
         System.out.println("find channel : " + channelService.getChannelById(codeitChannel.getId()));
         channelService.deleteChannel(codeitChannel);
-        System.out.println(channelService.getAllChannel());
-
     }
 }
