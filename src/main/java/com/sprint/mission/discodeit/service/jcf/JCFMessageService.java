@@ -1,71 +1,113 @@
 package com.sprint.mission.discodeit.service.jcf;
 
+import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.log.MyLog;
 import com.sprint.mission.discodeit.service.MessageService;
-import com.sprint.mission.discodeit.service.UserService;
 
 import java.util.*;
+
+import static com.sprint.mission.discodeit.error.MessageError.*;
 
 
 public class JCFMessageService implements MessageService {
     private final Map<UUID, Message> messageRepository;
-    private UserService userService;
+    private static final MessageService instance = new JCFMessageService();
 
-    public JCFMessageService(UserService userService) {
+    private JCFMessageService() {
         this.messageRepository = new HashMap<>();
-        this.userService = userService;
+    }
+
+    public static MessageService getInstance() {
+        return instance;
     }
 
     @Override
-    public MyLog<Message> createMessage(String content, User fromUser, User toUser) {
-        List<User> users = userService.getAllUser();
-        if (!(users.contains(fromUser) && users.contains(toUser))) {
-            return new MyLog<>(null, "송수신자를 다시 확인해주세요");
+    public Message createMessage(String content, User writer, Channel channel) throws IllegalArgumentException {
+        if (content.isEmpty()) {
+            throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
         }
-        Message message = new Message(content, fromUser, toUser);
+
+        Message message = new Message(content, writer, channel);
         messageRepository.put(message.getId(), message);
-        return new MyLog<>(message, "메시지 생성이 완료되었습니다");
+        return message;
     }
 
     // 메시지를 보낸 회원이 메시지 조회하기
     @Override
-    public MyLog<List<Message>> getMessageByUser(User fromUser, User toUser) {
+    public List<Message> getMessageByUser(User writer) {
         List<Message> messages = new ArrayList<>();
         for (Message message : messageRepository.values()) {
-            if (message.getFromUser().equals(fromUser) && message.getToUser().equals(toUser)) {
+            if (message.getWriter().equals(writer)) {
                 messages.add(message);
             }
         }
         if (!messages.isEmpty()) {
-            return new MyLog<>(messages, "메시지 조회가 완료되었습니다");
+            return messages;
         }
 
-        return new MyLog<>(null, "메시지가 조회되지 않습니다");
+        throw new IllegalArgumentException(EMPTY_MESSAGE.getMessage());
     }
 
     @Override
-    public MyLog<Message> updateMessageId(UUID id, String newContent) {
-        if (messageRepository.get(id) != null) {
-            Message message = messageRepository.get(id);
-            message.update(newContent);
-            return new MyLog<>(message, "업데이트가 완료되었습니다");
+    public List<Message> getMessageByChannel(String channelName) {
+        List<Message> messages = new ArrayList<>();
+        for (Message message : messageRepository.values()) {
+            if (message.getChannel().getName() == channelName) {
+                messages.add(message);
+            }
         }
-        return new MyLog<>(null, "존재하지 않는 메시지입니다");
+        if (!messages.isEmpty()) {
+            return messages;
+        }
+        throw new IllegalArgumentException(EMPTY_MESSAGE.getMessage());
+    }
+
+
+    @Override
+    public Message updateMessageContent(UUID id, String newContent) {
+        Message findMessage = messageRepository.get(id);
+        if (newContent.isEmpty()) {
+            throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
+        }
+        findMessage.update(newContent);
+        return findMessage;
     }
 
     @Override
     public List<Message> getAllMessages() {
+        if (messageRepository.values() == null) {
+            throw new IllegalArgumentException(EMPTY_MESSAGE.getMessage());
+        }
         return new ArrayList<>(messageRepository.values());
     }
 
     @Override
-    public MyLog<Message> deleteMessage(Message message) {
-        if (messageRepository.get(message.getId()) != null) {
-            messageRepository.remove(message.getId());
-            return new MyLog<>(message, "해당 메시지를 삭제하였습니다");
+    public boolean deleteMessageByWriter(User writer, UUID messageId) { // 작성자만 본인 메시지를 삭제할 수 있다.
+        for (Message message : messageRepository.values()) {
+            if (message.getWriter().equals(writer) && message.getId() == messageId) {
+                messageRepository.remove(messageId);
+                return true;
+            }
         }
-        return new MyLog<>(null, "존재하지 않는 메시지입니다");
+        throw new IllegalArgumentException(EMPTY_MESSAGE.getMessage());
+    }
+
+    @Override
+    public void deleteAllMessageByWriter(User writer) {
+        for (Message message : messageRepository.values()) {
+            if (message.getWriter().getPhone().equals(writer.getPhone())) {
+                messageRepository.remove(message.getId());
+            }
+        }
+    }
+
+    @Override
+    public void deleteAllMessageByChannel(Channel channel) {
+        for (Message message : messageRepository.values()) {
+            if (message.getChannel().getName().equals(channel.getName())) {
+                messageRepository.remove(message.getId());
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -25,14 +26,6 @@ public class Channel {
         this.creator = creator;
     }
 
-    public List<User> getMembers() {
-        return members;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public UUID getId() {
         return id;
     }
@@ -45,12 +38,25 @@ public class Channel {
         return updatedAt;
     }
 
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public User getCreator() {
         return creator;
     }
 
     public void update(User user) {
         this.members.add(user);
+        this.updatedAt = System.currentTimeMillis();
+    }
+
+    public void removeUser(User user) {
+        members.remove(user);
         this.updatedAt = System.currentTimeMillis();
     }
 

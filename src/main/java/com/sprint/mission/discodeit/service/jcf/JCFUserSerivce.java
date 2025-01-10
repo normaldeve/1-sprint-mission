@@ -1,62 +1,94 @@
 package com.sprint.mission.discodeit.service.jcf;
 
+import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.log.MyLog;
+import com.sprint.mission.discodeit.service.ChannelService;
+import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 
 import java.util.*;
 
-public class JCFUserSerivce implements UserService {
-    private final Map<UUID, User> userRepository;
+import static com.sprint.mission.discodeit.error.UserError.*;
 
-    public JCFUserSerivce() {
+public class JCFUserSerivce implements UserService {
+    private static final UserService instance = new JCFUserSerivce();
+    private final Map<UUID, User> userRepository;
+    private final MessageService messageService;
+    private final ChannelService channelService;
+
+    private JCFUserSerivce() {
         this.userRepository = new HashMap<>();
+        this.messageService = JCFMessageService.getInstance();
+        this.channelService = JCFChannelService.getInstance();
+    }
+
+    public static UserService getInstance() {
+        return instance;
     }
 
     @Override
-    public MyLog<User> createUser(String name, String phone, String password) {
+    public User createUser(String name, String phone, String password) throws IllegalArgumentException {
+        if (!User.isValidPassword(password)) {
+            throw new IllegalArgumentException(INVALID_PASSWORD.getMessage());
+        }
+
+        if (!User.isValidPhone(phone)) {
+            throw new IllegalArgumentException(INVALID_PHONE.getMessage());
+        }
+
         for (User user : userRepository.values()) {
             if (user.getPhone().equals(phone)) {
-                return new MyLog<>(null, "이미 존재하는 아이디 입니다");
+                throw new IllegalArgumentException(DUPLICATE_PHONE.getMessage());
             }
         }
         User createUser = new User(name, phone, password);
         userRepository.put(createUser.getId(), createUser);
-        return new MyLog<>(createUser, " 저장이 완료되었습니다");
+        return createUser;
     }
 
     @Override
-    public MyLog<User> getUserById(String phone) {
+    public User getUserById(String phone) {
         for (User user : userRepository.values()) {
             if (user.getPhone() == phone) {
-                return new MyLog<>(user, "해당 아이디의 유저를 발견하였습니다");
+                return user;
             }
         }
-        return new MyLog<>(null, "해당 아이디를 가진 유저가 존재하지 않습니다");
+        throw new IllegalArgumentException(CANNOTFOUND_PHONE.getMessage());
     }
 
     @Override
     public List<User> getAllUser() {
+        if (userRepository.values() == null) {
+            throw new IllegalArgumentException(EMPTY_USER.getMessage());
+        }
+
         return new ArrayList<>(userRepository.values());
     }
 
     @Override
-    public MyLog<User> updateUserPassword(String phone, String newPass) {
+    public User updateUserPassword(String phone, String newPass) {
         for (User user : userRepository.values()) {
             if (user.getPhone() == phone) {
                 user.update(newPass);
-                return new MyLog<>(user, " 비밀번호 변경이 완료되었습니다");
+                return user;
             }
         }
-        return new MyLog<>(null, "입력하신 아이디에 해당하는 유저가 존재하지 않습니다");
+        throw new IllegalArgumentException(CANNOTFOUND_PHONE.getMessage());
     }
 
     @Override
-    public MyLog<User> deleteUser(User user) {
-        if (userRepository.get(user.getId()) != null) {
-            userRepository.remove(user.getId());
-            return new MyLog<>(user, " 삭제를 완료하였습니다");
+    public boolean deleteUser(String phone) { // 유저 정보 삭제 시 유저가 보낸 메시지와 채널 모두 조회가 되면 안된다.
+        for (User user : userRepository.values()) {
+            if (user.getPhone() == phone) {
+                userRepository.remove(user.getId());
+                System.out.println(user.getName() + "님의 정보가 삭제되었습니다");
+                messageService.deleteAllMessageByWriter(user);
+                for (Channel channel : channelService.getChannelsByUserId(user)) {
+                    channel.removeUser(user);
+                }
+                return true;
+            }
         }
-        return new MyLog<>(null, "존재하지 않는 사용자입니다");
+        throw new IllegalArgumentException(CANNOTFOUND_USER.getMessage());
     }
 }

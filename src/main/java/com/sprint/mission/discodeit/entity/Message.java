@@ -11,24 +11,16 @@ public class Message {
     private Long createdAt;
     private Long updatedAt;
     private String content;
-    private User fromUser;
-    private User toUser;
+    private User writer;
+    private Channel channel;
 
-    public Message(String content, User fromUser , User toUser) {
+    public Message(String content, User writer, Channel channel) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = null;
         this.content = content;
-        this.fromUser = fromUser;
-        this.toUser = toUser;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public User getToUser() {
-        return toUser;
+        this.writer = writer;
+        this.channel = channel;
     }
 
     public UUID getId() {
@@ -43,8 +35,16 @@ public class Message {
         return updatedAt;
     }
 
-    public User getFromUser() {
-        return fromUser;
+    public String getContent() {
+        return content;
+    }
+
+    public User getWriter() {
+        return writer;
+    }
+
+    public Channel getChannel() {
+        return channel;
     }
 
     public void update(String content) {
@@ -63,16 +63,16 @@ public class Message {
                 ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
                 : "N/A";
 
-        String fromUserName = fromUser != null ? fromUser.getName() : "Unknown";
-        String toUserName = toUser != null ? toUser.getName() : "Unknown";
+        String writerUserName = writer != null ? writer.getName() : "Unknown";
+        String useChannelName = channel != null ? channel.getName() : "Unknown";
 
         return "Message{" +
                 "id=" + id +
                 ", createdAt=" + createdAtFormatted +
                 ", updatedAt=" + updatedAtFormatted +
                 ", content='" + content + '\'' +
-                ", fromUser='" + fromUserName + '\'' +
-                ", toUser='" + toUserName + '\'' +
+                ", writer='" + writerUserName + '\'' +
+                ", channel='" + useChannelName + '\'' +
                 '}';
     }
 }
