@@ -1,5 +1,9 @@
 package com.sprint.mission.discodeit.entity;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class Message {
@@ -50,13 +54,25 @@ public class Message {
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String createdAtFormatted = createdAt != null
+                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(createdAt), ZoneId.systemDefault()).format(formatter)
+                : "N/A";
+        String updatedAtFormatted = updatedAt != null
+                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
+                : "N/A";
+
+        String fromUserName = fromUser != null ? fromUser.getName() : "Unknown";
+        String toUserName = toUser != null ? toUser.getName() : "Unknown";
+
         return "Message{" +
                 "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", createdAt=" + createdAtFormatted +
+                ", updatedAt=" + updatedAtFormatted +
                 ", content='" + content + '\'' +
-                ", fromUser=" + fromUser +
-                ", toUser=" + toUser +
+                ", fromUser='" + fromUserName + '\'' +
+                ", toUser='" + toUserName + '\'' +
                 '}';
     }
 }

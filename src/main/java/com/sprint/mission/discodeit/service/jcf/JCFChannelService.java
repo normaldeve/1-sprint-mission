@@ -2,6 +2,7 @@ package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.log.MyLog;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.UserService;
 
@@ -18,39 +19,40 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public Channel createChannel(List<User> members, String name, User creator) {
+    public MyLog<Channel>  createChannel(List<User> members, String name, User creator) {
         for (Channel channel : channelRepository.values()) {
             if (channel.getName() == name) {
-                System.out.println("이미 존재하는 채널입니다");
-                return null;
+                return new MyLog<>(null, "이미 존재하는 채널입니다");
             }
         }
         Channel channel = new Channel(members, name, creator);
         channelRepository.put(channel.getId(), channel);
-        System.out.println("채널이 생성되었습니다.");
-        return channel;
+        return new MyLog<>(channel, "채널 생성이 완료되었습니다");
     }
 
     @Override
-    public Channel getChannelById(UUID id) {
-        if (channelRepository.get(id) != null) {
-            return channelRepository.get(id);
-        } else {
-            System.out.println("유효하지 않는 채널 ID이거나 존재하지 않는 채널입니다");
-            return null;
+    public MyLog<Channel> getChannelByName(String name) {
+        for (Channel channel : channelRepository.values()) {
+            if (channel.getName() == name) {
+                return new MyLog<>(channel, "입력하신 이름에 해당하는 채널을 발견하였습니다");
+            }
         }
+        return new MyLog<>(null, "입력하신 이름에 해당하는 채널이 존재하지 않습니다");
     }
 
     @Override
-    public Channel updateChannelById(UUID id, User newUser) { //새로운 유저가 채널에 들어갈때
-        if (channelRepository.get(id) != null) {
-            Channel channel = channelRepository.get(id);
-            channel.update(newUser);
-            return channel;
-        } else {
-            System.out.println("유효하지 않는 채널 ID이거나 존재하지 않는 채널입니다.");
-            return null;
+    public MyLog<Channel> updateChannel(String name, User newUser) {//새로운 유저가 채널에 들어갈때
+        List<User> users = userService.getAllUser();
+        if (!users.contains(newUser)) {
+            userService.createUser(newUser.getName(), newUser.getPhone(), newUser.getPhone());
         }
+        for (Channel channel : channelRepository.values()) {
+            if (channel.getName() == name) {
+                channel.update(newUser);
+                return new MyLog<>(channel, "신규 회원이 채널에 등록되었습니다");
+            }
+        }
+        return new MyLog<>(null, "해당하는 채널을 찾지 못했습니다");
     }
 
     @Override
@@ -59,12 +61,13 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public void deleteChannel(Channel channel) {
-        if (channelRepository.get(channel.getId()) != null) {
-            channelRepository.remove(channel.getId());
-            System.out.println("채널 삭제가 완료되었습니다.");
-        } else {
-            System.out.println("채널이 존재하지 않거나 이미 삭제된 채널입니다");
+    public MyLog<Channel> deleteChannel(String name) {
+        for (Channel channel : channelRepository.values()) {
+            if (channel.getName() == name) {
+                channelRepository.remove(channel.getId());
+                return new MyLog<>(channel, "해당 채널이 삭제되었습니다");
+            }
         }
+        return new MyLog<>(null, "해당하는 채널이 존재하지 않습니다");
     }
 }

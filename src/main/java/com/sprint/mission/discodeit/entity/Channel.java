@@ -1,7 +1,12 @@
 package com.sprint.mission.discodeit.entity;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Channel {
     private UUID id;
@@ -45,19 +50,35 @@ public class Channel {
     }
 
     public void update(User user) {
-        members.add(user);
+        this.members.add(user);
         this.updatedAt = System.currentTimeMillis();
     }
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String createdAtFormatted = createdAt != null
+                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(createdAt), ZoneId.systemDefault()).format(formatter)
+                : "N/A";
+        String updatedAtFormatted = updatedAt != null
+                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
+                : "N/A";
+
+        String creatorName = creator != null ? creator.getName() : "Unknown";
+
+        String membersNames = (members != null && !members.isEmpty())
+                ? members.stream().map(User::getName).collect(Collectors.joining(", "))
+                : "No members";
+
         return "Channel{" +
                 "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", members=" + members +
+                ", createdAt=" + createdAtFormatted +
+                ", updatedAt=" + updatedAtFormatted +
+                ", members=" + membersNames +
                 ", name='" + name + '\'' +
-                ", creator=" + creator +
+                ", creator='" + creatorName + '\'' +
                 '}';
     }
+
 }

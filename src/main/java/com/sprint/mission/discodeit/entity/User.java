@@ -1,5 +1,10 @@
 package com.sprint.mission.discodeit.entity;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.UUID;
 
 public class User {
@@ -49,14 +54,36 @@ public class User {
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(createdAt, user.createdAt) && Objects.equals(updatedAt, user.updatedAt) && Objects.equals(name, user.name) && Objects.equals(phone, user.phone) && Objects.equals(password, user.password);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, createdAt, updatedAt, name, phone, password);
+    }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String createdAtFormatted = createdAt != null
+                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(createdAt), ZoneId.systemDefault()).format(formatter)
+                : "N/A";
+        String updatedAtFormatted = updatedAt != null
+                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
+                : "N/A";
+
+        return "User {\n" +
+                "  id=" + id + ",\n" +
+                "  name='" + name + "',\n" +
+                "  phone='" + phone + "',\n" +
+                "  password='" + password + "',\n" +
+                "  createdAt=" + createdAtFormatted + ",\n" +
+                "  updatedAt=" + updatedAtFormatted + "\n" +
+                "}";
+    }
+
 }

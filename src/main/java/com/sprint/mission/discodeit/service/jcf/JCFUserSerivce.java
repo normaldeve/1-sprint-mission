@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.log.MyLog;
 import com.sprint.mission.discodeit.service.UserService;
 
 import java.util.*;
@@ -13,27 +14,25 @@ public class JCFUserSerivce implements UserService {
     }
 
     @Override
-    public User createUser(String name, String phone, String password) {
+    public MyLog<User> createUser(String name, String phone, String password) {
         for (User user : userRepository.values()) {
             if (user.getPhone().equals(phone)) {
-                System.out.println("이미 해당 전화번호를 가진 사용자가 존재합니다.");
-                return null; // 이미 존재하면 반환
+                return new MyLog<>(null, "이미 존재하는 아이디 입니다");
             }
         }
         User createUser = new User(name, phone, password);
         userRepository.put(createUser.getId(), createUser);
-        System.out.println("사용자 생성이 완료되었습니다.");
-        return createUser;
+        return new MyLog<>(createUser, " 저장이 완료되었습니다");
     }
 
     @Override
-    public User getUserById(UUID id) {
-        if (userRepository.get(id) != null) {
-            return userRepository.get(id);
-        } else {
-            System.out.println("유효하지 않는 사용자 ID이거나 존재하지 않는 사용자입니다");
-            return null;
+    public MyLog<User> getUserById(String phone) {
+        for (User user : userRepository.values()) {
+            if (user.getPhone() == phone) {
+                return new MyLog<>(user, "해당 아이디의 유저를 발견하였습니다");
+            }
         }
+        return new MyLog<>(null, "해당 아이디를 가진 유저가 존재하지 않습니다");
     }
 
     @Override
@@ -42,24 +41,22 @@ public class JCFUserSerivce implements UserService {
     }
 
     @Override
-    public User updateUserPasswordById(UUID id, String newPass) {
-        if (userRepository.get(id) != null) {
-            User user = getUserById(id);
-            user.update(newPass);
-            return user;
-        } else {
-            System.out.println("존재하지 않는 사용자입니다");
-            return null;
+    public MyLog<User> updateUserPassword(String phone, String newPass) {
+        for (User user : userRepository.values()) {
+            if (user.getPhone() == phone) {
+                user.update(newPass);
+                return new MyLog<>(user, " 비밀번호 변경이 완료되었습니다");
+            }
         }
+        return new MyLog<>(null, "입력하신 아이디에 해당하는 유저가 존재하지 않습니다");
     }
 
     @Override
-    public void deleteUser(User user) {
+    public MyLog<User> deleteUser(User user) {
         if (userRepository.get(user.getId()) != null) {
             userRepository.remove(user.getId());
-            System.out.println("사용자 " + user.getName() + " 삭제가 완료되었습니다.");
-        } else {
-            System.out.println("존재하지 않는 사용자입니다");
+            return new MyLog<>(user, " 삭제를 완료하였습니다");
         }
+        return new MyLog<>(null, "존재하지 않는 사용자입니다");
     }
 }

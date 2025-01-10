@@ -2,6 +2,7 @@ package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.log.MyLog;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 
@@ -18,38 +19,40 @@ public class JCFMessageService implements MessageService {
     }
 
     @Override
-    public Message createMessage(String content, User fromUser, User toUser) {
+    public MyLog<Message> createMessage(String content, User fromUser, User toUser) {
         List<User> users = userService.getAllUser();
         if (!(users.contains(fromUser) && users.contains(toUser))) {
-            System.out.println("수신자와 송신자를 확인해주세요");
-            return null;
+            return new MyLog<>(null, "송수신자를 다시 확인해주세요");
         }
         Message message = new Message(content, fromUser, toUser);
         messageRepository.put(message.getId(), message);
-        System.out.println("메시지 생성이 완료되었습니다");
-        return message;
+        return new MyLog<>(message, "메시지 생성이 완료되었습니다");
     }
 
+    // 메시지를 보낸 회원이 메시지 조회하기
     @Override
-    public Message getMessageById(UUID id) {
-        if (messageRepository.get(id) != null) {
-            return messageRepository.get(id);
-        } else {
-            System.out.println("유효하지 않는 ID이거나 존재하지 않는 메시지입니다");
-            return null;
+    public MyLog<List<Message>> getMessageByUser(User fromUser, User toUser) {
+        List<Message> messages = new ArrayList<>();
+        for (Message message : messageRepository.values()) {
+            if (message.getFromUser().equals(fromUser) && message.getToUser().equals(toUser)) {
+                messages.add(message);
+            }
         }
+        if (!messages.isEmpty()) {
+            return new MyLog<>(messages, "메시지 조회가 완료되었습니다");
+        }
+
+        return new MyLog<>(null, "메시지가 조회되지 않습니다");
     }
 
     @Override
-    public Message updateMessageId(UUID id, String newContent) {
+    public MyLog<Message> updateMessageId(UUID id, String newContent) {
         if (messageRepository.get(id) != null) {
             Message message = messageRepository.get(id);
             message.update(newContent);
-            return message;
-        } else {
-            System.out.println("유효하지 않는 ID이거나 존재하지 않는 메시지입니다");
-            return null;
+            return new MyLog<>(message, "업데이트가 완료되었습니다");
         }
+        return new MyLog<>(null, "존재하지 않는 메시지입니다");
     }
 
     @Override
@@ -58,12 +61,11 @@ public class JCFMessageService implements MessageService {
     }
 
     @Override
-    public void deleteMessage(Message message) {
+    public MyLog<Message> deleteMessage(Message message) {
         if (messageRepository.get(message.getId()) != null) {
             messageRepository.remove(message.getId());
-            System.out.println("메시지 삭제가 완료되었습니다");
-        } else {
-            System.out.println("존재하지 않는 메시지입니다");
+            return new MyLog<>(message, "해당 메시지를 삭제하였습니다");
         }
+        return new MyLog<>(null, "존재하지 않는 메시지입니다");
     }
 }

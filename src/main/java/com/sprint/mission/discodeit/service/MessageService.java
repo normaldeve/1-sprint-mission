@@ -2,20 +2,21 @@ package com.sprint.mission.discodeit.service;
 
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.log.MyLog;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface MessageService {
 
-    Message createMessage(String content, User fromUser, User toUser);
+    MyLog<Message> createMessage(String content, User fromUser, User toUser);
 
-    Message getMessageById(UUID id);
+    MyLog<List<Message>> getMessageByUser(User fromUser, User toUser);
 
-    Message updateMessageId(UUID id, String newContent);
+    MyLog<Message> updateMessageId(UUID id, String newContent);
 
     List<Message> getAllMessages();
 
-    void deleteMessage(Message message);
+    MyLog<Message> deleteMessage(Message message);
 
 }
