@@ -32,7 +32,7 @@ public class JCFMessageService implements MessageService {
             throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
         }
 
-        if (userService.userExists(writer.getId())) { // 해당 작성자가 존재하는가
+        if (userService.userExists(writer.getPhone())) { // 해당 작성자가 존재하는가
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
 
@@ -48,7 +48,7 @@ public class JCFMessageService implements MessageService {
     // 메시지를 보낸 회원이 메시지 조회하기
     @Override
     public List<Message> getMessageByUser(User writer) {
-        if (userService.userExists(writer.getId())) {
+        if (userService.userExists(writer.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         List<Message> messages = new ArrayList<>();
@@ -95,18 +95,6 @@ public class JCFMessageService implements MessageService {
             throw new IllegalArgumentException(INVALID_WRITER.getMessage());
         }
         messageRepository.remove(uuid);
-    }
-
-
-    @Override
-    public void deleteMessageWithWriter(User writer) { // 유저가 삭제될 때 메시지도 삭제되는 메서드
-        Iterator<Message> iterator = messageRepository.values().iterator();
-        while (iterator.hasNext()) {
-            Message message = iterator.next();
-            if (Objects.equals(message.getWriter().getId(), writer.getId())) {
-                iterator.remove();
-            }
-        }
     }
 
 

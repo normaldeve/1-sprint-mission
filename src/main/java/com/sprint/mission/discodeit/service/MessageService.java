@@ -19,7 +19,5 @@ public interface MessageService {
 
     void removeMessageByWriter(User writer, UUID uuid);
 
-    void deleteMessageWithWriter(User writer); // 작성자가 특정 메시지를 삭제하기
-
     void deleteMessageWithChannel(Channel channel);
 }

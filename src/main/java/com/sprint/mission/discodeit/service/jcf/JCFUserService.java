@@ -44,11 +44,10 @@ public class JCFUserService implements UserService {
     }
 
     @Override
-    public User getUserByPhone(String phone) {
+    public Optional<User> getUserByPhone(String phone) {
         return userRepository.values().stream()
                 .filter(user -> user.getPhone().equals(phone))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(CANNOT_FOUND_PHONE.getMessage()));
+                .findFirst();
     }
 
     @Override
@@ -58,7 +57,7 @@ public class JCFUserService implements UserService {
 
     @Override
     public User updateUserPassword(User updateUser, String newPass) {
-        if (!userExists(updateUser.getId())) {
+        if (!userExists(updateUser.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         User findUser = userRepository.get(updateUser.getId());
@@ -67,11 +66,10 @@ public class JCFUserService implements UserService {
     }
 
     @Override
-    public void deleteUser(User removeUser) { // 유저 정보 삭제 시 유저가 보낸 메시지와 채널 모두 조회가 되면 안된다.
-        if (!userExists(removeUser.getId())) {
+    public void deleteUser(User removeUser) { // 유저 정보 삭제 시 유저가 속해있던 채널에 해당 유저가 삭제되어야 한다.
+        if (!userExists(removeUser.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
-        messageService.deleteMessageWithWriter(removeUser);
         channelService.getAllChannel().stream()
                 .forEach(channel -> channel.getMembers()
                         .removeIf(user -> user.getId().equals(removeUser.getId())));
@@ -79,7 +77,12 @@ public class JCFUserService implements UserService {
     }
 
     @Override
-    public boolean userExists(UUID uuid) {
-        return userRepository.containsKey(uuid);
+    public boolean userExists(String phone) {
+        for (User user : userRepository.values()) {
+            if (user.getPhone().equals(phone)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

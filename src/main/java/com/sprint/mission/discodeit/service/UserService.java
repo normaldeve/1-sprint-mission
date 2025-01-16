@@ -9,9 +9,9 @@ import java.util.UUID;
 public interface UserService {
     User createUser(String name, String phone, String password);
 
-    User getUserByPhone(String phone);
+    Optional<User> getUserByPhone(String phone);
 
-    boolean userExists(UUID uuid);
+    boolean userExists(String phone);
 
     List<User> getAllUser();
 

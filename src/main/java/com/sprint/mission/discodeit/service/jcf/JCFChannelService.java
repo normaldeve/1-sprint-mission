@@ -27,28 +27,26 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public Channel createChannel(Channel createChannel) throws IllegalArgumentException {
+    public Channel createChannel(String name, User creator) throws IllegalArgumentException {
         for (Channel channel : channelRepository.values()) { // 채널 이름이 중복되면 안 됨
-            if (channel.getName() == createChannel.getName()) {
+            if (channel.getName().equals(name)) {
                 throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
             }
         }
-//        if (userService.getUserByPhone(createChannel.getCreator().getPhone()) == null) {
-//            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
-//        }
 
+        Channel createChannel = new Channel(name, creator);
         channelRepository.put(createChannel.getId(), createChannel);
         return createChannel;
     }
 
     @Override
-    public Channel getChannelByName(String name) {
+    public Optional<Channel> getChannelByName(String name) {
         for (Channel channel : channelRepository.values()) {
             if (channel.getName() == name) {
-                return channel;
+                return Optional.of(channel);
             }
         }
-        throw new IllegalArgumentException(CANNOT_FOUND_NAME.getMessage());
+        return Optional.empty();
     }
 
     @Override
@@ -64,9 +62,6 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public List<Channel> getChannelsByUserId(User user) {
-//        if (!userService.userExists(user.getId())) {
-//            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
-//        }
         List<Channel> channels = new ArrayList<>();
         for (Channel channel : channelRepository.values()) {
             if (channel.getMembers().contains(user)) {
@@ -81,7 +76,7 @@ public class JCFChannelService implements ChannelService {
         if (!channelRepository.containsKey(channel.getId())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
-        if (userService.userExists(newUser.getId())) {
+        if (userService.userExists(newUser.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         channel.addUser(newUser);
@@ -103,7 +98,7 @@ public class JCFChannelService implements ChannelService {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
 
-        if (userService.userExists(removeUser.getId())) {
+        if (userService.userExists(removeUser.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         channel.removeUser(removeUser);
