@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -16,14 +17,16 @@ public class Channel {
     private List<User> members;
     private String name;
     private User creator;
+    private List<Message> messages;
 
-    public Channel(List<User> members, String name, User creator) {
+    public Channel(String name, User creator) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = null;
-        this.members = members;
+        this.members = new ArrayList<>(Arrays.asList(creator));
         this.name = name;
         this.creator = creator;
+        this.messages = new ArrayList<>();
     }
 
     public UUID getId() {
@@ -50,9 +53,17 @@ public class Channel {
         return creator;
     }
 
-    public void update(User user) {
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void addUser(User user) {
         this.members.add(user);
         this.updatedAt = System.currentTimeMillis();
+    }
+
+    public void addManyUser(List<User> users) {
+        this.members.addAll(users);
     }
 
     public void removeUser(User user) {
@@ -84,6 +95,7 @@ public class Channel {
                 ", members=" + membersNames +
                 ", name='" + name + '\'' +
                 ", creator='" + creatorName + '\'' +
+                ", messages= " + messages + '\'' +
                 '}';
     }
 

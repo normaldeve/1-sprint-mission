@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.UUID;
 
 public class User {
@@ -53,29 +52,10 @@ public class User {
         this.updatedAt = System.currentTimeMillis();
     }
 
-    // 유효성 검사
-    //핸드폰 번호 형식을 지켜야 한다.
-    public static boolean isValidPhone(String phoneNumber) {
-        String phoneRegex = "^010-\\d{4}-\\d{4}$";
-        return phoneNumber.matches(phoneRegex);
-    }
-
     //8자리 이상 15자리 이하 대문자 및 특수문자 하나 이상 포함해야 한다
     public static boolean isValidPassword(String password) {
         String passwordRegex = "^(?=.*[A-Z])(?=.*[\\W_])(?=.*[a-zA-Z\\d]).{8,15}$";
         return password.matches(passwordRegex);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(phone, user.phone);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(phone);
     }
 
     @Override
@@ -98,5 +78,4 @@ public class User {
                 "  updatedAt=" + updatedAtFormatted + "\n" +
                 "}";
     }
-
 }

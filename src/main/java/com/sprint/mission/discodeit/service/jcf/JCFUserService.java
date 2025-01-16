@@ -1,0 +1,85 @@
+package com.sprint.mission.discodeit.service.jcf;
+
+import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.factory.Factory;
+import com.sprint.mission.discodeit.service.ChannelService;
+import com.sprint.mission.discodeit.service.MessageService;
+import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.util.ValidPass;
+import com.sprint.mission.discodeit.util.ValidPhone;
+
+import java.util.*;
+
+import static com.sprint.mission.discodeit.error.UserError.*;
+
+public class JCFUserService implements UserService {
+    private final Map<UUID, User> userRepository;
+    private final MessageService messageService;
+    private final ChannelService channelService;
+
+    public JCFUserService() {
+        this.userRepository = new HashMap<>();
+        this.messageService = Factory.getMessageService();
+        this.channelService = Factory.getChannelService();
+    }
+
+
+    @Override
+    public User createUser(String name, String phone, String password) throws IllegalArgumentException {
+        if (!ValidPass.isValidPassword(password)) {
+            throw new IllegalArgumentException(INVALID_PASSWORD.getMessage());
+        }
+
+        if (!ValidPhone.isValidPhone(phone)) {
+            throw new IllegalArgumentException(INVALID_PHONE.getMessage());
+        }
+
+        if (userRepository.values().stream()
+                .anyMatch(user -> user.getPhone().equals(phone))) {
+            throw new IllegalArgumentException(DUPLICATE_PHONE.getMessage());
+        }
+        User user = new User(name, phone, password);
+        userRepository.put(user.getId(), user);
+        return user;
+    }
+
+    @Override
+    public User getUserByPhone(String phone) {
+        return userRepository.values().stream()
+                .filter(user -> user.getPhone().equals(phone))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException(CANNOT_FOUND_PHONE.getMessage()));
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return new ArrayList<>(userRepository.values());
+    }
+
+    @Override
+    public User updateUserPassword(User updateUser, String newPass) {
+        if (!userExists(updateUser.getId())) {
+            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
+        }
+        User findUser = userRepository.get(updateUser.getId());
+        findUser.update(newPass);
+        return findUser;
+    }
+
+    @Override
+    public void deleteUser(User removeUser) { // 유저 정보 삭제 시 유저가 보낸 메시지와 채널 모두 조회가 되면 안된다.
+        if (!userExists(removeUser.getId())) {
+            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
+        }
+        messageService.deleteMessageWithWriter(removeUser);
+        channelService.getAllChannel().stream()
+                .forEach(channel -> channel.getMembers()
+                        .removeIf(user -> user.getId().equals(removeUser.getId())));
+        userRepository.remove(removeUser.getId());
+    }
+
+    @Override
+    public boolean userExists(UUID uuid) {
+        return userRepository.containsKey(uuid);
+    }
+}

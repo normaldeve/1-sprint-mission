@@ -13,15 +13,13 @@ public interface MessageService {
 
     List<Message> getMessageByUser(User writer);
 
-    List<Message> getMessageByChannel(String channelName);
+    List<Message> getMessageByChannel(Channel channel);
 
     Message updateMessageContent(UUID id, String newContent);
 
-    List<Message> getAllMessages();
+    void removeMessageByWriter(User writer, UUID uuid);
 
-    boolean deleteMessageByWriter(User writer, UUID messageId); // 작성자가 특정 메시지를 삭제하기
+    void deleteMessageWithWriter(User writer); // 작성자가 특정 메시지를 삭제하기
 
-    void deleteAllMessageByWriter(User writer); // 작성자 회원이 삭제되었을 때 해당 메시지도 모두 조회되면 안된다
-
-    void deleteAllMessageByChannel(Channel channel); // 채널이 사라졌을 때 해당 채널에 속한 메시지도 모두 조회되면 안 됨
+    void deleteMessageWithChannel(Channel channel);
 }

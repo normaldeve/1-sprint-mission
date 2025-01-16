@@ -4,21 +4,24 @@ import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.User;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ChannelService {
-    Channel createChannel(List<User> members, String name, User creator);
+    Channel createChannel(Channel channel);
 
     Channel getChannelByName(String name);
+
+    boolean channelExist(UUID uuid);
 
     List<Channel> getAllChannel();
 
     List<Channel> getChannelsByUserId(User user);
 
-    Channel addUserToChannel(String name, User newUser);
+    Channel addUserToChannel(Channel channel, User newUser);
 
-    Channel removeUserFromChannel(String name, User removeUser);
+    Channel addManyUserToChannel(Channel channel, List<User> users);
 
-    boolean deleteChannel(String name);
+    Channel removeUserToChannel(Channel channel, User removeUser);
 
-//    void removeUserFromAllChannels(User user);
+    void deleteChannel(Channel removeChannel);
 }
