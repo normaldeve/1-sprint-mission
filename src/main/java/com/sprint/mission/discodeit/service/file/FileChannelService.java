@@ -101,20 +101,26 @@ public class FileChannelService implements ChannelService {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         channel.addUser(newUser);
+        channels.put(channel.getId(), channel);
+        saveToFile(channels, filePath);
         return channel;
     }
 
     @Override
     public Channel addManyUserToChannel(Channel channel, List<User> users) {
+        Map<UUID, Channel> channels = loadFromFile(filePath);
         if (!channelExist(channel.getName())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
         channel.addManyUser(users);
+        channels.put(channel.getId(), channel);
+        saveToFile(channels, filePath);
         return channel;
     }
 
     @Override
     public Channel removeUserToChannel(Channel channel, User removeUser) {
+        Map<UUID, Channel> channels = loadFromFile(filePath);
         if (!channelExist(channel.getName())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
@@ -123,6 +129,8 @@ public class FileChannelService implements ChannelService {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         channel.removeUser(removeUser);
+        channels.put(channel.getId(), channel);
+        saveToFile(channels, filePath);
         return channel;
     }
 

@@ -9,6 +9,7 @@ import com.sprint.mission.discodeit.factory.JCFFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.util.FileIOUtil;
 
 
 import java.io.IOException;
@@ -19,8 +20,8 @@ import java.util.Optional;
 
 public class JavaApplication {
     public static void main(String[] args) {
-        Factory factory = JCFFactory.getInstance();
-//        Factory factory = FileFactory.getInstance();
+//        Factory factory = JCFFactory.getInstance();
+        Factory factory = FileFactory.getInstance();
         UserService userService = factory.getUserService();
         MessageService messageService = factory.getMessageService();
         ChannelService channelService = factory.getChannelService();
@@ -158,10 +159,9 @@ public class JavaApplication {
         System.out.println();
         System.out.println("<채널 생성하기>");
         Channel channel1 = channelService.createChannel("코드잇 디스코드", user2);
-        System.out.println("channel1 = " + channel1);
         Channel channel2 = channelService.createChannel("코테 준비", user3);
-        channel1.addManyUser(userService.getAllUser());
-        channel2.addManyUser(userService.getAllUser());
+        channelService.addManyUserToChannel(channel1, userService.getAllUser());
+        channelService.addManyUserToChannel(channel2, userService.getAllUser());
         User channelCreator = userService.createUser("김자바", "010-8739-9343", "Abcdefgh!");
         Channel javaChannel = channelService.createChannel("자바 공부합시다", channelCreator);
         channelService.addManyUserToChannel(javaChannel, userService.getAllUser());
@@ -178,8 +178,7 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<채널 단일 조회하기>");
-        Optional<Channel> findChannel1 = channelService.getChannelByName("코드잇 디스코드");
-        System.out.println("코드잇 디스코드 채널 찾기 : " + findChannel1);
+        System.out.println("코드잇 디스코드 채널 찾기 : " + channelService.getChannelByName("코드잇 디스코드"));
         System.out.println("<전체 채널 조회하기>");
         System.out.println(channelService.getAllChannel());
         System.out.println("<하나의 회원이 포함되어 있는 채널 조회>");
@@ -214,5 +213,8 @@ public class JavaApplication {
         System.out.println("코드잇 채널 삭제 이후 해당 채널에 존재하는 메시지 출력해보기");
         channelService.deleteChannel(channel1);
         System.out.println(messageService.getMessageByChannel(channel1));
+        FileIOUtil.convertDatToJson(Paths.get("./result/users.dat"), Paths.get("./json/users.json"));
+        FileIOUtil.convertDatToJson(Paths.get("./result/messages.dat"), Paths.get("./json/messages.json"));
+        FileIOUtil.convertDatToJson(Paths.get("./result/channels.dat"), Paths.get("./json/channels.json"));
     }
 }

@@ -1,7 +1,13 @@
 package com.sprint.mission.discodeit.util;
 
-import java.io.*;
-import java.nio.file.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +32,18 @@ public class FileIOUtil {
             oos.writeObject(data);
         } catch (IOException e) {
             throw new RuntimeException("파일 저장 도중 문제가 발생하였습니다.", e);
+        }
+    }
+
+    //.dat 파일을 읽기 쉬운 Json 파일로 변환하는 메서드
+    public static void convertDatToJson(Path datFilePath, Path jsonFilePath) {
+        Map<UUID, Object> data = loadFromFile(datFilePath);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFilePath.toFile(), data);
+        } catch (IOException e) {
+            throw new RuntimeException("JSON 파일로 변환하는 도중 문제가 발생하였습니다.", e);
         }
     }
 }
