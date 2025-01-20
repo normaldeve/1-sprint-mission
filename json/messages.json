@@ -1,1 +1,60 @@
-{ }
+{
+  "8a591869-9404-4f35-bb39-a60e037f0825" : {
+    "id" : "8a591869-9404-4f35-bb39-a60e037f0825",
+    "createdAt" : 1737362918443,
+    "updatedAt" : null,
+    "content" : "열심히 하겠습니다!!",
+    "writer" : {
+      "id" : "022b398f-7ec4-49a1-9026-7e0193cafb52",
+      "createdAt" : 1737362918364,
+      "updatedAt" : null,
+      "name" : "박지훈",
+      "phone" : "010-3333-1111",
+      "password" : "Abcdefgh12312!!"
+    },
+    "channel" : {
+      "id" : "8d85d3da-ccc6-4bc3-a640-53a2baeeb7c4",
+      "createdAt" : 1737362918439,
+      "updatedAt" : null,
+      "members" : [ ],
+      "name" : "코테 준비",
+      "creator" : {
+        "id" : "022b398f-7ec4-49a1-9026-7e0193cafb52",
+        "createdAt" : 1737362918364,
+        "updatedAt" : null,
+        "name" : "박지훈",
+        "phone" : "010-3333-1111",
+        "password" : "Abcdefgh12312!!"
+      }
+    }
+  },
+  "0bfd6b1f-26d0-46d6-b203-ae3eb0f19ef6" : {
+    "id" : "0bfd6b1f-26d0-46d6-b203-ae3eb0f19ef6",
+    "createdAt" : 1737362918440,
+    "updatedAt" : null,
+    "content" : "열심히 공부하는 코테 준비 채널입니다!",
+    "writer" : {
+      "id" : "20443f00-739f-46b5-aed6-2944ddadf4e5",
+      "createdAt" : 1737362918366,
+      "updatedAt" : null,
+      "name" : "이채은",
+      "phone" : "010-4444-1111",
+      "password" : "Abcdefgh12312!!"
+    },
+    "channel" : {
+      "id" : "8d85d3da-ccc6-4bc3-a640-53a2baeeb7c4",
+      "createdAt" : 1737362918439,
+      "updatedAt" : null,
+      "members" : [ ],
+      "name" : "코테 준비",
+      "creator" : {
+        "id" : "022b398f-7ec4-49a1-9026-7e0193cafb52",
+        "createdAt" : 1737362918364,
+        "updatedAt" : null,
+        "name" : "박지훈",
+        "phone" : "010-3333-1111",
+        "password" : "Abcdefgh12312!!"
+      }
+    }
+  }
+}

@@ -1,46 +1,96 @@
 {
-  "5cc6a9cd-071d-42b6-8d34-6505dc918f46" : {
-    "id" : "5cc6a9cd-071d-42b6-8d34-6505dc918f46",
-    "createdAt" : 1737362370130,
-    "updatedAt" : 1737362370132,
+  "8d85d3da-ccc6-4bc3-a640-53a2baeeb7c4" : {
+    "id" : "8d85d3da-ccc6-4bc3-a640-53a2baeeb7c4",
+    "createdAt" : 1737362918439,
+    "updatedAt" : 1737362918460,
     "members" : [ {
-      "id" : "b37c2425-ccdb-4cfe-8fb3-324bafb54542",
-      "createdAt" : 1737362370044,
+      "id" : "01aa082d-152a-4dc1-95d8-aebbb9ca9ea6",
+      "createdAt" : 1737362918346,
+      "updatedAt" : 1737362918396,
+      "name" : "김민준",
+      "phone" : "010-1111-1111",
+      "password" : "Zdefdasdf!@"
+    }, {
+      "id" : "20443f00-739f-46b5-aed6-2944ddadf4e5",
+      "createdAt" : 1737362918366,
       "updatedAt" : null,
       "name" : "이채은",
       "phone" : "010-4444-1111",
       "password" : "Abcdefgh12312!!"
     }, {
-      "id" : "e6d307c8-cfe0-4bad-b5a2-c50c68f5ee09",
-      "createdAt" : 1737362370039,
+      "id" : "b3e35f26-d243-4bc2-98ee-8b2d0ac4bcec",
+      "createdAt" : 1737362918362,
       "updatedAt" : null,
       "name" : "이서윤",
       "phone" : "010-2222-1111",
       "password" : "Abcdefgh12312!!"
     }, {
-      "id" : "48dce37f-9ee2-4e1c-8611-1074b120147f",
-      "createdAt" : 1737362370022,
-      "updatedAt" : 1737362370076,
+      "id" : "fe97c977-5eff-49db-b0f8-02b89f1b6630",
+      "createdAt" : 1737362918367,
+      "updatedAt" : null,
+      "name" : "정다은",
+      "phone" : "010-5555-1111",
+      "password" : "Abcdefgh12312!!"
+    }, {
+      "id" : "2418d752-a8a2-48f4-ba29-18be27945a2b",
+      "createdAt" : 1737362918456,
+      "updatedAt" : null,
+      "name" : "홍길동",
+      "phone" : "010-1234-4321",
+      "password" : "Abcdefgh!"
+    } ],
+    "name" : "코테 준비",
+    "creator" : {
+      "id" : "022b398f-7ec4-49a1-9026-7e0193cafb52",
+      "createdAt" : 1737362918364,
+      "updatedAt" : null,
+      "name" : "박지훈",
+      "phone" : "010-3333-1111",
+      "password" : "Abcdefgh12312!!"
+    }
+  },
+  "41bba8b5-1092-4149-b55e-6b28356f2f5f" : {
+    "id" : "41bba8b5-1092-4149-b55e-6b28356f2f5f",
+    "createdAt" : 1737362918448,
+    "updatedAt" : 1737362918450,
+    "members" : [ {
+      "id" : "01aa082d-152a-4dc1-95d8-aebbb9ca9ea6",
+      "createdAt" : 1737362918346,
+      "updatedAt" : 1737362918396,
       "name" : "김민준",
       "phone" : "010-1111-1111",
       "password" : "Zdefdasdf!@"
     }, {
-      "id" : "368916ad-16ea-4875-89fa-e0ecb36f98d8",
-      "createdAt" : 1737362370128,
+      "id" : "20443f00-739f-46b5-aed6-2944ddadf4e5",
+      "createdAt" : 1737362918366,
+      "updatedAt" : null,
+      "name" : "이채은",
+      "phone" : "010-4444-1111",
+      "password" : "Abcdefgh12312!!"
+    }, {
+      "id" : "20d05816-e6cc-4810-8573-e6d6b4d395d6",
+      "createdAt" : 1737362918446,
       "updatedAt" : null,
       "name" : "김자바",
       "phone" : "010-8739-9343",
       "password" : "Abcdefgh!"
     }, {
-      "id" : "67f512fc-1865-4f46-93e8-819779931c1d",
-      "createdAt" : 1737362370041,
+      "id" : "022b398f-7ec4-49a1-9026-7e0193cafb52",
+      "createdAt" : 1737362918364,
       "updatedAt" : null,
       "name" : "박지훈",
       "phone" : "010-3333-1111",
       "password" : "Abcdefgh12312!!"
     }, {
-      "id" : "d20cd8dc-f1ac-4992-8b83-4c737dbfb0cd",
-      "createdAt" : 1737362370045,
+      "id" : "b3e35f26-d243-4bc2-98ee-8b2d0ac4bcec",
+      "createdAt" : 1737362918362,
+      "updatedAt" : null,
+      "name" : "이서윤",
+      "phone" : "010-2222-1111",
+      "password" : "Abcdefgh12312!!"
+    }, {
+      "id" : "fe97c977-5eff-49db-b0f8-02b89f1b6630",
+      "createdAt" : 1737362918367,
       "updatedAt" : null,
       "name" : "정다은",
       "phone" : "010-5555-1111",
@@ -48,8 +98,8 @@
     } ],
     "name" : "자바 공부합시다",
     "creator" : {
-      "id" : "368916ad-16ea-4875-89fa-e0ecb36f98d8",
-      "createdAt" : 1737362370128,
+      "id" : "20d05816-e6cc-4810-8573-e6d6b4d395d6",
+      "createdAt" : 1737362918446,
       "updatedAt" : null,
       "name" : "김자바",
       "phone" : "010-8739-9343",

@@ -160,6 +160,8 @@ public class JavaApplication {
         System.out.println("<채널 생성하기>");
         Channel channel1 = channelService.createChannel("코드잇 디스코드", user2);
         Channel channel2 = channelService.createChannel("코테 준비", user3);
+        messageService.createMessage("열심히 공부하는 코테 준비 채널입니다!", user4, channel2);
+        messageService.createMessage("열심히 하겠습니다!!", user3, channel2);
         channelService.addManyUserToChannel(channel1, userService.getAllUser());
         channelService.addManyUserToChannel(channel2, userService.getAllUser());
         User channelCreator = userService.createUser("김자바", "010-8739-9343", "Abcdefgh!");
@@ -197,12 +199,6 @@ public class JavaApplication {
         System.out.println();
         System.out.println("===============================================================================");
         System.out.println();
-        System.out.println("<채널 삭제하기> : 코테 준비 채널 삭제");
-        channelService.deleteChannel(channel2);
-        System.out.println(channelService.getAllChannel());
-        System.out.println();
-        System.out.println("===============================================================================");
-        System.out.println();
         System.out.println("<심화> - 채널을 삭제하면 해당 채널에 있던 메시지가 조회되면 안된다.");
         System.out.println("코드잇 채널에 메시지를 여러 개 생성");
         messageService.createMessage("안녕하세요 처음 인사드립니다.", user3, channel1);
@@ -213,8 +209,10 @@ public class JavaApplication {
         System.out.println("코드잇 채널 삭제 이후 해당 채널에 존재하는 메시지 출력해보기");
         channelService.deleteChannel(channel1);
         System.out.println(messageService.getMessageByChannel(channel1));
-        FileIOUtil.convertDatToJson(Paths.get("./result/users.dat"), Paths.get("./json/users.json"));
-        FileIOUtil.convertDatToJson(Paths.get("./result/messages.dat"), Paths.get("./json/messages.json"));
-        FileIOUtil.convertDatToJson(Paths.get("./result/channels.dat"), Paths.get("./json/channels.json"));
+        if (factory instanceof FileFactory) {
+            FileIOUtil.convertDatToJson(Paths.get("./result/users.dat"), Paths.get("./json/users.json"));
+            FileIOUtil.convertDatToJson(Paths.get("./result/messages.dat"), Paths.get("./json/messages.json"));
+            FileIOUtil.convertDatToJson(Paths.get("./result/channels.dat"), Paths.get("./json/channels.json"));
+        }
     }
 }
