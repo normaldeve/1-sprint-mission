@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.factory.Factory;
+import com.sprint.mission.discodeit.factory.FileFactory;
 import com.sprint.mission.discodeit.factory.JCFFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
@@ -12,18 +13,30 @@ import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
 import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 public class JavaApplication {
     public static void main(String[] args) {
-        Factory factory = JCFFactory.getInstance();
+//        Factory factory = JCFFactory.getInstance();
+        Factory factory = FileFactory.getInstance();
         UserService userService = factory.getUserService();
         MessageService messageService = factory.getMessageService();
         ChannelService channelService = factory.getChannelService();
         userService.setDependency(messageService, channelService);
         messageService.setDependency(userService, channelService);
         channelService.setDependency(userService,messageService);
+
+        try {
+            Files.deleteIfExists(Paths.get("users.dat"));
+            Files.deleteIfExists(Paths.get("messages.dat"));
+            Files.deleteIfExists(Paths.get("channels.dat"));
+        } catch (IOException e) {
+            System.err.println("파일 초기화 중 오류 발생: " + e.getMessage());
+        }
 
 
         System.out.println("<회원 생성하기>");

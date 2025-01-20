@@ -77,7 +77,7 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public Channel addUserToChannel(Channel channel, User newUser) {//새로운 유저가 채널에 들어갈때
-        if (!channelRepository.containsKey(channel.getId())) {
+        if (!channelExist(channel.getName())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
         if (!userService.userExists(newUser.getPhone())) {
@@ -89,7 +89,7 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public Channel addManyUserToChannel(Channel channel, List<User> users) {
-        if (!channelRepository.containsKey(channel.getId())) {
+        if (!channelExist(channel.getName())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
         channel.addManyUser(users);
@@ -98,7 +98,7 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public Channel removeUserToChannel(Channel channel, User removeUser) {
-        if (!channelRepository.containsKey(channel.getId())) {
+        if (!channelExist(channel.getName())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
 
@@ -111,7 +111,7 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public void deleteChannel(Channel channel) { // 채널이 사라지면 해당 채널에 포함된 메시지도 사라진다.
-        if (!channelRepository.containsKey(channel.getId())) {
+        if (!channelExist(channel.getName())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
 

@@ -42,6 +42,7 @@ public class FileUserService implements UserService {
 
     @Override
     public User createUser(String name, String phone, String password) {
+        Map<UUID, User> users = loadFromFile(filePath);
         if (!ValidPass.isValidPassword(password)) {
             throw new IllegalArgumentException(INVALID_PASSWORD.getMessage());
         }
@@ -49,7 +50,6 @@ public class FileUserService implements UserService {
         if (!ValidPhone.isValidPhone(phone)) {
             throw new IllegalArgumentException(INVALID_PHONE.getMessage());
         }
-        Map<UUID, User> users = loadFromFile(filePath);
         if (users.values().stream()
                 .anyMatch(user -> user.getPhone().equals(phone))) {
             throw new IllegalArgumentException(DUPLICATE_PHONE.getMessage());
@@ -73,7 +73,7 @@ public class FileUserService implements UserService {
     public boolean userExists(String phone) {
         Map<UUID, User> users = loadFromFile(filePath);
         for (User user : users.values()) {
-            if (user.getPhone() == phone) {
+            if (user.getPhone().equals(phone)) {
                 return true;
             }
         }
