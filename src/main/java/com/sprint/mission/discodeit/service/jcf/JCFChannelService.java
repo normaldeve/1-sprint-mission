@@ -53,8 +53,9 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public boolean channelExist(UUID uuid) {
-        return channelRepository.containsKey(uuid);
+    public boolean channelExist(String name) {
+        return channelRepository.values().stream()
+                .anyMatch(user -> user.getName().equals(name));
     }
 
     @Override
@@ -79,7 +80,7 @@ public class JCFChannelService implements ChannelService {
         if (!channelRepository.containsKey(channel.getId())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
-        if (userService.userExists(newUser.getPhone())) {
+        if (!userService.userExists(newUser.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         channel.addUser(newUser);
@@ -101,7 +102,7 @@ public class JCFChannelService implements ChannelService {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
 
-        if (userService.userExists(removeUser.getPhone())) {
+        if (!userService.userExists(removeUser.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         channel.removeUser(removeUser);

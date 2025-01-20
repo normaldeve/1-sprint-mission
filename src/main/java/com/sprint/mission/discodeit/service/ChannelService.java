@@ -14,7 +14,7 @@ public interface ChannelService {
 
     Optional<Channel> getChannelByName(String name);
 
-    boolean channelExist(UUID uuid);
+    boolean channelExist(String name);
 
     List<Channel> getAllChannel();
 

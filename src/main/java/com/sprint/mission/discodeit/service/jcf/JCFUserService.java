@@ -80,11 +80,8 @@ public class JCFUserService implements UserService {
 
     @Override
     public boolean userExists(String phone) {
-        for (User user : userRepository.values()) {
-            if (user.getPhone().equals(phone)) {
-                return true;
-            }
-        }
-        return false;
+        return userRepository.values()
+                .stream()
+                .anyMatch(user -> user.getPhone().equals(phone));
     }
 }

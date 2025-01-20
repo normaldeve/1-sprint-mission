@@ -35,11 +35,11 @@ public class JCFMessageService implements MessageService {
             throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
         }
 
-        if (userService.userExists(writer.getPhone())) { // 해당 작성자가 존재하는가
+        if (!userService.userExists(writer.getPhone())) { // 해당 작성자가 존재하는가
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
 
-        if (channelService.channelExist(channel.getId())) { // 해당 채널이 존재하는가?
+        if (!channelService.channelExist(channel.getName())) { // 해당 채널이 존재하는가?
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
 
@@ -51,7 +51,7 @@ public class JCFMessageService implements MessageService {
     // 메시지를 보낸 회원이 메시지 조회하기
     @Override
     public List<Message> getMessageByUser(User writer) {
-        if (userService.userExists(writer.getPhone())) {
+        if (!userService.userExists(writer.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
         List<Message> messages = new ArrayList<>();
@@ -65,7 +65,7 @@ public class JCFMessageService implements MessageService {
 
     @Override
     public List<Message> getMessageByChannel(Channel channel) {
-        if (channelService.channelExist(channel.getId())) {
+        if (!channelService.channelExist(channel.getName())) {
             throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
         }
         List<Message> messages = new ArrayList<>();

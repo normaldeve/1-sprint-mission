@@ -7,10 +7,33 @@ import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
+
 public class FileMessageService implements MessageService {
+    private final Path filePath;
+    private UserService userService;
+    private ChannelService channelService;
+
+    public FileMessageService(String filePath) {
+        this.filePath = Paths.get(filePath);
+        if (!Files.exists(this.filePath)) {
+            try {
+                Files.createFile(this.filePath);
+                saveToFile(new HashMap<>(), this.filePath);
+            } catch (IOException e) {
+                throw new RuntimeException("Error initializing user repository file", e);
+            }
+        }
+    }
+
     @Override
     public void setDependency(UserService userService, ChannelService channelService) {
 
