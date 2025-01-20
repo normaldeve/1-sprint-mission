@@ -9,14 +9,14 @@ import com.sprint.mission.discodeit.service.file.FileUserService;
 
 public class FileFactory implements Factory{
     private static FileFactory instance;
-    private UserService userService;
-    private MessageService messageService;
-    private ChannelService channelService;
+    private final UserService userService;
+    private final MessageService messageService;
+    private final ChannelService channelService;
 
     private FileFactory() {
-        this.userService = new FileUserService("users.dat");
-        this.messageService = new FileMessageService("messages.dat");
-        this.channelService = new FileChannelService("channels.dat");
+        this.userService = new FileUserService("./result/users.dat");
+        this.messageService = new FileMessageService("./result/messages.dat");
+        this.channelService = new FileChannelService("./result/channels.dat");
     }
 
     public static FileFactory getInstance() {

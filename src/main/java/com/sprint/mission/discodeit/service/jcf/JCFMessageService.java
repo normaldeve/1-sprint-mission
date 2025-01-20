@@ -65,9 +65,6 @@ public class JCFMessageService implements MessageService {
 
     @Override
     public List<Message> getMessageByChannel(Channel channel) {
-        if (!channelService.channelExist(channel.getName())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
-        }
         List<Message> messages = new ArrayList<>();
         for (Message message : messageRepository.values()) {
             if (message.getChannel().getName().equals(channel.getName())) {
@@ -79,8 +76,7 @@ public class JCFMessageService implements MessageService {
 
 
     @Override
-    public Message updateMessageContent(UUID id, String newContent) {
-        Message findMessage = messageRepository.get(id);
+    public Message updateMessageContent(Message findMessage, String newContent) {
         if (newContent.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
         }
@@ -102,13 +98,9 @@ public class JCFMessageService implements MessageService {
 
 
     @Override
-    public void deleteMessageWithChannel(Channel channel) { // 채널이 삭제될 때 메시지도 없애는 메소드
-        Iterator<Message> iterator = messageRepository.values().iterator();
-        while (iterator.hasNext()) {
-            Message message = iterator.next();
-            if (Objects.equals(message.getChannel().getId(), channel.getId())) {
-                iterator.remove();
-            }
-        }
+    public void deleteMessageWithChannel(Channel channel) {
+        getMessageByChannel(channel).stream()
+                .map(Message::getId)
+                .forEach(messageRepository::remove);
     }
 }

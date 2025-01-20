@@ -29,7 +29,7 @@ public class FileUserService implements UserService {
                 Files.createFile(this.filePath);
                 saveToFile(new HashMap<>(), this.filePath);
             } catch (IOException e) {
-                throw new RuntimeException("Error initializing user repository file", e);
+                throw new RuntimeException("회원 파일을 초기화 하던 중에 문제가 발생했습니다", e);
             }
         }
     }
@@ -95,9 +95,10 @@ public class FileUserService implements UserService {
         if (!userExists(updateUser.getPhone())) {
             throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
         }
-        User findUser = users.get(updateUser.getId());
-        findUser.update(newPass);
-        return findUser;
+        updateUser.update(newPass);
+        users.put(updateUser.getId(), updateUser);
+        saveToFile(users, filePath);
+        return updateUser;
     }
 
     @Override

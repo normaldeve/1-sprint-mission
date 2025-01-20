@@ -16,7 +16,7 @@ public interface MessageService {
 
     List<Message> getMessageByChannel(Channel channel);
 
-    Message updateMessageContent(UUID id, String newContent);
+    Message updateMessageContent(Message message, String newContent);
 
     void removeMessageByWriter(User writer, UUID uuid);
 

@@ -45,7 +45,7 @@ public class JCFChannelService implements ChannelService {
     @Override
     public Optional<Channel> getChannelByName(String name) {
         for (Channel channel : channelRepository.values()) {
-            if (channel.getName() == name) {
+            if (channel.getName().equals(name)) {
                 return Optional.of(channel);
             }
         }
@@ -66,14 +66,13 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public List<Channel> getChannelsByUserId(User user) {
-        List<Channel> channels = new ArrayList<>();
-        for (Channel channel : channelRepository.values()) {
-            if (channel.getMembers().contains(user)) {
-                channels.add(channel);
-            }
-        }
-        return channels;
+        return channelRepository.values().stream()
+                .filter(channel -> channel.getMembers().stream()
+                        .anyMatch(member -> Objects.equals(member.getPhone(), user.getPhone()))
+                )
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public Channel addUserToChannel(Channel channel, User newUser) {//새로운 유저가 채널에 들어갈때

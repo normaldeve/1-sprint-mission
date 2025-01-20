@@ -31,7 +31,7 @@ public class FileMessageService implements MessageService {
                 Files.createFile(this.filePath);
                 saveToFile(new HashMap<>(), this.filePath);
             } catch (IOException e) {
-                throw new RuntimeException("Error initializing user repository file", e);
+                throw new RuntimeException("메시지 파일을 초기화 하던 중에 문제가 발생했습니다", e);
             }
         }
     }
@@ -79,9 +79,6 @@ public class FileMessageService implements MessageService {
     @Override
     public List<Message> getMessageByChannel(Channel channel) {
         Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
-        if (!channelService.channelExist(channel.getName())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
-        }
         List<Message> list = new ArrayList<>();
         for (Message message : messages.values()) {
             if (message.getChannel().getName().equals(channel.getName())) {
@@ -92,14 +89,15 @@ public class FileMessageService implements MessageService {
     }
 
     @Override
-    public Message updateMessageContent(UUID id, String newContent) {
+    public Message updateMessageContent(Message updateMessage, String newContent) {
         Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
-        Message findMessage = messages.get(id);
         if (newContent.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
         }
-        findMessage.update(newContent);
-        return findMessage;
+        updateMessage.update(newContent);
+        messages.put(updateMessage.getId(), updateMessage);
+        saveToFile(messages, filePath);
+        return updateMessage;
     }
 
     @Override
@@ -118,12 +116,10 @@ public class FileMessageService implements MessageService {
     @Override
     public void deleteMessageWithChannel(Channel channel) {
         Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
-        Iterator<Message> iterator = messages.values().iterator();
-        while (iterator.hasNext()) {
-            Message message = iterator.next();
-            if (Objects.equals(message.getChannel().getId(), channel.getId())) {
-                iterator.remove();
-            }
-        }
+        getMessageByChannel(channel).stream()
+                .map(Message::getId)
+                .forEach(messages::remove);
+
+        FileIOUtil.saveToFile(messages, filePath);
     }
 }

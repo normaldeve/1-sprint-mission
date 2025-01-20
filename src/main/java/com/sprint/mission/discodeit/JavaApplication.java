@@ -9,9 +9,7 @@ import com.sprint.mission.discodeit.factory.JCFFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
-import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
-import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
-import com.sprint.mission.discodeit.service.jcf.JCFUserService;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,8 +19,8 @@ import java.util.Optional;
 
 public class JavaApplication {
     public static void main(String[] args) {
-//        Factory factory = JCFFactory.getInstance();
-        Factory factory = FileFactory.getInstance();
+        Factory factory = JCFFactory.getInstance();
+//        Factory factory = FileFactory.getInstance();
         UserService userService = factory.getUserService();
         MessageService messageService = factory.getMessageService();
         ChannelService channelService = factory.getChannelService();
@@ -31,9 +29,9 @@ public class JavaApplication {
         channelService.setDependency(userService,messageService);
 
         try {
-            Files.deleteIfExists(Paths.get("users.dat"));
-            Files.deleteIfExists(Paths.get("messages.dat"));
-            Files.deleteIfExists(Paths.get("channels.dat"));
+            Files.deleteIfExists(Paths.get("./result/users.dat"));
+            Files.deleteIfExists(Paths.get("./result/messages.dat"));
+            Files.deleteIfExists(Paths.get("./result/channels.dat"));
         } catch (IOException e) {
             System.err.println("파일 초기화 중 오류 발생: " + e.getMessage());
         }
@@ -79,8 +77,8 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<회원 비밀번호 업데이트 하기>");
-        User updateUser1 = userService.updateUserPassword(user1, "Zdefdasdf!@");
-        System.out.println("UpdatePassword : " + updateUser1);
+        userService.updateUserPassword(user1, "Zdefdasdf!@");
+        System.out.println("UpdatePassword : " + user1);
         System.out.println();
         System.out.println("===============================================================================");
         System.out.println();
@@ -118,7 +116,7 @@ public class JavaApplication {
             System.out.println(e.getMessage());
         }
         System.out.print("    - 2. 채널에 등록되지 않은 회원이 메시지를 보낼 때 : ");
-        User unRegistUser1 = userService.createUser("미등록회원", "010-1919-9191", "Abcdefgh!");
+        User unRegistUser1 = new User("미등록회원", "010-1919-9191", "Abcdefgh!");
         try {
             Message unregistMessage = messageService.createMessage("안녕하세요 만나서 반갑습니다", unRegistUser1, testChannel);
         } catch (Exception e) {
@@ -143,17 +141,18 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<메시지 내용 수정하기>");
-        Message updateMessage = messageService.updateMessageContent(message2_1.getId(), "메시지 내용 업데이트");
-        System.out.println(updateMessage);
+        messageService.updateMessageContent(message2_1, "메시지 내용 업데이트");
+        System.out.println(message2_1);
         System.out.println();
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<메시지 삭제하기>");
         messageService.removeMessageByWriter(user2, message2_1.getId());
         System.out.println("전체 메시지 조회하기: " + messageService.getMessageByUser(user2));
-        System.out.print("임시로 만든 회원 삭제하기 : ");
-        userService.deleteUser(unRegistUser1);
         System.out.println("임시로 만든 채널 삭제하기 : ");
+        channelService.deleteChannel(testChannel);
+        channelService.deleteChannel(testChannel2);
+        System.out.println(channelService.getAllChannel());
         System.out.println();
         System.out.println("===============================================================================");
         System.out.println();
@@ -206,6 +205,14 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<심화> - 채널을 삭제하면 해당 채널에 있던 메시지가 조회되면 안된다.");
-
+        System.out.println("코드잇 채널에 메시지를 여러 개 생성");
+        messageService.createMessage("안녕하세요 처음 인사드립니다.", user3, channel1);
+        messageService.createMessage("안녕하세요 만나서 반갑습니다.", user4, channel1);
+        messageService.createMessage("오 디스코드는 처음 들어와보네요!.", user5, channel1);
+        System.out.println("코드잇 채널 삭제 이전 해당 채널에 존재하는 메시지 출력해보기");
+        System.out.println(messageService.getMessageByChannel(channel1));
+        System.out.println("코드잇 채널 삭제 이후 해당 채널에 존재하는 메시지 출력해보기");
+        channelService.deleteChannel(channel1);
+        System.out.println(messageService.getMessageByChannel(channel1));
     }
 }
