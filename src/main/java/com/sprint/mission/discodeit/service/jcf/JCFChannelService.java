@@ -31,10 +31,9 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public Channel createChannel(String name, User creator) throws IllegalArgumentException {
-        for (Channel channel : channelRepository.values()) { // 채널 이름이 중복되면 안 됨
-            if (channel.getName().equals(name)) {
-                throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
-            }
+        if (channelRepository.values().stream()
+                .anyMatch(user -> user.getName().equals(name))) {
+            throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
         }
 
         Channel createChannel = new Channel(name, creator);

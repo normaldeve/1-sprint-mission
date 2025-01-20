@@ -27,7 +27,7 @@ public class JCFUserService implements UserService {
     }
 
     @Override
-    public User createUser(String name, String phone, String password) throws IllegalArgumentException {
+    public User createUser(String name, String phone, String password) {
         if (!ValidPass.isValidPassword(password)) {
             throw new IllegalArgumentException(INVALID_PASSWORD.getMessage());
         }

@@ -1,39 +1,39 @@
 {
-  "8d85d3da-ccc6-4bc3-a640-53a2baeeb7c4" : {
-    "id" : "8d85d3da-ccc6-4bc3-a640-53a2baeeb7c4",
-    "createdAt" : 1737362918439,
-    "updatedAt" : 1737362918460,
+  "4dd36f67-d385-4eea-a334-887f9cee532c" : {
+    "id" : "4dd36f67-d385-4eea-a334-887f9cee532c",
+    "createdAt" : 1737366128033,
+    "updatedAt" : 1737366128074,
     "members" : [ {
-      "id" : "01aa082d-152a-4dc1-95d8-aebbb9ca9ea6",
-      "createdAt" : 1737362918346,
-      "updatedAt" : 1737362918396,
-      "name" : "김민준",
-      "phone" : "010-1111-1111",
-      "password" : "Zdefdasdf!@"
-    }, {
-      "id" : "20443f00-739f-46b5-aed6-2944ddadf4e5",
-      "createdAt" : 1737362918366,
-      "updatedAt" : null,
-      "name" : "이채은",
-      "phone" : "010-4444-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "b3e35f26-d243-4bc2-98ee-8b2d0ac4bcec",
-      "createdAt" : 1737362918362,
-      "updatedAt" : null,
-      "name" : "이서윤",
-      "phone" : "010-2222-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "fe97c977-5eff-49db-b0f8-02b89f1b6630",
-      "createdAt" : 1737362918367,
+      "id" : "687b9a63-304c-4f98-a782-6c59394a3e39",
+      "createdAt" : 1737366127937,
       "updatedAt" : null,
       "name" : "정다은",
       "phone" : "010-5555-1111",
       "password" : "Abcdefgh12312!!"
     }, {
-      "id" : "2418d752-a8a2-48f4-ba29-18be27945a2b",
-      "createdAt" : 1737362918456,
+      "id" : "77361495-8ec4-408c-8780-83104113840f",
+      "createdAt" : 1737366127904,
+      "updatedAt" : 1737366127972,
+      "name" : "김민준",
+      "phone" : "010-1111-1111",
+      "password" : "Zdefdasdf!@"
+    }, {
+      "id" : "a07912b1-e72e-428b-9ff3-b97b360e4a12",
+      "createdAt" : 1737366127934,
+      "updatedAt" : null,
+      "name" : "이채은",
+      "phone" : "010-4444-1111",
+      "password" : "Abcdefgh12312!!"
+    }, {
+      "id" : "fdefdb3b-2ec9-4801-ad62-5f9ed2aa1c36",
+      "createdAt" : 1737366127929,
+      "updatedAt" : null,
+      "name" : "이서윤",
+      "phone" : "010-2222-1111",
+      "password" : "Abcdefgh12312!!"
+    }, {
+      "id" : "fa2ad4d4-20d2-4a23-9cd1-8be3c2676d61",
+      "createdAt" : 1737366128065,
       "updatedAt" : null,
       "name" : "홍길동",
       "phone" : "010-1234-4321",
@@ -41,65 +41,65 @@
     } ],
     "name" : "코테 준비",
     "creator" : {
-      "id" : "022b398f-7ec4-49a1-9026-7e0193cafb52",
-      "createdAt" : 1737362918364,
+      "id" : "e14dd857-7a6c-4251-b663-928910ae4687",
+      "createdAt" : 1737366127931,
       "updatedAt" : null,
       "name" : "박지훈",
       "phone" : "010-3333-1111",
       "password" : "Abcdefgh12312!!"
     }
   },
-  "41bba8b5-1092-4149-b55e-6b28356f2f5f" : {
-    "id" : "41bba8b5-1092-4149-b55e-6b28356f2f5f",
-    "createdAt" : 1737362918448,
-    "updatedAt" : 1737362918450,
+  "45e43fda-f792-4655-8bd7-35e61552c636" : {
+    "id" : "45e43fda-f792-4655-8bd7-35e61552c636",
+    "createdAt" : 1737366128053,
+    "updatedAt" : 1737366128056,
     "members" : [ {
-      "id" : "01aa082d-152a-4dc1-95d8-aebbb9ca9ea6",
-      "createdAt" : 1737362918346,
-      "updatedAt" : 1737362918396,
-      "name" : "김민준",
-      "phone" : "010-1111-1111",
-      "password" : "Zdefdasdf!@"
-    }, {
-      "id" : "20443f00-739f-46b5-aed6-2944ddadf4e5",
-      "createdAt" : 1737362918366,
-      "updatedAt" : null,
-      "name" : "이채은",
-      "phone" : "010-4444-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "20d05816-e6cc-4810-8573-e6d6b4d395d6",
-      "createdAt" : 1737362918446,
-      "updatedAt" : null,
-      "name" : "김자바",
-      "phone" : "010-8739-9343",
-      "password" : "Abcdefgh!"
-    }, {
-      "id" : "022b398f-7ec4-49a1-9026-7e0193cafb52",
-      "createdAt" : 1737362918364,
+      "id" : "e14dd857-7a6c-4251-b663-928910ae4687",
+      "createdAt" : 1737366127931,
       "updatedAt" : null,
       "name" : "박지훈",
       "phone" : "010-3333-1111",
       "password" : "Abcdefgh12312!!"
     }, {
-      "id" : "b3e35f26-d243-4bc2-98ee-8b2d0ac4bcec",
-      "createdAt" : 1737362918362,
+      "id" : "687b9a63-304c-4f98-a782-6c59394a3e39",
+      "createdAt" : 1737366127937,
+      "updatedAt" : null,
+      "name" : "정다은",
+      "phone" : "010-5555-1111",
+      "password" : "Abcdefgh12312!!"
+    }, {
+      "id" : "77361495-8ec4-408c-8780-83104113840f",
+      "createdAt" : 1737366127904,
+      "updatedAt" : 1737366127972,
+      "name" : "김민준",
+      "phone" : "010-1111-1111",
+      "password" : "Zdefdasdf!@"
+    }, {
+      "id" : "a07912b1-e72e-428b-9ff3-b97b360e4a12",
+      "createdAt" : 1737366127934,
+      "updatedAt" : null,
+      "name" : "이채은",
+      "phone" : "010-4444-1111",
+      "password" : "Abcdefgh12312!!"
+    }, {
+      "id" : "fdefdb3b-2ec9-4801-ad62-5f9ed2aa1c36",
+      "createdAt" : 1737366127929,
       "updatedAt" : null,
       "name" : "이서윤",
       "phone" : "010-2222-1111",
       "password" : "Abcdefgh12312!!"
     }, {
-      "id" : "fe97c977-5eff-49db-b0f8-02b89f1b6630",
-      "createdAt" : 1737362918367,
+      "id" : "b525d206-0ae5-479f-add0-55bcfa5579ae",
+      "createdAt" : 1737366128052,
       "updatedAt" : null,
-      "name" : "정다은",
-      "phone" : "010-5555-1111",
-      "password" : "Abcdefgh12312!!"
+      "name" : "김자바",
+      "phone" : "010-8739-9343",
+      "password" : "Abcdefgh!"
     } ],
     "name" : "자바 공부합시다",
     "creator" : {
-      "id" : "20d05816-e6cc-4810-8573-e6d6b4d395d6",
-      "createdAt" : 1737362918446,
+      "id" : "b525d206-0ae5-479f-add0-55bcfa5579ae",
+      "createdAt" : 1737366128052,
       "updatedAt" : null,
       "name" : "김자바",
       "phone" : "010-8739-9343",

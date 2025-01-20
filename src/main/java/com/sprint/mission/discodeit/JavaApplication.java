@@ -20,8 +20,8 @@ import java.util.Optional;
 
 public class JavaApplication {
     public static void main(String[] args) {
-//        Factory factory = JCFFactory.getInstance();
-        Factory factory = FileFactory.getInstance();
+        Factory factory = JCFFactory.getInstance();
+//        Factory factory = FileFactory.getInstance();
         UserService userService = factory.getUserService();
         MessageService messageService = factory.getMessageService();
         ChannelService channelService = factory.getChannelService();

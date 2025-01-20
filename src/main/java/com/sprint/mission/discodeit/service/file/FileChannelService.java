@@ -45,10 +45,9 @@ public class FileChannelService implements ChannelService {
     @Override
     public Channel createChannel(String name, User creator) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
-        for (Channel channel : channels.values()) {
-            if (channelExist(name)) {
-                throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
-            }
+        if (channels.values().stream()
+                .anyMatch(user -> user.getName().equals(name))) {
+            throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
         }
         Channel createChannel = new Channel(name, creator);
         channels.put(createChannel.getId(), createChannel);
