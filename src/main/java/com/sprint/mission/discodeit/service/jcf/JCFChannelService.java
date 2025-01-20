@@ -2,7 +2,6 @@ package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.factory.Factory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -17,13 +16,17 @@ import static com.sprint.mission.discodeit.error.UserError.CANNOT_FOUND_USER;
 
 public class JCFChannelService implements ChannelService {
     private final Map<UUID, Channel> channelRepository;
-    private final UserService userService;
-    private final MessageService messageService;
+    private UserService userService;
+    private MessageService messageService;
 
     public JCFChannelService() {
         this.channelRepository = new HashMap<>();
-        this.userService = Factory.getUserService();
-        this.messageService = Factory.getMessageService();
+    }
+
+    @Override
+    public void setDependency(UserService userService, MessageService messageService) {
+        this.userService = userService;
+        this.messageService = messageService;
     }
 
     @Override

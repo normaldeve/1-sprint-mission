@@ -1,7 +1,6 @@
 package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.factory.Factory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -14,15 +13,18 @@ import static com.sprint.mission.discodeit.error.UserError.*;
 
 public class JCFUserService implements UserService {
     private final Map<UUID, User> userRepository;
-    private final MessageService messageService;
-    private final ChannelService channelService;
+    private MessageService messageService;
+    private ChannelService channelService;
 
     public JCFUserService() {
         this.userRepository = new HashMap<>();
-        this.messageService = Factory.getMessageService();
-        this.channelService = Factory.getChannelService();
     }
 
+    @Override
+    public void setDependency(MessageService messageService, ChannelService channelService) {
+        this.messageService = messageService;
+        this.channelService = channelService;
+    }
 
     @Override
     public User createUser(String name, String phone, String password) throws IllegalArgumentException {

@@ -3,6 +3,8 @@ package com.sprint.mission.discodeit;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.factory.Factory;
+import com.sprint.mission.discodeit.factory.JCFFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -15,9 +17,14 @@ import java.util.Optional;
 
 public class JavaApplication {
     public static void main(String[] args) {
-        UserService userService = new JCFUserService();
-        MessageService messageService = new JCFMessageService();
-        ChannelService channelService = new JCFChannelService();
+        Factory factory = JCFFactory.getInstance();
+        UserService userService = factory.getUserService();
+        MessageService messageService = factory.getMessageService();
+        ChannelService channelService = factory.getChannelService();
+        userService.setDependency(messageService, channelService);
+        messageService.setDependency(userService, channelService);
+        channelService.setDependency(userService,messageService);
+
 
         System.out.println("<회원 생성하기>");
         User user1 = userService.createUser("김민준", "010-1111-1111", "Abcdefgh12312!");

@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ChannelService {
+    void setDependency(UserService userService, MessageService messageService);
+
     Channel createChannel(String name, User creator);
 
     Optional<Channel> getChannelByName(String name);
