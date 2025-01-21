@@ -1,5 +1,6 @@
-package com.sprint.mission.discodeit.entity;
+package com.sprint.mission.discodeit.domain;
 
+import com.sprint.mission.discodeit.util.ChannelType;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -10,25 +11,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Getter
-public class Message implements Serializable {
+public class Channel implements Serializable {
     private UUID id;
     private Long createdAt;
     private Long updatedAt;
-    private String content;
-    private User writer;
-    private Channel channel;
+    private String name;
+    private String description;
+    private ChannelType channelType;
 
-    public Message(String content, User writer, Channel channel) {
+    public Channel(String name, String description, ChannelType channelType) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = null;
-        this.content = content;
-        this.writer = writer;
-        this.channel = channel;
+        this.name = name;
+        this.description = description;
+        this.channelType = channelType;
     }
 
-    public void update(String content) {
-        this.content = content;
+    public void changeType(ChannelType channelType) {
+        this.channelType = channelType;
+        this.updatedAt = System.currentTimeMillis();
+    }
+
+    public void changeDescription(String description) {
+        this.description = description;
         this.updatedAt = System.currentTimeMillis();
     }
 
@@ -43,16 +49,14 @@ public class Message implements Serializable {
                 ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
                 : "N/A";
 
-        String writerUserName = writer != null ? writer.getName() : "Unknown";
-        String useChannelName = channel != null ? channel.getName() : "Unknown";
-
-        return "Message{" +
+        return "Channel{" +
                 "id=" + id +
                 ", createdAt=" + createdAtFormatted +
                 ", updatedAt=" + updatedAtFormatted +
-                ", content='" + content + '\'' +
-                ", writer='" + writerUserName + '\'' +
-                ", channel='" + useChannelName + '\'' +
+                ", description=" + description +
+                ", name='" + name + '\'' +
+                ", type='" + channelType + '\'' +
                 '}';
     }
+
 }

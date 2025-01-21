@@ -1,14 +1,11 @@
 package com.sprint.mission.discodeit.repository.file;
 
-import com.sprint.mission.discodeit.entity.Channel;
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
-import com.sprint.mission.discodeit.util.FileIOUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,14 +36,14 @@ public class FileChannelRepository implements ChannelRepository {
     }
 
     @Override
-    public Optional<Channel> getByName(String channelName) {
+    public Optional<Channel> findByName(String channelName) {
         return channelMap.values().stream()
                 .filter(channel -> channel.getName().equals(channelName))
                 .findFirst();
     }
 
     @Override
-    public List<Channel> getAll() {
+    public List<Channel> findAll() {
         return channelMap.values().stream()
                 .collect(Collectors.toList());
     }

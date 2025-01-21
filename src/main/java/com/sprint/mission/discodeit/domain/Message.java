@@ -1,6 +1,5 @@
-package com.sprint.mission.discodeit.entity;
+package com.sprint.mission.discodeit.domain;
 
-import com.sprint.mission.discodeit.util.ChannelType;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -8,37 +7,28 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Getter
-public class Channel implements Serializable {
+public class Message implements Serializable {
     private UUID id;
     private Long createdAt;
     private Long updatedAt;
-    private String name;
-    private String description;
-    private ChannelType channelType;
+    private String content;
+    private User writer;
+    private Channel channel;
 
-    public Channel(String name, String description, ChannelType channelType) {
+    public Message(String content, User writer, Channel channel) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = null;
-        this.name = name;
-        this.description = description;
-        this.channelType = channelType;
+        this.content = content;
+        this.writer = writer;
+        this.channel = channel;
     }
 
-    public void changeType(ChannelType channelType) {
-        this.channelType = channelType;
-        this.updatedAt = System.currentTimeMillis();
-    }
-
-    public void changeDescription(String description) {
-        this.description = description;
+    public void update(String content) {
+        this.content = content;
         this.updatedAt = System.currentTimeMillis();
     }
 
@@ -53,14 +43,16 @@ public class Channel implements Serializable {
                 ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
                 : "N/A";
 
-        return "Channel{" +
+        String writerUserName = writer != null ? writer.getName() : "Unknown";
+        String useChannelName = channel != null ? channel.getName() : "Unknown";
+
+        return "Message{" +
                 "id=" + id +
                 ", createdAt=" + createdAtFormatted +
                 ", updatedAt=" + updatedAtFormatted +
-                ", description=" + description +
-                ", name='" + name + '\'' +
-                ", type='" + channelType + '\'' +
+                ", content='" + content + '\'' +
+                ", writer='" + writerUserName + '\'' +
+                ", channel='" + useChannelName + '\'' +
                 '}';
     }
-
 }

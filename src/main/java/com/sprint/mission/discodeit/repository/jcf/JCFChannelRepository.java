@@ -1,7 +1,6 @@
 package com.sprint.mission.discodeit.repository.jcf;
 
-import com.sprint.mission.discodeit.entity.Channel;
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 
 import java.util.*;
@@ -21,14 +20,14 @@ public class JCFChannelRepository implements ChannelRepository {
     }
 
     @Override
-    public Optional<Channel> getByName(String channelName) {
+    public Optional<Channel> findByName(String channelName) {
         return channelMap.values().stream()
                 .filter(channel -> channel.getName().equals(channelName))
                 .findFirst();
     }
 
     @Override
-    public List<Channel> getAll() {
+    public List<Channel> findAll() {
         return channelMap.values().stream()
                 .collect(Collectors.toList());
     }

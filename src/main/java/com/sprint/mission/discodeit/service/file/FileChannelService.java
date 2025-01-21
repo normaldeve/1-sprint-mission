@@ -1,20 +1,15 @@
 package com.sprint.mission.discodeit.service.file;
 
-import com.sprint.mission.discodeit.entity.Channel;
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.error.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
-import com.sprint.mission.discodeit.service.MessageService;
-import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.util.ChannelType;
 import com.sprint.mission.discodeit.util.FileIOUtil;
-import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 

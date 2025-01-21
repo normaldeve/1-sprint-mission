@@ -1,15 +1,13 @@
 package com.sprint.mission.discodeit.service.jcf;
 
-import com.sprint.mission.discodeit.entity.Channel;
-import com.sprint.mission.discodeit.entity.Message;
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.domain.Channel;
+import com.sprint.mission.discodeit.domain.Message;
+import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.error.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -68,7 +66,7 @@ public class JCFMessageService implements MessageService {
     }
 
     @Override
-    public void removeMessageByWriter(User writer, UUID uuid) { // 작성자가 작성한 메시지 삭제하기
+    public void deleteMessageByWriter(User writer, UUID uuid) { // 작성자가 작성한 메시지 삭제하기
         if (!messageRepository.containsKey(uuid)) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
         }

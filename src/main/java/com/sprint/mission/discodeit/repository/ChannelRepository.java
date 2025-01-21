@@ -1,7 +1,6 @@
 package com.sprint.mission.discodeit.repository;
 
-import com.sprint.mission.discodeit.entity.Channel;
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.domain.Channel;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,9 +8,9 @@ import java.util.Optional;
 public interface ChannelRepository {
     Channel save(Channel channel);
 
-    Optional<Channel> getByName(String channelName);
+    Optional<Channel> findByName(String channelName);
 
-    List<Channel> getAll();
+    List<Channel> findAll();
 
     Channel delete(Channel channel);
 }

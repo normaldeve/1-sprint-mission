@@ -1,21 +1,18 @@
 package com.sprint.mission.discodeit.service.file;
 
-import com.sprint.mission.discodeit.entity.Channel;
-import com.sprint.mission.discodeit.entity.Message;
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.domain.Channel;
+import com.sprint.mission.discodeit.domain.Message;
+import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.error.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.util.FileIOUtil;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
@@ -90,7 +87,7 @@ public class FileMessageService implements MessageService {
     }
 
     @Override
-    public void removeMessageByWriter(User writer, UUID uuid) {
+    public void deleteMessageByWriter(User writer, UUID uuid) {
         if (!messages.containsKey(uuid)) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
         }

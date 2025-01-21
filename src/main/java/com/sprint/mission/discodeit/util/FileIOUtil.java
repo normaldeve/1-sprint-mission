@@ -36,7 +36,7 @@ public class FileIOUtil {
     }
 
     //.dat 파일을 읽기 쉬운 Json 파일로 변환하는 메서드
-    public static void convertDatToJson(Path datFilePath, Path jsonFilePath) {
+    public static void convertDSerToJson(Path datFilePath, Path jsonFilePath) {
         Map<UUID, Object> data = loadFromFile(datFilePath);
 
         ObjectMapper objectMapper = new ObjectMapper();

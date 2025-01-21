@@ -1,20 +1,13 @@
 package com.sprint.mission.discodeit;
 
-import com.sprint.mission.discodeit.entity.Channel;
-import com.sprint.mission.discodeit.entity.Message;
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.domain.Channel;
+import com.sprint.mission.discodeit.domain.Message;
+import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.factory.Factory;
 import com.sprint.mission.discodeit.factory.FileFactory;
-import com.sprint.mission.discodeit.factory.JCFFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
-import com.sprint.mission.discodeit.service.file.FileChannelService;
-import com.sprint.mission.discodeit.service.file.FileMessageService;
-import com.sprint.mission.discodeit.service.file.FileUserService;
-import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
-import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
-import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 import com.sprint.mission.discodeit.util.ChannelType;
 import com.sprint.mission.discodeit.util.FileIOUtil;
 
@@ -176,7 +169,7 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<메시지 삭제하기>");
-        messageService.removeMessageByWriter(user2, message2_1.getId());
+        messageService.deleteMessageByWriter(user2, message2_1.getId());
         System.out.println("전체 메시지 조회하기: " + messageService.getMessageByUser(user2));
         System.out.println("채널 삭제하기 : ");
         channelService.deleteChannel(channel1);
@@ -185,9 +178,9 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         if (factory instanceof FileFactory) {
-            FileIOUtil.convertDatToJson(Paths.get("./result/users.ser"), Paths.get("./json/users.json"));
-            FileIOUtil.convertDatToJson(Paths.get("./result/messages.ser"), Paths.get("./json/messages.json"));
-            FileIOUtil.convertDatToJson(Paths.get("./result/channels.ser"), Paths.get("./json/channels.json"));
+            FileIOUtil.convertDSerToJson(Paths.get("./result/users.ser"), Paths.get("./json/users.json"));
+            FileIOUtil.convertDSerToJson(Paths.get("./result/messages.ser"), Paths.get("./json/messages.json"));
+            FileIOUtil.convertDSerToJson(Paths.get("./result/channels.ser"), Paths.get("./json/channels.json"));
         }
     }
 }
