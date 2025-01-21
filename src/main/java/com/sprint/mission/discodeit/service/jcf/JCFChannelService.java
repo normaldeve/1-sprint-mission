@@ -8,22 +8,18 @@ import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Setter
 public class JCFChannelService implements ChannelService {
     private final Map<UUID, Channel> channelRepository;
     private UserService userService;
     private MessageService messageService;
-
-    @Override
-    public void setDependency(UserService userService, MessageService messageService) {
-        this.userService = userService;
-        this.messageService = messageService;
-    }
 
     @Override
     public Channel create(String name, User creator) throws IllegalArgumentException {
@@ -35,6 +31,12 @@ public class JCFChannelService implements ChannelService {
         Channel createChannel = new Channel(name, creator);
         channelRepository.put(createChannel.getId(), createChannel);
         return createChannel;
+    }
+
+    @Override
+    public void setDependency(MessageService messageService, UserService userService) {
+        this.messageService = messageService;
+        this.userService = userService;
     }
 
     @Override
@@ -96,7 +98,7 @@ public class JCFChannelService implements ChannelService {
     public void deleteChannel(Channel channel) { // 채널이 사라지면 해당 채널에 포함된 메시지도 사라진다.
         validateChannel(channel);
 
-        messageService.deleteMessageWithChannel(channel);
+        messageService.deleteMessage(channel);
         channelRepository.remove(channel.getId());
     }
 

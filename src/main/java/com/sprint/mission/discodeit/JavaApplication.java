@@ -5,9 +5,16 @@ import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.factory.Factory;
 import com.sprint.mission.discodeit.factory.FileFactory;
+import com.sprint.mission.discodeit.factory.JCFFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.service.file.FileChannelService;
+import com.sprint.mission.discodeit.service.file.FileMessageService;
+import com.sprint.mission.discodeit.service.file.FileUserService;
+import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
+import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
+import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 import com.sprint.mission.discodeit.util.FileIOUtil;
 
 
@@ -26,8 +33,7 @@ public class JavaApplication {
         ChannelService channelService = factory.getChannelService();
         userService.setDependency(messageService, channelService);
         messageService.setDependency(userService, channelService);
-        channelService.setDependency(userService,messageService);
-
+        channelService.setDependency(messageService, userService);
         try {
             Files.deleteIfExists(Paths.get("./result/users.ser"));
             Files.deleteIfExists(Paths.get("./result/messages.ser"));

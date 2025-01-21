@@ -11,9 +11,9 @@ import java.util.HashMap;
 
 public class JCFFactory implements Factory{
     private static JCFFactory instance;
-    private final UserService userService;
-    private final MessageService messageService;
-    private final ChannelService channelService;
+    private final JCFUserService userService;
+    private final JCFMessageService messageService;
+    private final JCFChannelService channelService;
 
     private JCFFactory() {
         this.userService = new JCFUserService(new HashMap<>());

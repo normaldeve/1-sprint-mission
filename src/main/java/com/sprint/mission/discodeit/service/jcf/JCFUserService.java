@@ -9,6 +9,7 @@ import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.util.ValidPass;
 import com.sprint.mission.discodeit.util.ValidPhone;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.*;
 

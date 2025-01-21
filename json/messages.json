@@ -1,26 +1,26 @@
 {
-  "45e96717-a043-427d-ae32-eb528284b923" : {
-    "id" : "45e96717-a043-427d-ae32-eb528284b923",
-    "createdAt" : 1737439317886,
+  "07e11227-2424-4213-8dc9-e91fd20e1e48" : {
+    "id" : "07e11227-2424-4213-8dc9-e91fd20e1e48",
+    "createdAt" : 1737442168179,
     "updatedAt" : null,
-    "content" : "열심히 하겠습니다!!",
+    "content" : "열심히 공부하는 코테 준비 채널입니다!",
     "writer" : {
-      "id" : "a5420cc0-aab7-4d7d-9d6c-db18f739886d",
-      "createdAt" : 1737439317741,
+      "id" : "16a06eb1-560a-48ee-ae26-86b4cec545e1",
+      "createdAt" : 1737442167977,
       "updatedAt" : null,
-      "name" : "박지훈",
-      "phone" : "010-3333-1111",
+      "name" : "이채은",
+      "phone" : "010-4444-1111",
       "password" : "Abcdefgh12312!!"
     },
     "channel" : {
-      "id" : "c92d7b49-170e-46f8-99b5-a8fa89c2b229",
-      "createdAt" : 1737439317883,
+      "id" : "35137c5a-6b42-4ddd-a815-97e11ca60f56",
+      "createdAt" : 1737442168176,
       "updatedAt" : null,
       "members" : [ ],
       "name" : "코테 준비",
       "creator" : {
-        "id" : "a5420cc0-aab7-4d7d-9d6c-db18f739886d",
-        "createdAt" : 1737439317741,
+        "id" : "b7e1baec-0cca-4b7a-a4ee-340db01ca4c1",
+        "createdAt" : 1737442167974,
         "updatedAt" : null,
         "name" : "박지훈",
         "phone" : "010-3333-1111",
@@ -28,28 +28,28 @@
       }
     }
   },
-  "b3e6fd88-1319-432b-89a7-37870fa71b15" : {
-    "id" : "b3e6fd88-1319-432b-89a7-37870fa71b15",
-    "createdAt" : 1737439317884,
+  "6601315d-bb57-4163-8d27-41f0697242a8" : {
+    "id" : "6601315d-bb57-4163-8d27-41f0697242a8",
+    "createdAt" : 1737442168184,
     "updatedAt" : null,
-    "content" : "열심히 공부하는 코테 준비 채널입니다!",
+    "content" : "열심히 하겠습니다!!",
     "writer" : {
-      "id" : "73d05f70-f613-425d-ab28-aa4be458410c",
-      "createdAt" : 1737439317746,
+      "id" : "b7e1baec-0cca-4b7a-a4ee-340db01ca4c1",
+      "createdAt" : 1737442167974,
       "updatedAt" : null,
-      "name" : "이채은",
-      "phone" : "010-4444-1111",
+      "name" : "박지훈",
+      "phone" : "010-3333-1111",
       "password" : "Abcdefgh12312!!"
     },
     "channel" : {
-      "id" : "c92d7b49-170e-46f8-99b5-a8fa89c2b229",
-      "createdAt" : 1737439317883,
+      "id" : "35137c5a-6b42-4ddd-a815-97e11ca60f56",
+      "createdAt" : 1737442168176,
       "updatedAt" : null,
       "members" : [ ],
       "name" : "코테 준비",
       "creator" : {
-        "id" : "a5420cc0-aab7-4d7d-9d6c-db18f739886d",
-        "createdAt" : 1737439317741,
+        "id" : "b7e1baec-0cca-4b7a-a4ee-340db01ca4c1",
+        "createdAt" : 1737442167974,
         "updatedAt" : null,
         "name" : "박지훈",
         "phone" : "010-3333-1111",

@@ -8,6 +8,7 @@ import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.util.ValidPass;
 import com.sprint.mission.discodeit.util.ValidPhone;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 
+@Setter
 public class FileUserService implements UserService {
     private final Path filePath;
     private MessageService messageService;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChannelService {
-    void setDependency(UserService userService, MessageService messageService);
+    void setDependency(MessageService messageService, UserService userService);
 
     Channel create(String name, User creator);
 

@@ -9,21 +9,17 @@ import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Setter
 public class JCFMessageService implements MessageService {
     private final Map<UUID, Message> messageRepository;
     private UserService userService;
     private ChannelService channelService;
-
-    @Override
-    public void setDependency(UserService userService, ChannelService channelService) {
-        this.userService = userService;
-        this.channelService = channelService;
-    }
 
     @Override
     public Message createMessage(String content, User writer, Channel channel) throws IllegalArgumentException {
@@ -38,6 +34,12 @@ public class JCFMessageService implements MessageService {
         Message message = new Message(content, writer, channel);
         messageRepository.put(message.getId(), message);
         return message;
+    }
+
+    @Override
+    public void setDependency(UserService userService, ChannelService channelService) {
+        this.userService = userService;
+        this.channelService = channelService;
     }
 
     // 메시지를 보낸 회원이 메시지 조회하기
@@ -79,7 +81,7 @@ public class JCFMessageService implements MessageService {
 
 
     @Override
-    public void deleteMessageWithChannel(Channel channel) {
+    public void deleteMessage(Channel channel) {
         getMessageByChannel(channel).stream()
                 .map(Message::getId)
                 .forEach(messageRepository::remove);

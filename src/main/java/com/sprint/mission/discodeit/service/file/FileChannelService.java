@@ -7,6 +7,7 @@ import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
+@Setter
 public class FileChannelService implements ChannelService {
     private final Path filePath;
     private UserService userService;
@@ -36,7 +38,7 @@ public class FileChannelService implements ChannelService {
     }
 
     @Override
-    public void setDependency(UserService userService, MessageService messageService) {
+    public void setDependency(MessageService messageService, UserService userService) {
         this.userService = userService;
         this.messageService = messageService;
     }
@@ -126,7 +128,7 @@ public class FileChannelService implements ChannelService {
         Map<UUID, Channel> channels = loadFromFile(filePath);
         validateChannel(channel);
 
-        messageService.deleteMessageWithChannel(channel);
+        messageService.deleteMessage(channel);
         channels.remove(channel.getId());
 
         saveToFile(channels, filePath);

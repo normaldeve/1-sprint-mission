@@ -9,6 +9,7 @@ import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.util.FileIOUtil;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +19,7 @@ import java.util.*;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
+@Setter
 public class FileMessageService implements MessageService {
     private final Path filePath;
     private UserService userService;
@@ -34,7 +36,6 @@ public class FileMessageService implements MessageService {
             }
         }
     }
-
     @Override
     public void setDependency(UserService userService, ChannelService channelService) {
         this.userService = userService;
@@ -108,7 +109,7 @@ public class FileMessageService implements MessageService {
     }
 
     @Override
-    public void deleteMessageWithChannel(Channel channel) {
+    public void deleteMessage(Channel channel) {
         Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
         getMessageByChannel(channel).stream()
                 .map(Message::getId)

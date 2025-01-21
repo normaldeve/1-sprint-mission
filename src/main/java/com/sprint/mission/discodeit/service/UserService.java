@@ -19,5 +19,4 @@ public interface UserService {
     User updateUserPassword(User user, String newPass);
 
     void deleteUser(User removeUser);
-
 }
