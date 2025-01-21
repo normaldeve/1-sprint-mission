@@ -66,7 +66,7 @@ public class FileChannelService implements ChannelService {
     }
 
     @Override
-    public boolean channelExist(String name) {
+    public boolean channelExists(String name) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
         return channels.values().stream()
                 .anyMatch(user -> user.getName().equals(name));
@@ -80,7 +80,7 @@ public class FileChannelService implements ChannelService {
     }
 
     @Override
-    public List<Channel> getChannelsByUserId(User user) {
+    public List<Channel> getChannelsByUser(User user) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
         return channels.values().stream()
                 .filter(channel -> channel.getMembers().stream()

@@ -17,7 +17,7 @@ public interface ChannelService {
 
     List<Channel> getAllChannel();
 
-    List<Channel> getChannelsByUserId(User user);
+    List<Channel> getChannelsByUser(User user);
 
     Channel addUserToChannel(Channel channel, User newUser);
 

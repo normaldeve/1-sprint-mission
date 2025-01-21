@@ -4,14 +4,15 @@ import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.MessageRepository;
-import com.sprint.mission.discodeit.util.FileIOUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
+import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileMessageRepository implements MessageRepository {
@@ -28,35 +29,45 @@ public class FileMessageRepository implements MessageRepository {
                 throw new RuntimeException("메시지 파일을 초기화 하던 중에 문제가 발생했습니다", e);
             }
         }
-        this.messageMap = FileIOUtil.loadFromFile(this.filePath);
+        this.messageMap = loadFromFile(this.filePath);
     }
 
     @Override
     public Message save(Message message) {
         messageMap.put(message.getId(), message);
-        FileIOUtil.saveToFile(messageMap, filePath);
+        saveToFile(messageMap, filePath);
         return message;
     }
 
     @Override
     public Optional<Message> findById(UUID uuid) {
-
+        return Optional.of(messageMap.get(uuid));
     }
 
     @Override
     public List<Message> findByUser(User user) {
+        return messageMap.values().stream()
+                .filter(message -> message.getWriter().getPhone().equals(user.getPhone()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Message> findByChannel(Channel channel) {
+        return messageMap.values().stream()
+                .filter(message -> message.getChannel().getName().equals(channel.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Message> findAll() {
+        return messageMap.values().stream()
+                .collect(Collectors.toList());
     }
 
     @Override
     public Message delete(Message message) {
-        return null;
+        messageMap.remove(message.getId());
+        saveToFile(messageMap, filePath);
+        return message;
     }
 }

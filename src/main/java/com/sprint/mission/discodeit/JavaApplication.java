@@ -184,7 +184,7 @@ public class JavaApplication {
         System.out.println("<전체 채널 조회하기>");
         System.out.println(channelService.getAllChannel());
         System.out.println("<하나의 회원이 포함되어 있는 채널 조회>");
-        List<Channel> channelsByUserId = channelService.getChannelsByUserId(channelCreator);
+        List<Channel> channelsByUserId = channelService.getChannelsByUser(channelCreator);
         System.out.println("김자바 회원이 포함되어 있는 채널 조회 : " + channelsByUserId);
         System.out.println();
         System.out.println("===============================================================================");

@@ -60,7 +60,7 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public List<Channel> getChannelsByUserId(User user) {
+    public List<Channel> getChannelsByUser(User user) {
         return channelRepository.values().stream()
                 .filter(channel -> channel.getMembers().stream()
                         .anyMatch(member -> Objects.equals(member.getPhone(), user.getPhone()))
