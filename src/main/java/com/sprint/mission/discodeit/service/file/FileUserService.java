@@ -19,14 +19,11 @@ import java.util.stream.Collectors;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 
-@Setter
 public class FileUserService implements UserService {
-    private final Path filePath;
-    private MessageService messageService;
-    private ChannelService channelService;
+    private final Path filePath = Path.of("./result/users.ser");
+    private final Map<UUID, User> users = loadFromFile(filePath);
 
-    public FileUserService(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public FileUserService() {
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);
@@ -38,14 +35,7 @@ public class FileUserService implements UserService {
     }
 
     @Override
-    public void setDependency(MessageService messageService, ChannelService channelService) {
-        this.messageService = messageService;
-        this.channelService = channelService;
-    }
-
-    @Override
     public User createUser(String name, String phone, String password) {
-        Map<UUID, User> users = loadFromFile(filePath);
         if (!ValidPass.isValidPassword(password)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
@@ -66,26 +56,13 @@ public class FileUserService implements UserService {
 
     @Override
     public Optional<User> getUserByPhone(String phone) {
-        Map<UUID, User> users = loadFromFile(filePath);
         return users.values().stream()
                 .filter(user -> user.getPhone().equals(phone))
                 .findFirst();
     }
 
     @Override
-    public boolean userExists(String phone) {
-        Map<UUID, User> users = loadFromFile(filePath);
-        for (User user : users.values()) {
-            if (user.getPhone().equals(phone)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
     public List<User> getAllUser() {
-        Map<UUID, User> users = loadFromFile(filePath);
         return users.values()
                 .stream()
                 .collect(Collectors.toList());
@@ -94,7 +71,6 @@ public class FileUserService implements UserService {
 
     @Override
     public User updateUserPassword(User updateUser, String newPass) {
-        Map<UUID, User> users = loadFromFile(filePath);
         if (!userExists(updateUser.getPhone())) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }
@@ -106,13 +82,15 @@ public class FileUserService implements UserService {
 
     @Override
     public void deleteUser(User removeUser) {
-        Map<UUID, User> users = loadFromFile(filePath);
         if (!userExists(removeUser.getPhone())) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }
-        channelService.getAllChannel().stream()
-                .forEach(channel -> channel.getMembers()
-                        .removeIf(user -> user.getId().equals(removeUser.getId())));
         users.remove(removeUser.getId());
+    }
+
+    private boolean userExists(String phone) {
+        return users.values()
+                .stream()
+                .anyMatch(user -> user.getPhone().equals(phone));
     }
 }

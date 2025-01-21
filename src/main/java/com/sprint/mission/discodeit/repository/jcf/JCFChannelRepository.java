@@ -28,15 +28,6 @@ public class JCFChannelRepository implements ChannelRepository {
     }
 
     @Override
-    public List<Channel> getByUser(User user) {
-        return channelMap.values().stream()
-                .filter(channel -> channel.getMembers().stream()
-                        .anyMatch(member -> Objects.equals(member.getPhone(), user.getPhone()))
-                )
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Channel> getAll() {
         return channelMap.values().stream()
                 .collect(Collectors.toList());

@@ -1,58 +1,42 @@
 {
-  "ae463e42-d1ca-491c-94b0-494ae06281ea" : {
-    "id" : "ae463e42-d1ca-491c-94b0-494ae06281ea",
-    "createdAt" : 1737442168191,
+  "b99b8715-7d50-4e2f-acd6-7ab2e7d75ff4" : {
+    "id" : "b99b8715-7d50-4e2f-acd6-7ab2e7d75ff4",
+    "createdAt" : 1737448411096,
     "updatedAt" : null,
     "name" : "김자바",
     "phone" : "010-8739-9343",
     "password" : "Abcdefgh!"
   },
-  "9fc4ae20-f124-412a-9dba-21965d09c71c" : {
-    "id" : "9fc4ae20-f124-412a-9dba-21965d09c71c",
-    "createdAt" : 1737442167969,
+  "09a11f19-0e42-4509-94c7-64d6f5bdd5f4" : {
+    "id" : "09a11f19-0e42-4509-94c7-64d6f5bdd5f4",
+    "createdAt" : 1737448411020,
     "updatedAt" : null,
     "name" : "이서윤",
     "phone" : "010-2222-1111",
     "password" : "Abcdefgh12312!!"
   },
-  "b7e1baec-0cca-4b7a-a4ee-340db01ca4c1" : {
-    "id" : "b7e1baec-0cca-4b7a-a4ee-340db01ca4c1",
-    "createdAt" : 1737442167974,
+  "ea066c85-cb7f-43b2-b266-eca3d46bc4de" : {
+    "id" : "ea066c85-cb7f-43b2-b266-eca3d46bc4de",
+    "createdAt" : 1737448411024,
     "updatedAt" : null,
     "name" : "박지훈",
     "phone" : "010-3333-1111",
     "password" : "Abcdefgh12312!!"
   },
-  "16a06eb1-560a-48ee-ae26-86b4cec545e1" : {
-    "id" : "16a06eb1-560a-48ee-ae26-86b4cec545e1",
-    "createdAt" : 1737442167977,
+  "db53c2b5-90dd-4f65-a607-3638f05f1d80" : {
+    "id" : "db53c2b5-90dd-4f65-a607-3638f05f1d80",
+    "createdAt" : 1737448411026,
     "updatedAt" : null,
     "name" : "이채은",
     "phone" : "010-4444-1111",
     "password" : "Abcdefgh12312!!"
   },
-  "0b950654-21fb-4a11-9cf7-a197abd37bbc" : {
-    "id" : "0b950654-21fb-4a11-9cf7-a197abd37bbc",
-    "createdAt" : 1737442167990,
+  "b0d79561-1b2c-4cfb-9dc5-0affe9501154" : {
+    "id" : "b0d79561-1b2c-4cfb-9dc5-0affe9501154",
+    "createdAt" : 1737448411026,
     "updatedAt" : null,
     "name" : "정다은",
     "phone" : "010-5555-1111",
     "password" : "Abcdefgh12312!!"
-  },
-  "3935b48c-fbff-4de8-947e-3695b2c8b968" : {
-    "id" : "3935b48c-fbff-4de8-947e-3695b2c8b968",
-    "createdAt" : 1737442167937,
-    "updatedAt" : 1737442168077,
-    "name" : "김민준",
-    "phone" : "010-1111-1111",
-    "password" : "Zdefdasdf!@"
-  },
-  "c361661c-8625-490f-b10c-084aa21b22b2" : {
-    "id" : "c361661c-8625-490f-b10c-084aa21b22b2",
-    "createdAt" : 1737442168201,
-    "updatedAt" : null,
-    "name" : "홍길동",
-    "phone" : "010-1234-4321",
-    "password" : "Abcdefgh!"
   }
 }

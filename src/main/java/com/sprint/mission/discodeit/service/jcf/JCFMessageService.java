@@ -14,12 +14,16 @@ import lombok.Setter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
-@Setter
 public class JCFMessageService implements MessageService {
     private final Map<UUID, Message> messageRepository;
-    private UserService userService;
-    private ChannelService channelService;
+    private final UserService userService;
+    private final ChannelService channelService;
+
+    public JCFMessageService(UserService userService, ChannelService channelService) {
+        this.messageRepository = new HashMap<>();
+        this.userService = userService;
+        this.channelService = channelService;
+    }
 
     @Override
     public Message createMessage(String content, User writer, Channel channel) throws IllegalArgumentException {
@@ -34,12 +38,6 @@ public class JCFMessageService implements MessageService {
         Message message = new Message(content, writer, channel);
         messageRepository.put(message.getId(), message);
         return message;
-    }
-
-    @Override
-    public void setDependency(UserService userService, ChannelService channelService) {
-        this.userService = userService;
-        this.channelService = channelService;
     }
 
     // 메시지를 보낸 회원이 메시지 조회하기
@@ -81,7 +79,7 @@ public class JCFMessageService implements MessageService {
 
 
     @Override
-    public void deleteMessage(Channel channel) {
+    public void deleteMessageByChannel(Channel channel) {
         getMessageByChannel(channel).stream()
                 .map(Message::getId)
                 .forEach(messageRepository::remove);

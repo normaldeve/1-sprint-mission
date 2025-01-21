@@ -7,6 +7,7 @@ import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.util.ChannelType;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -14,29 +15,23 @@ import lombok.Setter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
-@Setter
 public class JCFChannelService implements ChannelService {
     private final Map<UUID, Channel> channelRepository;
-    private UserService userService;
-    private MessageService messageService;
+
+    public JCFChannelService() {
+        this.channelRepository = new HashMap<>();
+    }
 
     @Override
-    public Channel create(String name, User creator) throws IllegalArgumentException {
+    public Channel create(String name, String description, ChannelType channelType) throws IllegalArgumentException {
         if (channelRepository.values().stream()
                 .anyMatch(user -> user.getName().equals(name))) {
             throw new ServiceException(ErrorCode.DUPLICATE_CHANNEL);
         }
 
-        Channel createChannel = new Channel(name, creator);
+        Channel createChannel = new Channel(name, description, channelType);
         channelRepository.put(createChannel.getId(), createChannel);
         return createChannel;
-    }
-
-    @Override
-    public void setDependency(MessageService messageService, UserService userService) {
-        this.messageService = messageService;
-        this.userService = userService;
     }
 
     @Override
@@ -50,61 +45,29 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public boolean channelExists(String name) {
-        return channelRepository.values().stream()
-                .anyMatch(user -> user.getName().equals(name));
-    }
-
-    @Override
     public List<Channel> getAllChannel() {
         return channelRepository.values().stream()
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Channel> getChannelsByUser(User user) {
-        return channelRepository.values().stream()
-                .filter(channel -> channel.getMembers().stream()
-                        .anyMatch(member -> Objects.equals(member.getPhone(), user.getPhone()))
-                )
-                .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public Channel addUserToChannel(Channel channel, User newUser) {//새로운 유저가 채널에 들어갈때
+    public Channel updateType(Channel channel, ChannelType channelType) {
         validateChannel(channel);
-        validateUser(newUser);
-        channel.addUser(newUser);
+        channel.changeType(channelType);
         return channel;
     }
 
     @Override
-    public Channel addManyUserToChannel(Channel channel, List<User> users) {
+    public Channel updateDescription(Channel channel, String description) {
         validateChannel(channel);
-        channel.addManyUser(users);
-        return channel;
-    }
-
-    @Override
-    public Channel removeUserToChannel(Channel channel, User removeUser) {
-        validateChannel(channel);
-        validateUser(removeUser);
-        channel.removeUser(removeUser);
+        channel.changeDescription(description);
         return channel;
     }
 
     @Override
     public void deleteChannel(Channel channel) { // 채널이 사라지면 해당 채널에 포함된 메시지도 사라진다.
         validateChannel(channel);
-
-        messageService.deleteMessage(channel);
         channelRepository.remove(channel.getId());
-    }
-
-    private void validateUser(User user) {
-        User findUser = userService.getUserByPhone(user.getPhone())
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
     }
 
     private void validateChannel(Channel channel) {

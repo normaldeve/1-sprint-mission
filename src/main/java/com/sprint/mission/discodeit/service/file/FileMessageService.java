@@ -9,6 +9,7 @@ import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.util.FileIOUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.io.IOException;
@@ -19,14 +20,13 @@ import java.util.*;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
-@Setter
 public class FileMessageService implements MessageService {
-    private final Path filePath;
-    private UserService userService;
-    private ChannelService channelService;
+    private final Path filePath = Path.of("./result/messages.ser");
+    Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
+    private final UserService userService;
+    private final ChannelService channelService;
 
-    public FileMessageService(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public FileMessageService(UserService userService, ChannelService channelService) {
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);
@@ -35,16 +35,12 @@ public class FileMessageService implements MessageService {
                 throw new RuntimeException("메시지 파일을 초기화 하던 중에 문제가 발생했습니다", e);
             }
         }
-    }
-    @Override
-    public void setDependency(UserService userService, ChannelService channelService) {
         this.userService = userService;
         this.channelService = channelService;
     }
 
     @Override
     public Message createMessage(String content, User writer, Channel channel) {
-        Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
         if (content.isEmpty()) {
             throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }
@@ -60,8 +56,6 @@ public class FileMessageService implements MessageService {
 
     @Override
     public List<Message> getMessageByUser(User writer) {
-        Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
-
         validateUser(writer);
 
         List<Message> list = new ArrayList<>();
@@ -75,7 +69,6 @@ public class FileMessageService implements MessageService {
 
     @Override
     public List<Message> getMessageByChannel(Channel channel) {
-        Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
         List<Message> list = new ArrayList<>();
         for (Message message : messages.values()) {
             if (message.getChannel().getName().equals(channel.getName())) {
@@ -87,7 +80,6 @@ public class FileMessageService implements MessageService {
 
     @Override
     public Message updateMessageContent(Message updateMessage, String newContent) {
-        Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
         if (newContent.isEmpty()) {
             throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }
@@ -99,7 +91,6 @@ public class FileMessageService implements MessageService {
 
     @Override
     public void removeMessageByWriter(User writer, UUID uuid) {
-        Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
         if (!messages.containsKey(uuid)) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
         }
@@ -109,8 +100,7 @@ public class FileMessageService implements MessageService {
     }
 
     @Override
-    public void deleteMessage(Channel channel) {
-        Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
+    public void deleteMessageByChannel(Channel channel) {
         getMessageByChannel(channel).stream()
                 .map(Message::getId)
                 .forEach(messages::remove);

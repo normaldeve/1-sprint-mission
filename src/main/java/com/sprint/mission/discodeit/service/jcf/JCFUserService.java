@@ -13,16 +13,11 @@ import lombok.Setter;
 
 import java.util.*;
 
-@RequiredArgsConstructor
 public class JCFUserService implements UserService {
     private final Map<UUID, User> userRepository;
-    private MessageService messageService;
-    private ChannelService channelService;
 
-    @Override
-    public void setDependency(MessageService messageService, ChannelService channelService) {
-        this.messageService = messageService;
-        this.channelService = channelService;
+    public JCFUserService() {
+        this.userRepository = new HashMap<>();
     }
 
     @Override
@@ -71,14 +66,10 @@ public class JCFUserService implements UserService {
         if (!userExists(removeUser.getPhone())) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }
-        channelService.getAllChannel().stream()
-                .forEach(channel -> channel.getMembers()
-                        .removeIf(user -> user.getId().equals(removeUser.getId())));
         userRepository.remove(removeUser.getId());
     }
 
-    @Override
-    public boolean userExists(String phone) {
+    private boolean userExists(String phone) {
         return userRepository.values()
                 .stream()
                 .anyMatch(user -> user.getPhone().equals(phone));

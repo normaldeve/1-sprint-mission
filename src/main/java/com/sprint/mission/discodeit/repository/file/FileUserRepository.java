@@ -6,7 +6,6 @@ import com.sprint.mission.discodeit.repository.UserRepository;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,11 +13,10 @@ import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileUserRepository implements UserRepository {
-    private final Path filePath;
+    private final Path filePath = Path.of("./result/users.ser");
     private final Map<UUID, User> userMap;
 
-    public FileUserRepository(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public FileUserRepository() {
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);

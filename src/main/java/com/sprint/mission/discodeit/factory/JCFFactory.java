@@ -16,9 +16,9 @@ public class JCFFactory implements Factory{
     private final JCFChannelService channelService;
 
     private JCFFactory() {
-        this.userService = new JCFUserService(new HashMap<>());
-        this.messageService = new JCFMessageService(new HashMap<>());
-        this.channelService = new JCFChannelService(new HashMap<>());
+        this.userService = new JCFUserService();
+        this.channelService = new JCFChannelService();
+        this.messageService = new JCFMessageService(userService, channelService);
     }
 
     public static JCFFactory getInstance() {

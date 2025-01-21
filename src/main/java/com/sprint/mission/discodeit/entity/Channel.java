@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
+import com.sprint.mission.discodeit.util.ChannelType;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -18,31 +19,26 @@ public class Channel implements Serializable {
     private UUID id;
     private Long createdAt;
     private Long updatedAt;
-    private List<User> members;
     private String name;
-    private User creator;
+    private String description;
+    private ChannelType channelType;
 
-    public Channel(String name, User creator) {
+    public Channel(String name, String description, ChannelType channelType) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = null;
-        this.members = new ArrayList<>();
         this.name = name;
-        this.creator = creator;
+        this.description = description;
+        this.channelType = channelType;
     }
 
-    public void addUser(User user) {
-        this.members.add(user);
+    public void changeType(ChannelType channelType) {
+        this.channelType = channelType;
         this.updatedAt = System.currentTimeMillis();
     }
 
-    public void addManyUser(List<User> users) {
-        this.members.addAll(users);
-        this.updatedAt = System.currentTimeMillis();
-    }
-
-    public void removeUser(User user) {
-        members.remove(user);
+    public void changeDescription(String description) {
+        this.description = description;
         this.updatedAt = System.currentTimeMillis();
     }
 
@@ -57,19 +53,13 @@ public class Channel implements Serializable {
                 ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
                 : "N/A";
 
-        String creatorName = creator != null ? creator.getName() : "Unknown";
-
-        String membersNames = (members != null && !members.isEmpty())
-                ? members.stream().map(User::getName).collect(Collectors.joining(", "))
-                : "No members";
-
         return "Channel{" +
                 "id=" + id +
                 ", createdAt=" + createdAtFormatted +
                 ", updatedAt=" + updatedAtFormatted +
-                ", members=" + membersNames +
+                ", description=" + description +
                 ", name='" + name + '\'' +
-                ", creator='" + creatorName + '\'' +
+                ", type='" + channelType + '\'' +
                 '}';
     }
 

@@ -1,109 +1,18 @@
 {
-  "35137c5a-6b42-4ddd-a815-97e11ca60f56" : {
-    "id" : "35137c5a-6b42-4ddd-a815-97e11ca60f56",
-    "createdAt" : 1737442168176,
-    "updatedAt" : 1737442168210,
-    "members" : [ {
-      "id" : "9fc4ae20-f124-412a-9dba-21965d09c71c",
-      "createdAt" : 1737442167969,
-      "updatedAt" : null,
-      "name" : "이서윤",
-      "phone" : "010-2222-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "16a06eb1-560a-48ee-ae26-86b4cec545e1",
-      "createdAt" : 1737442167977,
-      "updatedAt" : null,
-      "name" : "이채은",
-      "phone" : "010-4444-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "0b950654-21fb-4a11-9cf7-a197abd37bbc",
-      "createdAt" : 1737442167990,
-      "updatedAt" : null,
-      "name" : "정다은",
-      "phone" : "010-5555-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "3935b48c-fbff-4de8-947e-3695b2c8b968",
-      "createdAt" : 1737442167937,
-      "updatedAt" : 1737442168077,
-      "name" : "김민준",
-      "phone" : "010-1111-1111",
-      "password" : "Zdefdasdf!@"
-    }, {
-      "id" : "c361661c-8625-490f-b10c-084aa21b22b2",
-      "createdAt" : 1737442168201,
-      "updatedAt" : null,
-      "name" : "홍길동",
-      "phone" : "010-1234-4321",
-      "password" : "Abcdefgh!"
-    } ],
+  "f0f161db-8761-4ead-903e-aad4c4678f3d" : {
+    "id" : "f0f161db-8761-4ead-903e-aad4c4678f3d",
+    "createdAt" : 1737448411089,
+    "updatedAt" : null,
     "name" : "코테 준비",
-    "creator" : {
-      "id" : "b7e1baec-0cca-4b7a-a4ee-340db01ca4c1",
-      "createdAt" : 1737442167974,
-      "updatedAt" : null,
-      "name" : "박지훈",
-      "phone" : "010-3333-1111",
-      "password" : "Abcdefgh12312!!"
-    }
+    "description" : "코테 준비용 채널입니다.",
+    "channelType" : "VOICE"
   },
-  "707e444d-1744-4516-a818-0fc27cad2c28" : {
-    "id" : "707e444d-1744-4516-a818-0fc27cad2c28",
-    "createdAt" : 1737442168192,
-    "updatedAt" : 1737442168195,
-    "members" : [ {
-      "id" : "ae463e42-d1ca-491c-94b0-494ae06281ea",
-      "createdAt" : 1737442168191,
-      "updatedAt" : null,
-      "name" : "김자바",
-      "phone" : "010-8739-9343",
-      "password" : "Abcdefgh!"
-    }, {
-      "id" : "9fc4ae20-f124-412a-9dba-21965d09c71c",
-      "createdAt" : 1737442167969,
-      "updatedAt" : null,
-      "name" : "이서윤",
-      "phone" : "010-2222-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "b7e1baec-0cca-4b7a-a4ee-340db01ca4c1",
-      "createdAt" : 1737442167974,
-      "updatedAt" : null,
-      "name" : "박지훈",
-      "phone" : "010-3333-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "16a06eb1-560a-48ee-ae26-86b4cec545e1",
-      "createdAt" : 1737442167977,
-      "updatedAt" : null,
-      "name" : "이채은",
-      "phone" : "010-4444-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "0b950654-21fb-4a11-9cf7-a197abd37bbc",
-      "createdAt" : 1737442167990,
-      "updatedAt" : null,
-      "name" : "정다은",
-      "phone" : "010-5555-1111",
-      "password" : "Abcdefgh12312!!"
-    }, {
-      "id" : "3935b48c-fbff-4de8-947e-3695b2c8b968",
-      "createdAt" : 1737442167937,
-      "updatedAt" : 1737442168077,
-      "name" : "김민준",
-      "phone" : "010-1111-1111",
-      "password" : "Zdefdasdf!@"
-    } ],
+  "5f3b3809-eebb-49c5-8f9f-1d6ee558712b" : {
+    "id" : "5f3b3809-eebb-49c5-8f9f-1d6ee558712b",
+    "createdAt" : 1737448411097,
+    "updatedAt" : null,
     "name" : "자바 공부합시다",
-    "creator" : {
-      "id" : "ae463e42-d1ca-491c-94b0-494ae06281ea",
-      "createdAt" : 1737442168191,
-      "updatedAt" : null,
-      "name" : "김자바",
-      "phone" : "010-8739-9343",
-      "password" : "Abcdefgh!"
-    }
+    "description" : "자바 공부용 채널입니다.",
+    "channelType" : "TEXT"
   }
 }

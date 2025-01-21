@@ -7,6 +7,8 @@ import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.util.ChannelType;
+import com.sprint.mission.discodeit.util.FileIOUtil;
 import lombok.Setter;
 
 import java.io.IOException;
@@ -19,14 +21,11 @@ import java.util.stream.Collectors;
 import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
-@Setter
 public class FileChannelService implements ChannelService {
-    private final Path filePath;
-    private UserService userService;
-    private MessageService messageService;
+    private final Path filePath = Path.of("./result/channels.ser");
+    private final Map<UUID, Channel> channels = loadFromFile(filePath);
 
-    public FileChannelService(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public FileChannelService() {
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);
@@ -38,19 +37,12 @@ public class FileChannelService implements ChannelService {
     }
 
     @Override
-    public void setDependency(MessageService messageService, UserService userService) {
-        this.userService = userService;
-        this.messageService = messageService;
-    }
-
-    @Override
-    public Channel create(String name, User creator) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
+    public Channel create(String name, String description, ChannelType channelType) {
         if (channels.values().stream()
                 .anyMatch(user -> user.getName().equals(name))) {
             throw new ServiceException(ErrorCode.DUPLICATE_CHANNEL);
         }
-        Channel createChannel = new Channel(name, creator);
+        Channel createChannel = new Channel(name, description, channelType);
         channels.put(createChannel.getId(), createChannel);
         saveToFile(channels, filePath);
         return createChannel;
@@ -58,7 +50,6 @@ public class FileChannelService implements ChannelService {
 
     @Override
     public Optional<Channel> getChannelByName(String name) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
         for (Channel channel : channels.values()) {
             if (channel.getName().equals(name)) {
                 return Optional.of(channel);
@@ -68,75 +59,35 @@ public class FileChannelService implements ChannelService {
     }
 
     @Override
-    public boolean channelExists(String name) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
-        return channels.values().stream()
-                .anyMatch(user -> user.getName().equals(name));
-    }
-
-    @Override
     public List<Channel> getAllChannel() {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
         return channels.values().stream()
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Channel> getChannelsByUser(User user) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
-        return channels.values().stream()
-                .filter(channel -> channel.getMembers().stream()
-                        .anyMatch(member -> Objects.equals(member.getPhone(), user.getPhone()))
-                )
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Channel addUserToChannel(Channel channel, User newUser) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
+    public Channel updateType(Channel channel, ChannelType channelType) {
         validateChannel(channel);
-        validateUser(newUser);
-        channel.addUser(newUser);
+        channel.changeType(channelType);
         channels.put(channel.getId(), channel);
-        saveToFile(channels, filePath);
+        FileIOUtil.saveToFile(channels, filePath);
         return channel;
     }
 
     @Override
-    public Channel addManyUserToChannel(Channel channel, List<User> users) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
+    public Channel updateDescription(Channel channel, String description) {
         validateChannel(channel);
-        channel.addManyUser(users);
+        channel.changeDescription(description);
         channels.put(channel.getId(), channel);
-        saveToFile(channels, filePath);
+        FileIOUtil.saveToFile(channels, filePath);
         return channel;
     }
 
-    @Override
-    public Channel removeUserToChannel(Channel channel, User removeUser) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
-        validateChannel(channel);
-        validateUser(removeUser);
-        channel.removeUser(removeUser);
-        channels.put(channel.getId(), channel);
-        saveToFile(channels, filePath);
-        return channel;
-    }
 
     @Override
     public void deleteChannel(Channel channel) {
-        Map<UUID, Channel> channels = loadFromFile(filePath);
         validateChannel(channel);
-
-        messageService.deleteMessage(channel);
         channels.remove(channel.getId());
-
         saveToFile(channels, filePath);
-    }
-
-    private void validateUser(User user) {
-        User findUser = userService.getUserByPhone(user.getPhone())
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
     }
 
     private void validateChannel(Channel channel) {

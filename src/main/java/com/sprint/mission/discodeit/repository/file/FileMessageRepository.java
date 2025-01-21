@@ -16,11 +16,10 @@ import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileMessageRepository implements MessageRepository {
-    private final Path filePath;
+    private final Path filePath = Path.of("./result/messages.ser");
     private final Map<UUID, Message> messageMap;
 
-    public FileMessageRepository(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public FileMessageRepository() {
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);

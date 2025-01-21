@@ -11,8 +11,6 @@ public interface ChannelRepository {
 
     Optional<Channel> getByName(String channelName);
 
-    List<Channel> getByUser(User user);
-
     List<Channel> getAll();
 
     Channel delete(Channel channel);

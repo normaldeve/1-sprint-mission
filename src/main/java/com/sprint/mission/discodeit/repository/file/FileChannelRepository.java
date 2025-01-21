@@ -16,11 +16,10 @@ import static com.sprint.mission.discodeit.util.FileIOUtil.loadFromFile;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileChannelRepository implements ChannelRepository {
-    private final Path filePath;
+    private final Path filePath = Path.of("./result/channels.ser");
     private final Map<UUID, Channel> channelMap;
 
-    public FileChannelRepository(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public FileChannelRepository() {
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);
@@ -44,15 +43,6 @@ public class FileChannelRepository implements ChannelRepository {
         return channelMap.values().stream()
                 .filter(channel -> channel.getName().equals(channelName))
                 .findFirst();
-    }
-
-    @Override
-    public List<Channel> getByUser(User user) {
-        return channelMap.values().stream()
-                .filter(channel -> channel.getMembers().stream()
-                        .anyMatch(member -> Objects.equals(member.getPhone(), user.getPhone()))
-                )
-                .collect(Collectors.toList());
     }
 
     @Override

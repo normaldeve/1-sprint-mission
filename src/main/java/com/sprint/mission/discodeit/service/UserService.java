@@ -6,13 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    void setDependency(MessageService messageService, ChannelService channelService);
-
     User createUser(String name, String phone, String password);
 
     Optional<User> getUserByPhone(String phone);
-
-    boolean userExists(String phone);
 
     List<User> getAllUser();
 
