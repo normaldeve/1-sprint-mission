@@ -14,9 +14,9 @@ public class FileFactory implements Factory{
     private final ChannelService channelService;
 
     private FileFactory() {
-        this.userService = new FileUserService("./result/users.dat");
-        this.messageService = new FileMessageService("./result/messages.dat");
-        this.channelService = new FileChannelService("./result/channels.dat");
+        this.userService = new FileUserService("./result/users.ser");
+        this.messageService = new FileMessageService("./result/messages.ser");
+        this.channelService = new FileChannelService("./result/channels.ser");
     }
 
     public static FileFactory getInstance() {

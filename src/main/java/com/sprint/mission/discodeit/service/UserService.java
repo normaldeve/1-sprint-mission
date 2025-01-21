@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserService {
     void setDependency(MessageService messageService, ChannelService channelService);
 
-    User create(String name, String phone, String password);
+    User createUser(String name, String phone, String password);
 
     Optional<User> getUserByPhone(String phone);
 
