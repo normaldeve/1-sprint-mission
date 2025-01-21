@@ -1,5 +1,7 @@
 package com.sprint.mission.discodeit.entity;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -8,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
 public class User implements Serializable {
     private UUID id;
     private Long createdAt;
@@ -23,30 +26,6 @@ public class User implements Serializable {
         this.name = name;
         this.phone = phone;
         this.password = password;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public Long getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void update(String password) {

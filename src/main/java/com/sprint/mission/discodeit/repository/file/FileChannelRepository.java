@@ -2,9 +2,9 @@ package com.sprint.mission.discodeit.repository.file;
 
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.error.ErrorCode;
+import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
-import com.sprint.mission.discodeit.service.MessageService;
-import com.sprint.mission.discodeit.service.UserService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.sprint.mission.discodeit.error.ChannelError.DUPLICATE_NAME;
-import static com.sprint.mission.discodeit.error.UserError.DUPLICATE_PHONE;
 import static com.sprint.mission.discodeit.util.FileIOUtil.loadFromFile;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
@@ -38,7 +36,7 @@ public class FileChannelRepository implements ChannelRepository {
         Map<UUID, Channel> channels = loadFromFile(filePath);
         if (channels.values().stream()
                 .anyMatch(user -> user.getName().equals(name))) {
-            throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
+            throw new ServiceException(ErrorCode.DUPLICATE_CHANNEL);
         }
 
         Channel createChannel = new Channel(name, creator);

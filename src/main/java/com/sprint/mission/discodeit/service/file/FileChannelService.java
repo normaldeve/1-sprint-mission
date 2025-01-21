@@ -2,6 +2,8 @@ package com.sprint.mission.discodeit.service.file;
 
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.error.ErrorCode;
+import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -15,9 +17,6 @@ import java.util.stream.Collectors;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
-
-import static com.sprint.mission.discodeit.error.ChannelError.*;
-import static com.sprint.mission.discodeit.error.UserError.CANNOT_FOUND_USER;
 
 public class FileChannelService implements ChannelService {
     private final Path filePath;
@@ -47,7 +46,7 @@ public class FileChannelService implements ChannelService {
         Map<UUID, Channel> channels = loadFromFile(filePath);
         if (channels.values().stream()
                 .anyMatch(user -> user.getName().equals(name))) {
-            throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
+            throw new ServiceException(ErrorCode.DUPLICATE_CHANNEL);
         }
         Channel createChannel = new Channel(name, creator);
         channels.put(createChannel.getId(), createChannel);
@@ -93,12 +92,8 @@ public class FileChannelService implements ChannelService {
     @Override
     public Channel addUserToChannel(Channel channel, User newUser) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
-        if (!channelExist(channel.getName())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
-        }
-        if (!userService.userExists(newUser.getPhone())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
-        }
+        validateChannel(channel);
+        validateUser(newUser);
         channel.addUser(newUser);
         channels.put(channel.getId(), channel);
         saveToFile(channels, filePath);
@@ -108,9 +103,7 @@ public class FileChannelService implements ChannelService {
     @Override
     public Channel addManyUserToChannel(Channel channel, List<User> users) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
-        if (!channelExist(channel.getName())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
-        }
+        validateChannel(channel);
         channel.addManyUser(users);
         channels.put(channel.getId(), channel);
         saveToFile(channels, filePath);
@@ -120,13 +113,8 @@ public class FileChannelService implements ChannelService {
     @Override
     public Channel removeUserToChannel(Channel channel, User removeUser) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
-        if (!channelExist(channel.getName())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
-        }
-
-        if (!userService.userExists(removeUser.getPhone())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
-        }
+        validateChannel(channel);
+        validateUser(removeUser);
         channel.removeUser(removeUser);
         channels.put(channel.getId(), channel);
         saveToFile(channels, filePath);
@@ -136,13 +124,21 @@ public class FileChannelService implements ChannelService {
     @Override
     public void deleteChannel(Channel channel) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
-        if (!channelExist(channel.getName())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
-        }
+        validateChannel(channel);
 
         messageService.deleteMessageWithChannel(channel);
         channels.remove(channel.getId());
 
         saveToFile(channels, filePath);
+    }
+
+    private void validateUser(User user) {
+        User findUser = userService.getUserByPhone(user.getPhone())
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+    }
+
+    private void validateChannel(Channel channel) {
+        Channel findChannel = getChannelByName(channel.getName())
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
     }
 }

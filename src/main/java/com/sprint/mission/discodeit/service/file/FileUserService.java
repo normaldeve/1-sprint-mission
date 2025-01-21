@@ -1,6 +1,8 @@
 package com.sprint.mission.discodeit.service.file;
 
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.error.ErrorCode;
+import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -14,7 +16,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.sprint.mission.discodeit.error.UserError.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 
 public class FileUserService implements UserService {
@@ -44,15 +45,15 @@ public class FileUserService implements UserService {
     public User createUser(String name, String phone, String password) {
         Map<UUID, User> users = loadFromFile(filePath);
         if (!ValidPass.isValidPassword(password)) {
-            throw new IllegalArgumentException(INVALID_PASSWORD.getMessage());
+            throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
 
         if (!ValidPhone.isValidPhone(phone)) {
-            throw new IllegalArgumentException(INVALID_PHONE.getMessage());
+            throw new ServiceException(ErrorCode.INVALID_WRITER);
         }
         if (users.values().stream()
                 .anyMatch(user -> user.getPhone().equals(phone))) {
-            throw new IllegalArgumentException(DUPLICATE_PHONE.getMessage());
+            throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }
 
         User createUser = new User(name, phone, password);
@@ -93,7 +94,7 @@ public class FileUserService implements UserService {
     public User updateUserPassword(User updateUser, String newPass) {
         Map<UUID, User> users = loadFromFile(filePath);
         if (!userExists(updateUser.getPhone())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
+            throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }
         updateUser.update(newPass);
         users.put(updateUser.getId(), updateUser);
@@ -105,7 +106,7 @@ public class FileUserService implements UserService {
     public void deleteUser(User removeUser) {
         Map<UUID, User> users = loadFromFile(filePath);
         if (!userExists(removeUser.getPhone())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
+            throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }
         channelService.getAllChannel().stream()
                 .forEach(channel -> channel.getMembers()

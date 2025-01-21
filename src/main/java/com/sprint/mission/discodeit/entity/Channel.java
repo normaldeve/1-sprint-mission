@@ -1,5 +1,7 @@
 package com.sprint.mission.discodeit.entity;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Getter
 public class Channel implements Serializable {
     private UUID id;
     private Long createdAt;
@@ -26,30 +29,6 @@ public class Channel implements Serializable {
         this.members = new ArrayList<>();
         this.name = name;
         this.creator = creator;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public Long getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public List<User> getMembers() {
-        return members;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User getCreator() {
-        return creator;
     }
 
     public void addUser(User user) {

@@ -3,25 +3,20 @@ package com.sprint.mission.discodeit.service.jcf;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.error.ErrorCode;
+import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import lombok.RequiredArgsConstructor;
 
 import java.util.*;
 
-import static com.sprint.mission.discodeit.error.ChannelError.CANNOT_FOUND_CHANNEL;
-import static com.sprint.mission.discodeit.error.MessageError.*;
-import static com.sprint.mission.discodeit.error.UserError.CANNOT_FOUND_USER;
-
-
+@RequiredArgsConstructor
 public class JCFMessageService implements MessageService {
     private final Map<UUID, Message> messageRepository;
     private UserService userService;
     private ChannelService channelService;
-
-    public JCFMessageService() {
-        this.messageRepository = new HashMap<>();
-    }
 
     @Override
     public void setDependency(UserService userService, ChannelService channelService) {
@@ -32,16 +27,12 @@ public class JCFMessageService implements MessageService {
     @Override
     public Message createMessage(String content, User writer, Channel channel) throws IllegalArgumentException {
         if (content.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
+            throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }
 
-        if (!userService.userExists(writer.getPhone())) { // 해당 작성자가 존재하는가
-            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
-        }
+        validateUser(writer);
 
-        if (!channelService.channelExist(channel.getName())) { // 해당 채널이 존재하는가?
-            throw new IllegalArgumentException(CANNOT_FOUND_CHANNEL.getMessage());
-        }
+        validateChannel(channel);
 
         Message message = new Message(content, writer, channel);
         messageRepository.put(message.getId(), message);
@@ -51,9 +42,7 @@ public class JCFMessageService implements MessageService {
     // 메시지를 보낸 회원이 메시지 조회하기
     @Override
     public List<Message> getMessageByUser(User writer) {
-        if (!userService.userExists(writer.getPhone())) {
-            throw new IllegalArgumentException(CANNOT_FOUND_USER.getMessage());
-        }
+        validateUser(writer);
         List<Message> messages = new ArrayList<>();
         for (Message message : messageRepository.values()) {
             if (message.getWriter().getPhone().equals(writer.getPhone())) {
@@ -78,7 +67,7 @@ public class JCFMessageService implements MessageService {
     @Override
     public Message updateMessageContent(Message findMessage, String newContent) {
         if (newContent.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_CONTENT.getMessage());
+            throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }
         findMessage.update(newContent);
         return findMessage;
@@ -87,12 +76,10 @@ public class JCFMessageService implements MessageService {
     @Override
     public void removeMessageByWriter(User writer, UUID uuid) { // 작성자가 작성한 메시지 삭제하기
         if (!messageRepository.containsKey(uuid)) {
-            throw new IllegalArgumentException(CANNOT_FOUND_MESSAGE.getMessage());
+            throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
         }
+        validateUser(writer);
         Message findMessage = messageRepository.get(uuid);
-        if (!findMessage.getWriter().getId().equals(writer.getId())) {
-            throw new IllegalArgumentException(INVALID_WRITER.getMessage());
-        }
         messageRepository.remove(uuid);
     }
 
@@ -102,5 +89,15 @@ public class JCFMessageService implements MessageService {
         getMessageByChannel(channel).stream()
                 .map(Message::getId)
                 .forEach(messageRepository::remove);
+    }
+
+    private void validateUser(User user) {
+        User findUser = userService.getUserByPhone(user.getPhone())
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+    }
+
+    private void validateChannel(Channel channel) {
+        Channel findChannel = channelService.getChannelByName(channel.getName())
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
     }
 }

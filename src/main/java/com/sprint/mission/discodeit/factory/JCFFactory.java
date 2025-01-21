@@ -7,6 +7,8 @@ import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
 import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
+import java.util.HashMap;
+
 public class JCFFactory implements Factory{
     private static JCFFactory instance;
     private final UserService userService;
@@ -14,9 +16,9 @@ public class JCFFactory implements Factory{
     private final ChannelService channelService;
 
     private JCFFactory() {
-        this.userService = new JCFUserService();
-        this.messageService = new JCFMessageService();
-        this.channelService = new JCFChannelService();
+        this.userService = new JCFUserService(new HashMap<>());
+        this.messageService = new JCFMessageService(new HashMap<>());
+        this.channelService = new JCFChannelService(new HashMap<>());
     }
 
     public static JCFFactory getInstance() {
