@@ -42,7 +42,7 @@ public class FileChannelService implements ChannelService {
     }
 
     @Override
-    public Channel createChannel(String name, User creator) {
+    public Channel create(String name, User creator) {
         Map<UUID, Channel> channels = loadFromFile(filePath);
         if (channels.values().stream()
                 .anyMatch(user -> user.getName().equals(name))) {

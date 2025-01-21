@@ -12,5 +12,5 @@ public interface UserRepository {
 
     List<User> findAll();
 
-    void delete(User user);
+    User delete(User user);
 }

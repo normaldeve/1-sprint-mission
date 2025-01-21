@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface MessageService {
     void setDependency(UserService userService, ChannelService channelService);
 
-    Message createMessage(String content, User writer, Channel channel);
+    Message create(String content, User writer, Channel channel);
 
     List<Message> getMessageByUser(User writer);
 

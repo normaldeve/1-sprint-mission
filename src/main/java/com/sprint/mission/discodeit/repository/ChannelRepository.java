@@ -15,5 +15,5 @@ public interface ChannelRepository {
 
     List<Channel> getAll();
 
-    void delete(Channel channel);
+    Channel delete(Channel channel);
 }

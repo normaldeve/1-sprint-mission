@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.error.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
+import com.sprint.mission.discodeit.util.FileIOUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +20,7 @@ import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileChannelRepository implements ChannelRepository {
     private final Path filePath;
+    private final Map<UUID, Channel> channelMap;
 
     public FileChannelRepository(String filePath) {
         this.filePath = Paths.get(filePath);
@@ -30,6 +32,7 @@ public class FileChannelRepository implements ChannelRepository {
                 throw new RuntimeException("채널 파일을 초기화 하던 중에 문제가 발생했습니다", e);
             }
         }
+        this.channelMap = FileIOUtil.loadFromFile(this.filePath);
     }
     @Override
     public Channel create(String name, User creator) {

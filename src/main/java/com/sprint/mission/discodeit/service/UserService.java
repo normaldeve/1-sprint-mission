@@ -4,12 +4,11 @@ import com.sprint.mission.discodeit.entity.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface UserService {
     void setDependency(MessageService messageService, ChannelService channelService);
 
-    User createUser(String name, String phone, String password);
+    User create(String name, String phone, String password);
 
     Optional<User> getUserByPhone(String phone);
 

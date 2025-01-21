@@ -42,7 +42,7 @@ public class FileUserService implements UserService {
     }
 
     @Override
-    public User createUser(String name, String phone, String password) {
+    public User create(String name, String phone, String password) {
         Map<UUID, User> users = loadFromFile(filePath);
         if (!ValidPass.isValidPassword(password)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);

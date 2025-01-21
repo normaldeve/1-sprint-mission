@@ -33,7 +33,8 @@ public class JCFUserRepository implements UserRepository {
     }
 
     @Override
-    public void delete(User user) {
+    public User delete(User user) {
         userMap.remove(user.getId());
+        return user;
     }
 }

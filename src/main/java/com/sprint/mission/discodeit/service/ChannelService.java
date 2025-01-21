@@ -5,12 +5,11 @@ import com.sprint.mission.discodeit.entity.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ChannelService {
     void setDependency(UserService userService, MessageService messageService);
 
-    Channel createChannel(String name, User creator);
+    Channel create(String name, User creator);
 
     Optional<Channel> getChannelByName(String name);
 

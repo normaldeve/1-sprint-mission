@@ -26,7 +26,7 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public Channel createChannel(String name, User creator) throws IllegalArgumentException {
+    public Channel create(String name, User creator) throws IllegalArgumentException {
         if (channelRepository.values().stream()
                 .anyMatch(user -> user.getName().equals(name))) {
             throw new ServiceException(ErrorCode.DUPLICATE_CHANNEL);

@@ -26,7 +26,7 @@ public class JCFMessageService implements MessageService {
     }
 
     @Override
-    public Message createMessage(String content, User writer, Channel channel) throws IllegalArgumentException {
+    public Message create(String content, User writer, Channel channel) throws IllegalArgumentException {
         if (content.isEmpty()) {
             throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }

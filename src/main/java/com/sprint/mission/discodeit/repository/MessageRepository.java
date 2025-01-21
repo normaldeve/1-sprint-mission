@@ -19,5 +19,5 @@ public interface MessageRepository {
 
     List<Message> findAll();
 
-    void delete(Message message);
+    Message delete(Message message);
 }

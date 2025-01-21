@@ -3,8 +3,6 @@ package com.sprint.mission.discodeit.repository.file;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.error.ErrorCode;
-import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.util.FileIOUtil;
 
@@ -12,14 +10,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileMessageRepository implements MessageRepository {
     private final Path filePath;
+    private final Map<UUID, Message> messageMap;
 
     public FileMessageRepository(String filePath) {
         this.filePath = Paths.get(filePath);
@@ -31,17 +28,35 @@ public class FileMessageRepository implements MessageRepository {
                 throw new RuntimeException("메시지 파일을 초기화 하던 중에 문제가 발생했습니다", e);
             }
         }
+        this.messageMap = FileIOUtil.loadFromFile(this.filePath);
     }
-    @Override
-    public Message create(String content, User writer, Channel channel) {
-        Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
-        if (content.isEmpty()) {
-            throw new ServiceException(ErrorCode.EMPTY_CONTENT);
-        }
 
-        Message message = new Message(content, writer, channel);
-        messages.put(message.getId(), message);
-        FileIOUtil.saveToFile(messages, filePath);
+    @Override
+    public Message save(Message message) {
+        messageMap.put(message.getId(), message);
+        FileIOUtil.saveToFile(messageMap, filePath);
         return message;
+    }
+
+    @Override
+    public Optional<Message> findById(UUID uuid) {
+
+    }
+
+    @Override
+    public List<Message> findByUser(User user) {
+    }
+
+    @Override
+    public List<Message> findByChannel(Channel channel) {
+    }
+
+    @Override
+    public List<Message> findAll() {
+    }
+
+    @Override
+    public Message delete(Message message) {
+        return null;
     }
 }

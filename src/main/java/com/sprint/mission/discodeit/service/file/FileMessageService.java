@@ -42,7 +42,7 @@ public class FileMessageService implements MessageService {
     }
 
     @Override
-    public Message createMessage(String content, User writer, Channel channel) {
+    public Message create(String content, User writer, Channel channel) {
         Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
         if (content.isEmpty()) {
             throw new ServiceException(ErrorCode.EMPTY_CONTENT);

@@ -39,27 +39,27 @@ public class JavaApplication {
 
 
         System.out.println("<회원 생성하기>");
-        User user1 = userService.createUser("김민준", "010-1111-1111", "Abcdefgh12312!");
-        User user2 = userService.createUser("이서윤", "010-2222-1111", "Abcdefgh12312!!");
-        User user3 = userService.createUser("박지훈", "010-3333-1111", "Abcdefgh12312!!");
-        User user4 = userService.createUser("이채은", "010-4444-1111", "Abcdefgh12312!!");
-        User user5 = userService.createUser("정다은", "010-5555-1111", "Abcdefgh12312!!");
+        User user1 = userService.create("김민준", "010-1111-1111", "Abcdefgh12312!");
+        User user2 = userService.create("이서윤", "010-2222-1111", "Abcdefgh12312!!");
+        User user3 = userService.create("박지훈", "010-3333-1111", "Abcdefgh12312!!");
+        User user4 = userService.create("이채은", "010-4444-1111", "Abcdefgh12312!!");
+        User user5 = userService.create("정다은", "010-5555-1111", "Abcdefgh12312!!");
         System.out.println(" - 회원 생성 시 발생할 수 있는 문제");
         System.out.print("    - 1. 동일한 전화번호로 회원 가입을 진행 : ");
         try {
-            User user1_1 = userService.createUser("홍지훈", "010-1111-1111", "Abcdefgh!");
+            User user1_1 = userService.create("홍지훈", "010-1111-1111", "Abcdefgh!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.print("    - 2. 올바르지 않은 전화번호 형식 : ");
         try {
-            User unCorrectPhone = userService.createUser("김철수", "010-12345-12345", "Abcdefgh!");
+            User unCorrectPhone = userService.create("김철수", "010-12345-12345", "Abcdefgh!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.print("    - 3. 올바르지 않은 비밀번호 형식 : ");
         try {
-            User unCorrectPass = userService.createUser("김영미", "010-1234-4321", "1234");
+            User unCorrectPass = userService.create("김영미", "010-1234-4321", "1234");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -97,29 +97,29 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<메시지를 보낼 수 있는 테스트 채널을 생성함>");
-        Channel testChannel = channelService.createChannel("테스트1", user4);
-        Channel testChannel2 = channelService.createChannel("테스트2", user5);
+        Channel testChannel = channelService.create("테스트1", user4);
+        Channel testChannel2 = channelService.create("테스트2", user5);
         testChannel.addManyUser(userService.getAllUser());
         testChannel2.addManyUser(userService.getAllUser());
         System.out.println(testChannel);
         System.out.println("<메시지 생성하기>");
-        Message message2_1 = messageService.createMessage("안녕하세요 지훈님 저는 이서윤이라고 합니다.", user2, testChannel);
-        Message message2_2 = messageService.createMessage("저는 요즘 스프링에 대해 공부하고 있습니다^^", user2, testChannel);
-        Message message3_1 = messageService.createMessage("테스트 확인 용 메시지입니다!", user3, testChannel2);
+        Message message2_1 = messageService.create("안녕하세요 지훈님 저는 이서윤이라고 합니다.", user2, testChannel);
+        Message message2_2 = messageService.create("저는 요즘 스프링에 대해 공부하고 있습니다^^", user2, testChannel);
+        Message message3_1 = messageService.create("테스트 확인 용 메시지입니다!", user3, testChannel2);
         System.out.println(message2_1);
-        Message message3 = messageService.createMessage("네 만나서 반갑습니다!", user3, testChannel);
+        Message message3 = messageService.create("네 만나서 반갑습니다!", user3, testChannel);
         System.out.println(message3);
         System.out.println(" - 메시지 생성 시 발생할 수 있는 문제");
         System.out.print("    - 1. 내용이 작성되지 않은 메시지 : ");
         try {
-            Message message4 = messageService.createMessage("", user4, testChannel);
+            Message message4 = messageService.create("", user4, testChannel);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.print("    - 2. 채널에 등록되지 않은 회원이 메시지를 보낼 때 : ");
         User unRegistUser1 = new User("미등록회원", "010-1919-9191", "Abcdefgh!");
         try {
-            Message unregistMessage = messageService.createMessage("안녕하세요 만나서 반갑습니다", unRegistUser1, testChannel);
+            Message unregistMessage = messageService.create("안녕하세요 만나서 반갑습니다", unRegistUser1, testChannel);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -158,21 +158,21 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<채널 생성하기>");
-        Channel channel1 = channelService.createChannel("코드잇 디스코드", user2);
-        Channel channel2 = channelService.createChannel("코테 준비", user3);
-        messageService.createMessage("열심히 공부하는 코테 준비 채널입니다!", user4, channel2);
-        messageService.createMessage("열심히 하겠습니다!!", user3, channel2);
+        Channel channel1 = channelService.create("코드잇 디스코드", user2);
+        Channel channel2 = channelService.create("코테 준비", user3);
+        messageService.create("열심히 공부하는 코테 준비 채널입니다!", user4, channel2);
+        messageService.create("열심히 하겠습니다!!", user3, channel2);
         channelService.addManyUserToChannel(channel1, userService.getAllUser());
         channelService.addManyUserToChannel(channel2, userService.getAllUser());
-        User channelCreator = userService.createUser("김자바", "010-8739-9343", "Abcdefgh!");
-        Channel javaChannel = channelService.createChannel("자바 공부합시다", channelCreator);
+        User channelCreator = userService.create("김자바", "010-8739-9343", "Abcdefgh!");
+        Channel javaChannel = channelService.create("자바 공부합시다", channelCreator);
         channelService.addManyUserToChannel(javaChannel, userService.getAllUser());
         System.out.println(channel1);
         System.out.println(channel2);
         System.out.println(" - 채널 생성 시 발생할 수 있는 문제");
         System.out.print("     - 기존 채널과 동일한 이름으로 채널을 개설하는 경우 : ");
         try {
-            Channel sameChannel = channelService.createChannel("코드잇 디스코드", user4);
+            Channel sameChannel = channelService.create("코드잇 디스코드", user4);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -190,7 +190,7 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<채널에 새로운 멤버 추가하기>");
-        User newUser = userService.createUser("홍길동", "010-1234-4321", "Abcdefgh!");
+        User newUser = userService.create("홍길동", "010-1234-4321", "Abcdefgh!");
         Channel updateChannel2 = channelService.addUserToChannel(channel2, newUser);
         System.out.println("코테 준비 채널에 신규 회원 추가 : " + updateChannel2);
         System.out.println("<채널에 있는 멤버 채널 나가기>");
@@ -201,9 +201,9 @@ public class JavaApplication {
         System.out.println();
         System.out.println("<심화> - 채널을 삭제하면 해당 채널에 있던 메시지가 조회되면 안된다.");
         System.out.println("코드잇 채널에 메시지를 여러 개 생성");
-        messageService.createMessage("안녕하세요 처음 인사드립니다.", user3, channel1);
-        messageService.createMessage("안녕하세요 만나서 반갑습니다.", user4, channel1);
-        messageService.createMessage("오 디스코드는 처음 들어와보네요!.", user5, channel1);
+        messageService.create("안녕하세요 처음 인사드립니다.", user3, channel1);
+        messageService.create("안녕하세요 만나서 반갑습니다.", user4, channel1);
+        messageService.create("오 디스코드는 처음 들어와보네요!.", user5, channel1);
         System.out.println("코드잇 채널 삭제 이전 해당 채널에 존재하는 메시지 출력해보기");
         System.out.println(messageService.getMessageByChannel(channel1));
         System.out.println("코드잇 채널 삭제 이후 해당 채널에 존재하는 메시지 출력해보기");
