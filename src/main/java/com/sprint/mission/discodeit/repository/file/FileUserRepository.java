@@ -1,20 +1,16 @@
 package com.sprint.mission.discodeit.repository.file;
 
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.error.ErrorCode;
-import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.UserRepository;
-import com.sprint.mission.discodeit.util.ValidPass;
-import com.sprint.mission.discodeit.util.ValidPhone;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import static com.sprint.mission.discodeit.util.FileIOUtil.loadFromFile;
+import java.util.List;
+import java.util.Optional;
+
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileUserRepository implements UserRepository {
@@ -33,23 +29,22 @@ public class FileUserRepository implements UserRepository {
     }
 
     @Override
-    public User create(String name, String phone, String password) {
-        Map<UUID, User> users = loadFromFile(filePath);
-        if (!ValidPass.isValidPassword(password)) {
-            throw new ServiceException(ErrorCode.INVALID_PASSWORD);
-        }
+    public User save(User user) {
+        return null;
+    }
 
-        if (!ValidPhone.isValidPhone(phone)) {
-            throw new ServiceException(ErrorCode.INVALID_WRITER);
-        }
-        if (users.values().stream()
-                .anyMatch(user -> user.getPhone().equals(phone))) {
-            throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
-        }
+    @Override
+    public Optional<User> findByPhone(String phone) {
+        return Optional.empty();
+    }
 
-        User createUser = new User(name, phone, password);
-        users.put(createUser.getId(), createUser);
-        saveToFile(users, filePath);
-        return createUser;
+    @Override
+    public List<User> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public void delete(User user) {
+
     }
 }
