@@ -19,6 +19,5 @@ public enum ErrorCode {
     INVALID_WRITER("작성자가 올바르지 않습니다"),
     INVALID_PHONE("올바르지 않은 핸드폰 번호 형식 입니다.");
 
-
     private final String description;
     }

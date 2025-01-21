@@ -11,6 +11,7 @@ import com.sprint.mission.discodeit.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class JCFMessageService implements MessageService {
@@ -43,24 +44,17 @@ public class JCFMessageService implements MessageService {
     @Override
     public List<Message> getMessageByUser(User writer) {
         validateUser(writer);
-        List<Message> messages = new ArrayList<>();
-        for (Message message : messageRepository.values()) {
-            if (message.getWriter().getPhone().equals(writer.getPhone())) {
-                messages.add(message);
-            }
-        }
-        return messages;
+        return messageRepository.values().stream()
+                .filter(message -> message.getWriter().getPhone().equals(writer.getPhone()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Message> getMessageByChannel(Channel channel) {
         List<Message> messages = new ArrayList<>();
-        for (Message message : messageRepository.values()) {
-            if (message.getChannel().getName().equals(channel.getName())) {
-                messages.add(message);
-            }
-        }
-        return messages;
+        return messageRepository.values().stream()
+                .filter(message -> message.getChannel().getName().equals(channel.getName()))
+                .collect(Collectors.toList());
     }
 
 

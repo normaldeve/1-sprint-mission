@@ -3,6 +3,17 @@ package com.sprint.mission.discodeit.repository;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.User;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface ChannelRepository {
-    Channel create(String name, User creator);
+    Channel save(Channel channel);
+
+    Optional<Channel> getByName(String channelName);
+
+    List<Channel> getByUser(User user);
+
+    List<Channel> getAll();
+
+    void delete(Channel channel);
 }
