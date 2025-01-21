@@ -48,7 +48,7 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public boolean channelExist(String name) {
+    public boolean channelExists(String name) {
         return channelRepository.values().stream()
                 .anyMatch(user -> user.getName().equals(name));
     }
