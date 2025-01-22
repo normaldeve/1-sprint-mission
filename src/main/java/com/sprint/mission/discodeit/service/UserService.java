@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User createUser(String name, String phone, String password);
+    User create(String name, String phone, String password);
 
     Optional<User> getUserByPhone(String phone);
 
@@ -14,5 +14,5 @@ public interface UserService {
 
     User updateUserPassword(User user, String newPass);
 
-    void deleteUser(User removeUser);
+    void delete(User removeUser);
 }

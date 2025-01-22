@@ -7,21 +7,21 @@ import com.sprint.mission.discodeit.service.file.FileChannelService;
 import com.sprint.mission.discodeit.service.file.FileMessageService;
 import com.sprint.mission.discodeit.service.file.FileUserService;
 
-public class FileFactory implements Factory{
-    private static FileFactory instance;
+public class FileServiceFactory implements ServiceFactory{
+    private static FileServiceFactory instance;
     private final UserService userService;
     private final MessageService messageService;
     private final ChannelService channelService;
 
-    private FileFactory() {
+    private FileServiceFactory() {
         this.userService = new FileUserService();
         this.channelService = new FileChannelService();
         this.messageService = new FileMessageService(userService, channelService);
     }
 
-    public static FileFactory getInstance() {
+    public static FileServiceFactory getInstance() {
         if (instance == null) {
-            instance = new FileFactory();
+            instance = new FileServiceFactory();
         }
         return instance;
     }

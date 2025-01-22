@@ -53,7 +53,7 @@ public class BasicChannelService implements ChannelService  {
     }
 
     @Override
-    public void deleteChannel(Channel removeChannel) {
+    public void delete(Channel removeChannel) {
         existChannel(removeChannel);
         channelRepository.delete(removeChannel);
     }

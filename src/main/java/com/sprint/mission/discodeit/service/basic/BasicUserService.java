@@ -20,7 +20,7 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public User createUser(String name, String phone, String password) {
+    public User create(String name, String phone, String password) {
         if (!ValidPass.isValidPassword(password)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
@@ -56,7 +56,7 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public void deleteUser(User removeUser) {
+    public void delete(User removeUser) {
         existUser(removeUser);
         userRepository.delete(removeUser);
     }

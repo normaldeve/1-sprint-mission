@@ -31,7 +31,7 @@ public class FileUserService implements UserService {
     }
 
     @Override
-    public User createUser(String name, String phone, String password) {
+    public User create(String name, String phone, String password) {
         if (!ValidPass.isValidPassword(password)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
@@ -77,7 +77,7 @@ public class FileUserService implements UserService {
     }
 
     @Override
-    public void deleteUser(User removeUser) {
+    public void delete(User removeUser) {
         if (!userExists(removeUser.getPhone())) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }

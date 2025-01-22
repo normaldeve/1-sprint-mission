@@ -1,42 +1,10 @@
 {
-  "b99b8715-7d50-4e2f-acd6-7ab2e7d75ff4" : {
-    "id" : "b99b8715-7d50-4e2f-acd6-7ab2e7d75ff4",
-    "createdAt" : 1737448411096,
+  "791d3e94-7902-41cd-a66d-8e2021dd74b0" : {
+    "id" : "791d3e94-7902-41cd-a66d-8e2021dd74b0",
+    "createdAt" : 1737512438619,
     "updatedAt" : null,
-    "name" : "김자바",
-    "phone" : "010-8739-9343",
-    "password" : "Abcdefgh!"
-  },
-  "09a11f19-0e42-4509-94c7-64d6f5bdd5f4" : {
-    "id" : "09a11f19-0e42-4509-94c7-64d6f5bdd5f4",
-    "createdAt" : 1737448411020,
-    "updatedAt" : null,
-    "name" : "이서윤",
-    "phone" : "010-2222-1111",
-    "password" : "Abcdefgh12312!!"
-  },
-  "ea066c85-cb7f-43b2-b266-eca3d46bc4de" : {
-    "id" : "ea066c85-cb7f-43b2-b266-eca3d46bc4de",
-    "createdAt" : 1737448411024,
-    "updatedAt" : null,
-    "name" : "박지훈",
-    "phone" : "010-3333-1111",
-    "password" : "Abcdefgh12312!!"
-  },
-  "db53c2b5-90dd-4f65-a607-3638f05f1d80" : {
-    "id" : "db53c2b5-90dd-4f65-a607-3638f05f1d80",
-    "createdAt" : 1737448411026,
-    "updatedAt" : null,
-    "name" : "이채은",
-    "phone" : "010-4444-1111",
-    "password" : "Abcdefgh12312!!"
-  },
-  "b0d79561-1b2c-4cfb-9dc5-0affe9501154" : {
-    "id" : "b0d79561-1b2c-4cfb-9dc5-0affe9501154",
-    "createdAt" : 1737448411026,
-    "updatedAt" : null,
-    "name" : "정다은",
-    "phone" : "010-5555-1111",
-    "password" : "Abcdefgh12312!!"
+    "name" : "woody",
+    "phone" : "010-9218-1188",
+    "password" : "Abcdefgh12312!"
   }
 }

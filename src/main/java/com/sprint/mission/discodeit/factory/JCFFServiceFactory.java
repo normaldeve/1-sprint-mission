@@ -9,21 +9,21 @@ import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
 import java.util.HashMap;
 
-public class JCFFactory implements Factory{
-    private static JCFFactory instance;
+public class JCFFServiceFactory implements ServiceFactory{
+    private static JCFFServiceFactory instance;
     private final JCFUserService userService;
     private final JCFMessageService messageService;
     private final JCFChannelService channelService;
 
-    private JCFFactory() {
+    private JCFFServiceFactory() {
         this.userService = new JCFUserService();
         this.channelService = new JCFChannelService();
         this.messageService = new JCFMessageService(userService, channelService);
     }
 
-    public static JCFFactory getInstance() {
+    public static JCFFServiceFactory getInstance() {
         if (instance == null) {
-            instance = new JCFFactory();
+            instance = new JCFFServiceFactory();
         }
         return instance;
     }

@@ -1,18 +1,10 @@
 {
-  "f0f161db-8761-4ead-903e-aad4c4678f3d" : {
-    "id" : "f0f161db-8761-4ead-903e-aad4c4678f3d",
-    "createdAt" : 1737448411089,
+  "08ed6ec5-03c4-4228-a20d-446e423f2095" : {
+    "id" : "08ed6ec5-03c4-4228-a20d-446e423f2095",
+    "createdAt" : 1737512438623,
     "updatedAt" : null,
-    "name" : "코테 준비",
-    "description" : "코테 준비용 채널입니다.",
+    "name" : "코드잇 공지 채널",
+    "description" : "공지 채널입니다",
     "channelType" : "VOICE"
-  },
-  "5f3b3809-eebb-49c5-8f9f-1d6ee558712b" : {
-    "id" : "5f3b3809-eebb-49c5-8f9f-1d6ee558712b",
-    "createdAt" : 1737448411097,
-    "updatedAt" : null,
-    "name" : "자바 공부합시다",
-    "description" : "자바 공부용 채널입니다.",
-    "channelType" : "TEXT"
   }
 }

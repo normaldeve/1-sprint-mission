@@ -79,7 +79,7 @@ public class FileChannelService implements ChannelService {
 
 
     @Override
-    public void deleteChannel(Channel channel) {
+    public void delete(Channel channel) {
         validateChannel(channel);
         channels.remove(channel.getId());
         saveToFile(channels, filePath);

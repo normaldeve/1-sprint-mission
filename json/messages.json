@@ -1,133 +1,23 @@
 {
-  "7559c20d-5a2b-47a3-a1fe-27e90760fe59" : {
-    "id" : "7559c20d-5a2b-47a3-a1fe-27e90760fe59",
-    "createdAt" : 1737448411105,
-    "updatedAt" : 1737448411120,
-    "content" : "메시지 내용 업데이트",
-    "writer" : {
-      "id" : "09a11f19-0e42-4509-94c7-64d6f5bdd5f4",
-      "createdAt" : 1737448411020,
-      "updatedAt" : null,
-      "name" : "이서윤",
-      "phone" : "010-2222-1111",
-      "password" : "Abcdefgh12312!!"
-    },
-    "channel" : {
-      "id" : "e6bfb8c6-df59-4b24-9fa9-204b912b679a",
-      "createdAt" : 1737448411086,
-      "updatedAt" : 1737448411103,
-      "name" : "코드잇 디스코드",
-      "description" : "코드잇 디스코드 채널에 오신 것을 환영합니다.",
-      "channelType" : "VOICE"
-    }
-  },
-  "1da40381-6362-478b-a017-3f7786dce855" : {
-    "id" : "1da40381-6362-478b-a017-3f7786dce855",
-    "createdAt" : 1737448411094,
+  "a7ef7951-e0f6-415a-a909-318727c1521f" : {
+    "id" : "a7ef7951-e0f6-415a-a909-318727c1521f",
+    "createdAt" : 1737512438625,
     "updatedAt" : null,
-    "content" : "열심히 하겠습니다!!",
+    "content" : "안녕하세요",
     "writer" : {
-      "id" : "ea066c85-cb7f-43b2-b266-eca3d46bc4de",
-      "createdAt" : 1737448411024,
+      "id" : "791d3e94-7902-41cd-a66d-8e2021dd74b0",
+      "createdAt" : 1737512438619,
       "updatedAt" : null,
-      "name" : "박지훈",
-      "phone" : "010-3333-1111",
-      "password" : "Abcdefgh12312!!"
+      "name" : "woody",
+      "phone" : "010-9218-1188",
+      "password" : "Abcdefgh12312!"
     },
     "channel" : {
-      "id" : "f0f161db-8761-4ead-903e-aad4c4678f3d",
-      "createdAt" : 1737448411089,
+      "id" : "08ed6ec5-03c4-4228-a20d-446e423f2095",
+      "createdAt" : 1737512438623,
       "updatedAt" : null,
-      "name" : "코테 준비",
-      "description" : "코테 준비용 채널입니다.",
-      "channelType" : "VOICE"
-    }
-  },
-  "caedf1c6-057c-4692-8d7b-7bd6448dfff0" : {
-    "id" : "caedf1c6-057c-4692-8d7b-7bd6448dfff0",
-    "createdAt" : 1737448411113,
-    "updatedAt" : null,
-    "content" : "네 만나서 반갑습니다!",
-    "writer" : {
-      "id" : "ea066c85-cb7f-43b2-b266-eca3d46bc4de",
-      "createdAt" : 1737448411024,
-      "updatedAt" : null,
-      "name" : "박지훈",
-      "phone" : "010-3333-1111",
-      "password" : "Abcdefgh12312!!"
-    },
-    "channel" : {
-      "id" : "e6bfb8c6-df59-4b24-9fa9-204b912b679a",
-      "createdAt" : 1737448411086,
-      "updatedAt" : 1737448411103,
-      "name" : "코드잇 디스코드",
-      "description" : "코드잇 디스코드 채널에 오신 것을 환영합니다.",
-      "channelType" : "VOICE"
-    }
-  },
-  "875e684a-8cfa-40ef-b5ee-e3e5f781c23d" : {
-    "id" : "875e684a-8cfa-40ef-b5ee-e3e5f781c23d",
-    "createdAt" : 1737448411091,
-    "updatedAt" : null,
-    "content" : "열심히 공부하는 코테 준비 채널입니다!",
-    "writer" : {
-      "id" : "db53c2b5-90dd-4f65-a607-3638f05f1d80",
-      "createdAt" : 1737448411026,
-      "updatedAt" : null,
-      "name" : "이채은",
-      "phone" : "010-4444-1111",
-      "password" : "Abcdefgh12312!!"
-    },
-    "channel" : {
-      "id" : "f0f161db-8761-4ead-903e-aad4c4678f3d",
-      "createdAt" : 1737448411089,
-      "updatedAt" : null,
-      "name" : "코테 준비",
-      "description" : "코테 준비용 채널입니다.",
-      "channelType" : "VOICE"
-    }
-  },
-  "ebe5151e-1a7d-4ab8-b469-ef2e5e2963f7" : {
-    "id" : "ebe5151e-1a7d-4ab8-b469-ef2e5e2963f7",
-    "createdAt" : 1737448411111,
-    "updatedAt" : null,
-    "content" : "테스트 확인 용 메시지입니다!",
-    "writer" : {
-      "id" : "ea066c85-cb7f-43b2-b266-eca3d46bc4de",
-      "createdAt" : 1737448411024,
-      "updatedAt" : null,
-      "name" : "박지훈",
-      "phone" : "010-3333-1111",
-      "password" : "Abcdefgh12312!!"
-    },
-    "channel" : {
-      "id" : "f0f161db-8761-4ead-903e-aad4c4678f3d",
-      "createdAt" : 1737448411089,
-      "updatedAt" : null,
-      "name" : "코테 준비",
-      "description" : "코테 준비용 채널입니다.",
-      "channelType" : "VOICE"
-    }
-  },
-  "3928e8a9-8697-4065-b078-9adcaf4ea925" : {
-    "id" : "3928e8a9-8697-4065-b078-9adcaf4ea925",
-    "createdAt" : 1737448411107,
-    "updatedAt" : null,
-    "content" : "저는 요즘 스프링에 대해 공부하고 있습니다^^",
-    "writer" : {
-      "id" : "09a11f19-0e42-4509-94c7-64d6f5bdd5f4",
-      "createdAt" : 1737448411020,
-      "updatedAt" : null,
-      "name" : "이서윤",
-      "phone" : "010-2222-1111",
-      "password" : "Abcdefgh12312!!"
-    },
-    "channel" : {
-      "id" : "f0f161db-8761-4ead-903e-aad4c4678f3d",
-      "createdAt" : 1737448411089,
-      "updatedAt" : null,
-      "name" : "코테 준비",
-      "description" : "코테 준비용 채널입니다.",
+      "name" : "코드잇 공지 채널",
+      "description" : "공지 채널입니다",
       "channelType" : "VOICE"
     }
   }

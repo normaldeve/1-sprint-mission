@@ -17,7 +17,7 @@ public class JCFUserService implements UserService {
     }
 
     @Override
-    public User createUser(String name, String phone, String password) {
+    public User create(String name, String phone, String password) {
         if (!ValidPass.isValidPassword(password)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
@@ -58,7 +58,7 @@ public class JCFUserService implements UserService {
     }
 
     @Override
-    public void deleteUser(User removeUser) { // 유저 정보 삭제 시 유저가 속해있던 채널에 해당 유저가 삭제되어야 한다.
+    public void delete(User removeUser) { // 유저 정보 삭제 시 유저가 속해있던 채널에 해당 유저가 삭제되어야 한다.
         if (!userExists(removeUser.getPhone())) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
         }

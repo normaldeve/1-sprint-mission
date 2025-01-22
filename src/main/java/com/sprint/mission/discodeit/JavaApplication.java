@@ -3,14 +3,16 @@ package com.sprint.mission.discodeit;
 import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.User;
-import com.sprint.mission.discodeit.factory.Factory;
-import com.sprint.mission.discodeit.factory.FileFactory;
+import com.sprint.mission.discodeit.factory.*;
+import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.service.basic.BasicChannelService;
+import com.sprint.mission.discodeit.service.basic.BasicMessageService;
+import com.sprint.mission.discodeit.service.basic.BasicUserService;
 import com.sprint.mission.discodeit.util.ChannelType;
 import com.sprint.mission.discodeit.util.FileIOUtil;
-
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,7 +23,7 @@ import java.util.Optional;
 public class JavaApplication {
     public static void main(String[] args) {
 /*        Factory factory = JCFFactory.getInstance();*/
-        Factory factory = FileFactory.getInstance();
+        ServiceFactory factory = FileServiceFactory.getInstance();
         UserService userService = factory.getUserService();
         ChannelService channelService = factory.getChannelService();
         MessageService messageService = factory.getMessageService();
@@ -34,27 +36,27 @@ public class JavaApplication {
             System.err.println("파일 초기화 중 오류 발생: " + e.getMessage());
         }
         System.out.println("<회원 생성하기>");
-        User user1 = userService.createUser("김민준", "010-1111-1111", "Abcdefgh12312!");
-        User user2 = userService.createUser("이서윤", "010-2222-1111", "Abcdefgh12312!!");
-        User user3 = userService.createUser("박지훈", "010-3333-1111", "Abcdefgh12312!!");
-        User user4 = userService.createUser("이채은", "010-4444-1111", "Abcdefgh12312!!");
-        User user5 = userService.createUser("정다은", "010-5555-1111", "Abcdefgh12312!!");
+        User user1 = userService.create("김민준", "010-1111-1111", "Abcdefgh12312!");
+        User user2 = userService.create("이서윤", "010-2222-1111", "Abcdefgh12312!!");
+        User user3 = userService.create("박지훈", "010-3333-1111", "Abcdefgh12312!!");
+        User user4 = userService.create("이채은", "010-4444-1111", "Abcdefgh12312!!");
+        User user5 = userService.create("정다은", "010-5555-1111", "Abcdefgh12312!!");
         System.out.println(" - 회원 생성 시 발생할 수 있는 문제");
         System.out.print("    - 1. 동일한 전화번호로 회원 가입을 진행 : ");
         try {
-            User user1_1 = userService.createUser("홍지훈", "010-1111-1111", "Abcdefgh!");
+            User user1_1 = userService.create("홍지훈", "010-1111-1111", "Abcdefgh!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.print("    - 2. 올바르지 않은 전화번호 형식 : ");
         try {
-            User unCorrectPhone = userService.createUser("김철수", "010-12345-12345", "Abcdefgh!");
+            User unCorrectPhone = userService.create("김철수", "010-12345-12345", "Abcdefgh!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.print("    - 3. 올바르지 않은 비밀번호 형식 : ");
         try {
-            User unCorrectPass = userService.createUser("김영미", "010-1234-4321", "1234");
+            User unCorrectPass = userService.create("김영미", "010-1234-4321", "1234");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -79,12 +81,12 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<회원 정보 삭제하기>");
-        userService.deleteUser(user1);
+        userService.delete(user1);
         System.out.println(userService.getAllUser());
         System.out.print(" - 회원 삭제 시 저장되어 있지 않는 회원일 경우 문제가 발생 : ");
         try {
             User unRegisterUser = new User("김미영", "010-4343-3434", "Rasdffa1234!");
-            userService.deleteUser(unRegisterUser);
+            userService.delete(unRegisterUser);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -94,9 +96,9 @@ public class JavaApplication {
         System.out.println("<채널 생성하기>");
         Channel channel1 = channelService.create("코드잇 디스코드", "코드잇용 디스코드 채널입니다.", ChannelType.TEXT);
         Channel channel2 = channelService.create("코테 준비", "코테 준비용 채널입니다.", ChannelType.VOICE);
-        messageService.createMessage("열심히 공부하는 코테 준비 채널입니다!", user4, channel2);
-        messageService.createMessage("열심히 하겠습니다!!", user3, channel2);
-        User channelCreator = userService.createUser("김자바", "010-8739-9343", "Abcdefgh!");
+        messageService.create("열심히 공부하는 코테 준비 채널입니다!", user4, channel2);
+        messageService.create("열심히 하겠습니다!!", user3, channel2);
+        User channelCreator = userService.create("김자바", "010-8739-9343", "Abcdefgh!");
         Channel javaChannel = channelService.create("자바 공부합시다", "자바 공부용 채널입니다.", ChannelType.TEXT);
         System.out.println(channel1);
         System.out.println(channel2);
@@ -124,23 +126,23 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<메시지 생성하기>");
-        Message message2_1 = messageService.createMessage("안녕하세요 지훈님 저는 이서윤이라고 합니다.", user2, channel1);
-        Message message2_2 = messageService.createMessage("저는 요즘 스프링에 대해 공부하고 있습니다^^", user2, channel2);
-        Message message3_1 = messageService.createMessage("테스트 확인 용 메시지입니다!", user3, channel2);
+        Message message2_1 = messageService.create("안녕하세요 지훈님 저는 이서윤이라고 합니다.", user2, channel1);
+        Message message2_2 = messageService.create("저는 요즘 스프링에 대해 공부하고 있습니다^^", user2, channel2);
+        Message message3_1 = messageService.create("테스트 확인 용 메시지입니다!", user3, channel2);
         System.out.println(message2_1);
-        Message message3 = messageService.createMessage("네 만나서 반갑습니다!", user3, channel1);
+        Message message3 = messageService.create("네 만나서 반갑습니다!", user3, channel1);
         System.out.println(message3);
         System.out.println(" - 메시지 생성 시 발생할 수 있는 문제");
         System.out.print("    - 1. 내용이 작성되지 않은 메시지 : ");
         try {
-            Message message4 = messageService.createMessage("", user4, channel1);
+            Message message4 = messageService.create("", user4, channel1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.print("    - 2. 등록되지 않은 회원이 메시지를 보낼 때 : ");
         User unRegistUser1 = new User("미등록회원", "010-1919-9191", "Abcdefgh!");
         try {
-            Message unregistMessage = messageService.createMessage("안녕하세요 만나서 반갑습니다", unRegistUser1, channel1);
+            Message unregistMessage = messageService.create("안녕하세요 만나서 반갑습니다", unRegistUser1, channel1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -172,12 +174,12 @@ public class JavaApplication {
         messageService.deleteMessageByWriter(user2, message2_1.getId());
         System.out.println("전체 메시지 조회하기: " + messageService.getMessageByUser(user2));
         System.out.println("채널 삭제하기 : ");
-        channelService.deleteChannel(channel1);
+        channelService.delete(channel1);
         System.out.println(channelService.getAllChannel());
         System.out.println();
         System.out.println("===============================================================================");
         System.out.println();
-        if (factory instanceof FileFactory) {
+        if (factory instanceof FileServiceFactory) {
             FileIOUtil.convertDSerToJson(Paths.get("./result/users.ser"), Paths.get("./json/users.json"));
             FileIOUtil.convertDSerToJson(Paths.get("./result/messages.ser"), Paths.get("./json/messages.json"));
             FileIOUtil.convertDSerToJson(Paths.get("./result/channels.ser"), Paths.get("./json/channels.json"));

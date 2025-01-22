@@ -17,5 +17,5 @@ public interface ChannelService {
 
     Channel updateDescription(Channel channel, String description);
 
-    void deleteChannel(Channel removeChannel);
+    void delete(Channel removeChannel);
 }

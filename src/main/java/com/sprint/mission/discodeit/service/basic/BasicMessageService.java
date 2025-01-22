@@ -25,7 +25,7 @@ public class BasicMessageService implements MessageService {
     }
 
     @Override
-    public Message createMessage(String content, User writer, Channel channel) {
+    public Message create(String content, User writer, Channel channel) {
         if (content.isEmpty()) {
             throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }

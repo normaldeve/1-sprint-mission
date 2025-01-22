@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface MessageService {
-    Message createMessage(String content, User writer, Channel channel);
+    Message create(String content, User writer, Channel channel);
 
     List<Message> getMessageByUser(User writer);
 
