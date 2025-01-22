@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class RepositoryTest {
     RepositoryFactory factory = FileRepositoryFactory.getInstance();
@@ -54,8 +55,38 @@ public class RepositoryTest {
         User user = setupUser(userService);
         Channel channel = setupChannel(channelService);
         messageCreateTest(messageService, channel, user);
-      }
+    }
 
+    @Test
+    @DisplayName("작성자 이름으로 메시지 찾기")
+    void findMessageByUser() {
+        User user = setupUser(userService);
+        Channel channel = setupChannel(channelService);
+        messageCreateTest(messageService, channel, user);
+        List<Message> messages = messageService.getMessageByUser(user);
+        System.out.println("메시지 찾기: " + messages);
+    }
+
+    @Test
+    @DisplayName("채널 이름으로 메시지 찾기")
+    void findMessageByChannel() {
+        User user = setupUser(userService);
+        Channel channel = setupChannel(channelService);
+        messageCreateTest(messageService, channel, user);
+        List<Message> messages = messageService.getMessageByChannel(channel);
+        System.out.println("메시지 찾기: " + messages);
+    }
+
+    @Test
+    @DisplayName("메시지 삭제하기")
+    void deleteMessage() {
+        User user = setupUser(userService);
+        Channel channel = setupChannel(channelService);
+        Message createMessage = messageCreateTest(messageService, channel, user);
+        messageService.deleteMessageByWriter(user, createMessage.getId());
+        List<Message> messages = messageService.getMessageByChannel(channel);
+        System.out.println("메시지 찾기: " + messages);
+    }
 
     User setupUser(UserService userService) {
         User user = userService.create("woody", "010-9218-1188", "Abcdefgh12312!");
@@ -67,8 +98,10 @@ public class RepositoryTest {
         return channel;
     }
 
-    void messageCreateTest(MessageService messageService, Channel channel, User writer) {
+    Message messageCreateTest(MessageService messageService, Channel channel, User writer) {
         Message message = messageService.create("안녕하세요", writer, channel);
         System.out.println("메시지 생성 : " + message);
+        return message;
     }
+
 }
