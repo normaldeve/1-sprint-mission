@@ -88,20 +88,21 @@ public class FileMessageService implements MessageService {
 
     @Override
     public void deleteMessageByWriter(User writer, UUID uuid) {
+        validateUser(writer);
         if (!messages.containsKey(uuid)) {
             throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
         }
-        Message findMessage = messages.get(uuid);
-        validateUser(writer);
         messages.remove(uuid);
+        FileIOUtil.saveToFile(messages, filePath);
     }
 
     @Override
-    public void deleteMessageByChannel(Channel channel) {
-        getMessageByChannel(channel).stream()
-                .map(Message::getId)
-                .forEach(messages::remove);
-
+    public void deleteMessageByChannel(Channel channel, UUID id) {
+        validateChannel(channel);
+        if (!messages.containsKey(id)) {
+            throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
+        }
+        messages.remove(id);
         FileIOUtil.saveToFile(messages, filePath);
     }
 

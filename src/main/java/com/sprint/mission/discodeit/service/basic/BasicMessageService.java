@@ -65,14 +65,15 @@ public class BasicMessageService implements MessageService {
         existUser(writer);
         Message removeMessage = messageRepository.findById(uuid)
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
-        if (!removeMessage.getWriter().getPhone().equals(writer.getPhone())) {
-            throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
-        }
         messageRepository.delete(removeMessage);
     }
 
     @Override
-    public void deleteMessageByChannel(Channel channel) {
+    public void deleteMessageByChannel(Channel channel, UUID uuid) {
+        existChannel(channel);
+        Message removeMessage = messageRepository.findById(uuid)
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
+        messageRepository.delete(removeMessage);
 
     }
 

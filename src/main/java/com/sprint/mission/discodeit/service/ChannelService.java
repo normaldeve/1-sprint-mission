@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.util.ChannelType;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ChannelService {
     Channel create(String name, String description, ChannelType channelType);

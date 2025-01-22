@@ -18,5 +18,5 @@ public interface MessageService {
 
     void deleteMessageByWriter(User writer, UUID uuid);
 
-    void deleteMessageByChannel(Channel channel);
+    void deleteMessageByChannel(Channel channel, UUID uuid);
 }
