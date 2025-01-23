@@ -5,8 +5,6 @@ import com.sprint.mission.discodeit.error.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.UserService;
-import com.sprint.mission.discodeit.util.ValidPass;
-import com.sprint.mission.discodeit.util.ValidPhone;
 
 
 import java.util.List;
@@ -21,11 +19,11 @@ public class BasicUserService implements UserService {
 
     @Override
     public User create(String name, String phone, String password) {
-        if (!ValidPass.isValidPassword(password)) {
+        if (!User.isValidPassword(password)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
 
-        if (!ValidPhone.isValidPhone(phone)) {
+        if (!User.isValidPhone(phone)) {
             throw new ServiceException(ErrorCode.INVALID_WRITER);
         }
 

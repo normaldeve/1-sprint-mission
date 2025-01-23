@@ -39,6 +39,11 @@ public class User implements Serializable {
         return password.matches(passwordRegex);
     }
 
+    public static boolean isValidPhone(String phoneNumber) {
+        String phoneRegex = "^010-\\d{4}-\\d{4}$";
+        return phoneNumber.matches(phoneRegex);
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
