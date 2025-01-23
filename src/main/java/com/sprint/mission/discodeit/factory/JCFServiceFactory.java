@@ -7,23 +7,21 @@ import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
 import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
-import java.util.HashMap;
+public class JCFServiceFactory implements ServiceFactory{
+    private static JCFServiceFactory instance;
+    private final UserService userService;
+    private final MessageService messageService;
+    private final ChannelService channelService;
 
-public class JCFFServiceFactory implements ServiceFactory{
-    private static JCFFServiceFactory instance;
-    private final JCFUserService userService;
-    private final JCFMessageService messageService;
-    private final JCFChannelService channelService;
-
-    private JCFFServiceFactory() {
+    private JCFServiceFactory() {
         this.userService = new JCFUserService();
         this.channelService = new JCFChannelService();
         this.messageService = new JCFMessageService(userService, channelService);
     }
 
-    public static JCFFServiceFactory getInstance() {
+    public static JCFServiceFactory getInstance() {
         if (instance == null) {
-            instance = new JCFFServiceFactory();
+            instance = new JCFServiceFactory();
         }
         return instance;
     }

@@ -77,7 +77,7 @@ public class JCFMessageService implements MessageService {
 
 
     @Override
-    public void deleteMessageByChannel(Channel channel) {
+    public void deleteMessageByChannel(Channel channel, UUID uuid) {
         getMessageByChannel(channel).stream()
                 .map(Message::getId)
                 .forEach(messageRepository::remove);
