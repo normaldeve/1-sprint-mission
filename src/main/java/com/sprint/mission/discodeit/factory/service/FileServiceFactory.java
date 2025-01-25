@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.factory;
+package com.sprint.mission.discodeit.factory.service;
 
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
@@ -7,7 +7,7 @@ import com.sprint.mission.discodeit.service.file.FileChannelService;
 import com.sprint.mission.discodeit.service.file.FileMessageService;
 import com.sprint.mission.discodeit.service.file.FileUserService;
 
-public class FileServiceFactory implements ServiceFactory{
+public class FileServiceFactory implements ServiceFactory {
     private static FileServiceFactory instance;
     private final UserService userService;
     private final MessageService messageService;

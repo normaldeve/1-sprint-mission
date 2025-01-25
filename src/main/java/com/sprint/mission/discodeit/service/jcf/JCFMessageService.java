@@ -83,12 +83,12 @@ public class JCFMessageService implements MessageService {
                 .forEach(messageRepository::remove);
     }
 
-    private void validateUser(User user) {
+    private void validateUser(User user) { // User가 repository에 저장되어 있는지 확인
         User findUser = userService.getUserByPhone(user.getPhone())
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
     }
 
-    private void validateChannel(Channel channel) {
+    private void validateChannel(Channel channel) { // Channel이 repository에 저장되어 있는지 확인
         Channel findChannel = channelService.getChannelByName(channel.getName())
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
     }

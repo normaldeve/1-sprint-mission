@@ -3,14 +3,11 @@ package com.sprint.mission.discodeit;
 import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.User;
-import com.sprint.mission.discodeit.factory.*;
-import com.sprint.mission.discodeit.repository.MessageRepository;
+import com.sprint.mission.discodeit.factory.service.FileServiceFactory;
+import com.sprint.mission.discodeit.factory.service.ServiceFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
-import com.sprint.mission.discodeit.service.basic.BasicChannelService;
-import com.sprint.mission.discodeit.service.basic.BasicMessageService;
-import com.sprint.mission.discodeit.service.basic.BasicUserService;
 import com.sprint.mission.discodeit.util.ChannelType;
 import com.sprint.mission.discodeit.util.FileIOUtil;
 

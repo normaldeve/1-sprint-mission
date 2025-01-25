@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.factory;
+package com.sprint.mission.discodeit.factory.repository;
 
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;

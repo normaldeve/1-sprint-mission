@@ -16,11 +16,11 @@ public class JCFUserService implements UserService {
 
     @Override
     public User create(String name, String phone, String password) {
-        if (!ValidPass.isValidPassword(password)) {
+        if (!User.isValidPassword(password)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
 
-        if (!ValidPhone.isValidPhone(phone)) {
+        if (!User.isValidPhone(phone)) {
             throw new ServiceException(ErrorCode.INVALID_WRITER);
         }
 

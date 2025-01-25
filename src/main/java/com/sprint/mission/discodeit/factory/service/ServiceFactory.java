@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.factory;
+package com.sprint.mission.discodeit.factory.service;
 
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;

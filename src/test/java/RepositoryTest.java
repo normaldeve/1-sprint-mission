@@ -1,9 +1,9 @@
 import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.User;
-import com.sprint.mission.discodeit.factory.FileRepositoryFactory;
-import com.sprint.mission.discodeit.factory.JCFRepositoryFactory;
-import com.sprint.mission.discodeit.factory.RepositoryFactory;
+import com.sprint.mission.discodeit.factory.repository.FileRepositoryFactory;
+import com.sprint.mission.discodeit.factory.repository.JCFRepositoryFactory;
+import com.sprint.mission.discodeit.factory.repository.RepositoryFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -23,7 +23,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class RepositoryTest {
-    RepositoryFactory factory = JCFRepositoryFactory.getInstance();
+    RepositoryFactory factory = FileRepositoryFactory.getInstance();
     UserService userService = new BasicUserService(factory.getUserRepository());
     ChannelService channelService = new BasicChannelService(factory.getChannelRepository());
     MessageService messageService = new BasicMessageService(factory.getMessageRepository(), factory.getUserRepository(), factory.getChannelRepository());

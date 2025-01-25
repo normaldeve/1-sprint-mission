@@ -60,7 +60,7 @@ public class JCFChannelService implements ChannelService {
     }
 
     @Override
-    public void delete(Channel channel) { // 채널이 사라지면 해당 채널에 포함된 메시지도 사라진다.
+    public void delete(Channel channel) {
         validateChannel(channel);
         channelRepository.remove(channel.getId());
     }
