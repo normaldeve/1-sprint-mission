@@ -62,7 +62,7 @@ public class RepositoryTest {
         User user = setupUser(userService);
         Channel channel = setupChannel(channelService);
         messageCreateTest(messageService, channel, user);
-        List<Message> messages = messageService.getMessageByUser(user);
+        List<Message> messages = messageService.getMessageWithWriter(user);
         System.out.println("메시지 찾기: " + messages);
     }
 
@@ -72,7 +72,7 @@ public class RepositoryTest {
         User user = setupUser(userService);
         Channel channel = setupChannel(channelService);
         messageCreateTest(messageService, channel, user);
-        List<Message> messages = messageService.getMessageByChannel(channel);
+        List<Message> messages = messageService.getMessageWithChannel(channel);
         System.out.println("메시지 찾기: " + messages);
     }
 
@@ -82,8 +82,8 @@ public class RepositoryTest {
         User user = setupUser(userService);
         Channel channel = setupChannel(channelService);
         Message createMessage = messageCreateTest(messageService, channel, user);
-        messageService.deleteMessageByWriter(user, createMessage.getId());
-        List<Message> messages = messageService.getMessageByChannel(channel);
+        messageService.deleteMessage(createMessage.getId());
+        List<Message> messages = messageService.getAllMessage();
         System.out.println("메시지 찾기: " + messages);
     }
 

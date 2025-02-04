@@ -38,21 +38,30 @@ public class JCFMessageService implements MessageService {
         return message;
     }
 
-    // 메시지를 보낸 회원이 메시지 조회하기
     @Override
-    public List<Message> getMessageByUser(User writer) {
+    public Optional<Message> getMessage(UUID messageID) {
+        return Optional.ofNullable(messageRepository.get(messageID));
+    }
+
+    @Override
+    public List<Message> getMessageWithWriter(User writer) {
         validateUser(writer);
         return messageRepository.values().stream()
-                .filter(message -> message.getWriter().getPhone().equals(writer.getPhone()))
+                .filter(message -> message.getWriter().equals(writer))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Message> getMessageByChannel(Channel channel) {
-        List<Message> messages = new ArrayList<>();
+    public List<Message> getMessageWithChannel(Channel channel) {
+        validateChannel(channel);
         return messageRepository.values().stream()
-                .filter(message -> message.getChannel().getName().equals(channel.getName()))
+                .filter(message -> message.getChannel().equals(channel))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Message> getAllMessage() {
+        return new ArrayList<>(messageRepository.values());
     }
 
 
@@ -66,21 +75,8 @@ public class JCFMessageService implements MessageService {
     }
 
     @Override
-    public void deleteMessageByWriter(User writer, UUID uuid) { // 작성자가 작성한 메시지 삭제하기
-        if (!messageRepository.containsKey(uuid)) {
-            throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
-        }
-        validateUser(writer);
-        Message findMessage = messageRepository.get(uuid);
-        messageRepository.remove(uuid);
-    }
-
-
-    @Override
-    public void deleteMessageByChannel(Channel channel, UUID uuid) {
-        getMessageByChannel(channel).stream()
-                .map(Message::getId)
-                .forEach(messageRepository::remove);
+    public void deleteMessage(UUID messageID) {
+        messageRepository.remove(messageID);
     }
 
     private void validateUser(User user) { // User가 repository에 저장되어 있는지 확인

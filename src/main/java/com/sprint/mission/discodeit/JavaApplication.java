@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.factory.service.FileServiceFactory;
+import com.sprint.mission.discodeit.factory.service.JCFServiceFactory;
 import com.sprint.mission.discodeit.factory.service.ServiceFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
@@ -19,8 +20,8 @@ import java.util.Optional;
 
 public class JavaApplication {
     public static void main(String[] args) {
-/*        Factory factory = JCFFactory.getInstance();*/
-        ServiceFactory factory = FileServiceFactory.getInstance();
+//        Factory factory = JCFFactory.getInstance();
+        ServiceFactory factory = JCFServiceFactory.getInstance();
         UserService userService = factory.getUserService();
         ChannelService channelService = factory.getChannelService();
         MessageService messageService = factory.getMessageService();
@@ -149,14 +150,14 @@ public class JavaApplication {
         System.out.println();
         System.out.println("<특정 채널에서 전체 메시지 조회하기>");
         System.out.print("코드잇 채널 전체 메시지 조회");
-        List<Message> allMessages = messageService.getMessageByChannel(channel1);
+        List<Message> allMessages = messageService.getMessageWithChannel(channel1);
         System.out.println(allMessages);
         System.out.println();
         System.out.print("코테 준비 채널 전체 메시지 조회");
-        List<Message> allMessages2 = messageService.getMessageByChannel(channel2);
+        List<Message> allMessages2 = messageService.getMessageWithChannel(channel2);
         System.out.println(allMessages2);
         System.out.println("<단일 메시지 조회하기>");
-        List<Message> getMessage = messageService.getMessageByUser(user2);
+        Optional<Message> getMessage = messageService.getMessage(message2_2.getId());
         System.out.println(getMessage);
         System.out.println();
         System.out.println("===============================================================================");
@@ -168,8 +169,8 @@ public class JavaApplication {
         System.out.println("===============================================================================");
         System.out.println();
         System.out.println("<메시지 삭제하기>");
-        messageService.deleteMessageByWriter(user2, message2_1.getId());
-        System.out.println("전체 메시지 조회하기: " + messageService.getMessageByUser(user2));
+        messageService.deleteMessage(message2_1.getId());
+        System.out.println("전체 메시지 조회하기: " + messageService.getAllMessage());
         System.out.println("채널 삭제하기 : ");
         channelService.delete(channel1);
         System.out.println(channelService.getAllChannel());

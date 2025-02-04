@@ -1,20 +1,20 @@
 {
-  "1d6cf41e-e4ed-42fb-84f4-4f80739b6182" : {
-    "id" : "1d6cf41e-e4ed-42fb-84f4-4f80739b6182",
-    "createdAt" : 1737766782119,
+  "8eee100b-d71e-40a1-b95e-adce9d17766f" : {
+    "id" : "8eee100b-d71e-40a1-b95e-adce9d17766f",
+    "createdAt" : 1738630648276,
     "updatedAt" : null,
     "content" : "안녕하세요",
     "writer" : {
-      "id" : "89f18c5c-e7bf-47b3-8399-bdda8f3ecc8f",
-      "createdAt" : 1737766782116,
+      "id" : "0bc6e12b-c26a-4390-ba51-c3f133dc3dd8",
+      "createdAt" : 1738630648272,
       "updatedAt" : null,
       "name" : "woody",
       "phone" : "010-9218-1188",
       "password" : "Abcdefgh12312!"
     },
     "channel" : {
-      "id" : "e8671ec5-5555-4c80-835c-642788d4be12",
-      "createdAt" : 1737766782118,
+      "id" : "6b97f829-3282-4879-b803-42f2c8cdf280",
+      "createdAt" : 1738630648275,
       "updatedAt" : null,
       "name" : "코드잇 공지 채널",
       "description" : "공지 채널입니다",

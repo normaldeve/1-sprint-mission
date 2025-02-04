@@ -11,7 +11,9 @@ import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.MessageService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class BasicMessageService implements MessageService {
     private final MessageRepository messageRepository;
@@ -38,15 +40,31 @@ public class BasicMessageService implements MessageService {
     }
 
     @Override
-    public List<Message> getMessageByUser(User writer) {
-        existUser(writer);
-        return messageRepository.findByUser(writer);
+    public Optional<Message> getMessage(UUID messageID) {
+        return messageRepository.findById(messageID);
     }
 
     @Override
-    public List<Message> getMessageByChannel(Channel channel) {
+    public List<Message> getMessageWithWriter(User writer) {
+        existUser(writer);
+        List<Message> messageList = messageRepository.findAll();
+        return messageList.stream()
+                .filter(message -> message.getWriter().equals(writer))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Message> getMessageWithChannel(Channel channel) {
         existChannel(channel);
-        return messageRepository.findByChannel(channel);
+        List<Message> messageList = messageRepository.findAll();
+        return messageList.stream()
+                .filter(message -> message.getChannel().equals(channel))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Message> getAllMessage() {
+        return messageRepository.findAll();
     }
 
     @Override
@@ -61,20 +79,9 @@ public class BasicMessageService implements MessageService {
     }
 
     @Override
-    public void deleteMessageByWriter(User writer, UUID uuid) {
-        existUser(writer);
-        Message removeMessage = messageRepository.findById(uuid)
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
-        messageRepository.delete(removeMessage);
-    }
-
-    @Override
-    public void deleteMessageByChannel(Channel channel, UUID uuid) {
-        existChannel(channel);
-        Message removeMessage = messageRepository.findById(uuid)
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
-        messageRepository.delete(removeMessage);
-
+    public void deleteMessage(UUID messageID) {
+        Optional<Message> deleteMessage = messageRepository.findById(messageID);
+        messageRepository.delete(deleteMessage.orElse(null));
     }
 
     private void existUser(User user) {

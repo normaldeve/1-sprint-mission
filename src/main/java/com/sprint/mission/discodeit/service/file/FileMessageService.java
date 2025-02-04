@@ -14,12 +14,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 public class FileMessageService implements MessageService {
     private final Path filePath = Path.of("./result/messages.ser");
-    Map<UUID, Message> messages = FileIOUtil.loadFromFile(filePath);
+    Map<UUID, Message> messageRepository = FileIOUtil.loadFromFile(filePath);
     private final UserService userService;
     private final ChannelService channelService;
 
@@ -46,34 +47,37 @@ public class FileMessageService implements MessageService {
         validateChannel(channel);
 
         Message message = new Message(content, writer, channel);
-        messages.put(message.getId(), message);
-        FileIOUtil.saveToFile(messages, filePath);
+        messageRepository.put(message.getId(), message);
+        FileIOUtil.saveToFile(messageRepository, filePath);
         return message;
     }
 
     @Override
-    public List<Message> getMessageByUser(User writer) {
-        validateUser(writer);
-
-        List<Message> list = new ArrayList<>();
-        for (Message message : messages.values()) {
-            if (message.getWriter().getPhone().equals(writer.getPhone())) {
-                list.add(message);
-            }
-        }
-        return list;
+    public Optional<Message> getMessage(UUID messageID) {
+        return Optional.ofNullable(messageRepository.get(messageID));
     }
 
     @Override
-    public List<Message> getMessageByChannel(Channel channel) {
-        List<Message> list = new ArrayList<>();
-        for (Message message : messages.values()) {
-            if (message.getChannel().getName().equals(channel.getName())) {
-                list.add(message);
-            }
-        }
-        return list;
+    public List<Message> getMessageWithWriter(User writer) {
+        validateUser(writer);
+        return messageRepository.values().stream()
+                .filter(message -> message.getWriter().equals(writer))
+                .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Message> getMessageWithChannel(Channel channel) {
+        validateChannel(channel);
+        return messageRepository.values().stream()
+                .filter(message -> message.getChannel().equals(channel))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Message> getAllMessage() {
+        return new ArrayList<>(messageRepository.values());
+    }
+
 
     @Override
     public Message updateMessageContent(Message updateMessage, String newContent) {
@@ -81,29 +85,14 @@ public class FileMessageService implements MessageService {
             throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }
         updateMessage.update(newContent);
-        messages.put(updateMessage.getId(), updateMessage);
-        saveToFile(messages, filePath);
+        messageRepository.put(updateMessage.getId(), updateMessage);
+        saveToFile(messageRepository, filePath);
         return updateMessage;
     }
 
     @Override
-    public void deleteMessageByWriter(User writer, UUID uuid) {
-        validateUser(writer);
-        if (!messages.containsKey(uuid)) {
-            throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
-        }
-        messages.remove(uuid);
-        FileIOUtil.saveToFile(messages, filePath);
-    }
-
-    @Override
-    public void deleteMessageByChannel(Channel channel, UUID id) {
-        validateChannel(channel);
-        if (!messages.containsKey(id)) {
-            throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
-        }
-        messages.remove(id);
-        FileIOUtil.saveToFile(messages, filePath);
+    public void deleteMessage(UUID messageID) {
+        messageRepository.remove(messageID);
     }
 
     private void validateUser(User user) {

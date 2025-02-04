@@ -5,18 +5,21 @@ import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MessageService {
     Message create(String content, User writer, Channel channel);
 
-    List<Message> getMessageByUser(User writer);
+    Optional<Message> getMessage(UUID messageID);
 
-    List<Message> getMessageByChannel(Channel channel);
+    List<Message> getMessageWithWriter(User writer);
+
+    List<Message> getMessageWithChannel(Channel channel);
+
+    List<Message> getAllMessage();
 
     Message updateMessageContent(Message message, String newContent);
 
-    void deleteMessageByWriter(User writer, UUID uuid);
-
-    void deleteMessageByChannel(Channel channel, UUID uuid);
+    void deleteMessage(UUID messageID);
 }

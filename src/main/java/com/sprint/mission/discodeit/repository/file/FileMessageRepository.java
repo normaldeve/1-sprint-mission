@@ -43,20 +43,6 @@ public class FileMessageRepository implements MessageRepository {
     }
 
     @Override
-    public List<Message> findByUser(User user) {
-        return messageMap.values().stream()
-                .filter(message -> message.getWriter().getPhone().equals(user.getPhone()))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Message> findByChannel(Channel channel) {
-        return messageMap.values().stream()
-                .filter(message -> message.getChannel().getName().equals(channel.getName()))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Message> findAll() {
         return messageMap.values().stream()
                 .collect(Collectors.toList());
