@@ -55,10 +55,5 @@ public class DiscodeitApplication {
 		User user = setupUser(userService);
 		Channel channel = setupChannel(channelService);
 		Message message = messageCreateTest(messageService, channel, user);
-		messageService.updateMessageContent(message, "this is new content");
-
-		FileIOUtil.convertDSerToJson(Paths.get("./result/users.ser"),Paths.get("./json/users.json"));
-		FileIOUtil.convertDSerToJson(Paths.get("./result/messages.ser"),Paths.get("./json/messages.json"));
-		FileIOUtil.convertDSerToJson(Paths.get("./result/channels.ser"), Paths.get("./json/channels.json"));
 	}
 }

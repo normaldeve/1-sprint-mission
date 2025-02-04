@@ -2,6 +2,8 @@ package com.sprint.mission.discodeit.repository.file;
 
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 @Repository
+@Primary
 public class FileUserRepository implements UserRepository {
     private final Path filePath = Path.of("./result/users.ser");
     private final Map<UUID, User> userMap;

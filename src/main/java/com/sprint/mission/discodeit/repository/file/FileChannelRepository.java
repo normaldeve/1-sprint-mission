@@ -2,6 +2,8 @@ package com.sprint.mission.discodeit.repository.file;
 
 import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import static com.sprint.mission.discodeit.util.FileIOUtil.loadFromFile;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
 @Repository
+@Primary
 public class FileChannelRepository implements ChannelRepository {
     private final Path filePath = Path.of("./result/channels.ser");
     private final Map<UUID, Channel> channelMap;
