@@ -22,7 +22,7 @@ public class User implements Serializable {
     public User(String name, String phone, String password) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
-        this.updatedAt = null;
+        this.updatedAt = System.currentTimeMillis();
         this.name = name;
         this.phone = phone;
         this.password = password;

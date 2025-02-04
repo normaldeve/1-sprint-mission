@@ -1,22 +1,22 @@
 {
-  "8eee100b-d71e-40a1-b95e-adce9d17766f" : {
-    "id" : "8eee100b-d71e-40a1-b95e-adce9d17766f",
-    "createdAt" : 1738630648276,
-    "updatedAt" : null,
-    "content" : "안녕하세요",
+  "a7100559-54b7-4404-a31e-75e6a27fe6d5" : {
+    "id" : "a7100559-54b7-4404-a31e-75e6a27fe6d5",
+    "createdAt" : 1738649436776,
+    "updatedAt" : 1738649436777,
+    "content" : "this is new content",
     "writer" : {
-      "id" : "0bc6e12b-c26a-4390-ba51-c3f133dc3dd8",
-      "createdAt" : 1738630648272,
-      "updatedAt" : null,
-      "name" : "woody",
-      "phone" : "010-9218-1188",
+      "id" : "09160e63-f313-45d7-af4c-b5ec79491c58",
+      "createdAt" : 1738649436774,
+      "updatedAt" : 1738649436774,
+      "name" : "student1",
+      "phone" : "010-1929-1188",
       "password" : "Abcdefgh12312!"
     },
     "channel" : {
-      "id" : "6b97f829-3282-4879-b803-42f2c8cdf280",
-      "createdAt" : 1738630648275,
-      "updatedAt" : null,
-      "name" : "코드잇 공지 채널",
+      "id" : "45d7295b-2f18-4c05-9f74-0b517fc7dbb9",
+      "createdAt" : 1738649436775,
+      "updatedAt" : 1738649436775,
+      "name" : "자바 공지 채널",
       "description" : "공지 채널입니다",
       "channelType" : "VOICE"
     }

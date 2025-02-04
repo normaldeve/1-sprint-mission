@@ -1,9 +1,9 @@
 {
-  "6b97f829-3282-4879-b803-42f2c8cdf280" : {
-    "id" : "6b97f829-3282-4879-b803-42f2c8cdf280",
-    "createdAt" : 1738630648275,
-    "updatedAt" : null,
-    "name" : "코드잇 공지 채널",
+  "45d7295b-2f18-4c05-9f74-0b517fc7dbb9" : {
+    "id" : "45d7295b-2f18-4c05-9f74-0b517fc7dbb9",
+    "createdAt" : 1738649436775,
+    "updatedAt" : 1738649436775,
+    "name" : "자바 공지 채널",
     "description" : "공지 채널입니다",
     "channelType" : "VOICE"
   }
