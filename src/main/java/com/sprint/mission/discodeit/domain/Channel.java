@@ -14,16 +14,16 @@ import java.util.UUID;
 @Getter
 public class Channel implements Serializable {
     private UUID id;
-    private Long createdAt;
-    private Long updatedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
     private String name;
     private String description;
     private ChannelType channelType;
 
     public Channel(String name, String description, ChannelType channelType) {
         this.id = UUID.randomUUID();
-        this.createdAt = System.currentTimeMillis();
-        this.updatedAt = System.currentTimeMillis();
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
         this.name = name;
         this.description = description;
         this.channelType = channelType;
@@ -43,29 +43,21 @@ public class Channel implements Serializable {
 
     public void changeType(ChannelType channelType) {
         this.channelType = channelType;
-        this.updatedAt = System.currentTimeMillis();
+        this.updatedAt = Instant.now();
     }
 
     public void changeDescription(String description) {
         this.description = description;
-        this.updatedAt = System.currentTimeMillis();
+        this.updatedAt = Instant.now();
     }
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        String createdAtFormatted = createdAt != null
-                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(createdAt), ZoneId.systemDefault()).format(formatter)
-                : "N/A";
-        String updatedAtFormatted = updatedAt != null
-                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
-                : "N/A";
 
         return "Channel{" +
                 "id=" + id +
-                ", createdAt=" + createdAtFormatted +
-                ", updatedAt=" + updatedAtFormatted +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 ", description=" + description +
                 ", name='" + name + '\'' +
                 ", type='" + channelType + '\'' +

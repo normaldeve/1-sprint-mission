@@ -13,16 +13,16 @@ import java.util.UUID;
 @Getter
 public class User implements Serializable {
     private UUID id;
-    private Long createdAt;
-    private Long updatedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
     private String name;
     private String phone;
     private String password;
 
     public User(String name, String phone, String password) {
         this.id = UUID.randomUUID();
-        this.createdAt = System.currentTimeMillis();
-        this.updatedAt = System.currentTimeMillis();
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
         this.name = name;
         this.phone = phone;
         this.password = password;
@@ -30,7 +30,7 @@ public class User implements Serializable {
 
     public void update(String password) {
         this.password = password;
-        this.updatedAt = System.currentTimeMillis();
+        this.updatedAt = Instant.now();
     }
 
     //8자리 이상 15자리 이하 대문자 및 특수문자 하나 이상 포함해야 한다
@@ -58,22 +58,13 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        String createdAtFormatted = createdAt != null
-                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(createdAt), ZoneId.systemDefault()).format(formatter)
-                : "N/A";
-        String updatedAtFormatted = updatedAt != null
-                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
-                : "N/A";
-
         return "User {\n" +
                 "  id=" + id + ",\n" +
                 "  name='" + name + "',\n" +
                 "  phone='" + phone + "',\n" +
                 "  password='" + password + "',\n" +
-                "  createdAt=" + createdAtFormatted + ",\n" +
-                "  updatedAt=" + updatedAtFormatted + "\n" +
+                "  createdAt=" + createdAt + ",\n" +
+                "  updatedAt=" + updatedAt + "\n" +
                 "}";
     }
 }

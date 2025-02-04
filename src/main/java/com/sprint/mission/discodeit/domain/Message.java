@@ -12,16 +12,16 @@ import java.util.UUID;
 @Getter
 public class Message implements Serializable {
     private UUID id;
-    private Long createdAt;
-    private Long updatedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
     private String content;
     private User writer;
     private Channel channel;
 
     public Message(String content, User writer, Channel channel) {
         this.id = UUID.randomUUID();
-        this.createdAt = System.currentTimeMillis();
-        this.updatedAt = System.currentTimeMillis();
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
         this.content = content;
         this.writer = writer;
         this.channel = channel;
@@ -29,27 +29,18 @@ public class Message implements Serializable {
 
     public void update(String content) {
         this.content = content;
-        this.updatedAt = System.currentTimeMillis();
+        this.updatedAt = Instant.now();
     }
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        String createdAtFormatted = createdAt != null
-                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(createdAt), ZoneId.systemDefault()).format(formatter)
-                : "N/A";
-        String updatedAtFormatted = updatedAt != null
-                ? LocalDateTime.ofInstant(Instant.ofEpochMilli(updatedAt), ZoneId.systemDefault()).format(formatter)
-                : "N/A";
-
         String writerUserName = writer != null ? writer.getName() : "Unknown";
         String useChannelName = channel != null ? channel.getName() : "Unknown";
 
         return "Message{" +
                 "id=" + id +
-                ", createdAt=" + createdAtFormatted +
-                ", updatedAt=" + updatedAtFormatted +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 ", content='" + content + '\'' +
                 ", writer='" + writerUserName + '\'' +
                 ", channel='" + useChannelName + '\'' +
