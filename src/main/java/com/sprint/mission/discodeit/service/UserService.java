@@ -1,14 +1,16 @@
 package com.sprint.mission.discodeit.service;
 
 import com.sprint.mission.discodeit.domain.User;
+import com.sprint.mission.discodeit.dto.user.FindUserDto;
+import com.sprint.mission.discodeit.dto.user.UserCreateRequest;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User create(String name, String phone, String password);
+    User create(UserCreateRequest request);
 
-    Optional<User> getUserByPhone(String phone);
+    FindUserDto getUserByPhone(String phone);
 
     List<User> getAllUser();
 

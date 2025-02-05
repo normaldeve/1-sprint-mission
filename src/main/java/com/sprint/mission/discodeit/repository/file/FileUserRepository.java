@@ -48,6 +48,18 @@ public class FileUserRepository implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByName(String name) {
+        return userMap.values().stream()
+                .filter(user -> user.getName().equals(name))
+                .findFirst();
+    }
+
+    @Override
+    public Optional<User> findById(UUID userId) {
+        return Optional.ofNullable(userMap.get(userId));
+    }
+
+    @Override
     public List<User> findAll() {
         return userMap.values().stream()
                 .collect(Collectors.toList());

@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -10,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Getter
+@Setter
 public class Message implements Serializable {
     private UUID id;
     private Instant createdAt;

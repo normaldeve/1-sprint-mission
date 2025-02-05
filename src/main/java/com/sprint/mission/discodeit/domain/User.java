@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -8,9 +9,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Getter
+@Setter
 public class User implements Serializable {
     private UUID id;
     private Instant createdAt;
@@ -18,15 +21,16 @@ public class User implements Serializable {
     private String name;
     private String phone;
     private String password;
-    private UUID profileImageId;
+    private Optional<UUID> profileImageId;
 
-    public User(String name, String phone, String password) {
+    public User(String name, String phone, String password, Optional<UUID> profileImageId) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
         this.name = name;
         this.phone = phone;
         this.password = password;
+        this.profileImageId = profileImageId;
     }
 
     public void update(String password) {
