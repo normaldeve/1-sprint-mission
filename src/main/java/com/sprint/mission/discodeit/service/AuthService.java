@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepository;
 
-    public UserDTO login(LoginRequest request) {
+    public UserDTO login(LoginRequest request) { // 요청으로 name과 password가 들어온 상황
         User findUser = userRepository.findByName(request.userName()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
 
         if (!findUser.getPassword().equals(request.password())) { // 비밀번호가 일치하지 않으면 에러 발생
