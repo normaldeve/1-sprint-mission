@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.domain;
 
-import com.sprint.mission.discodeit.util.BinaryContentType;
+import com.sprint.mission.discodeit.util.type.BinaryContentType;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -18,5 +18,9 @@ public class BinaryContent {
         this.createdAt = Instant.now();
         this.content = content;
         this.contentType = contentType;
+    }
+
+    public void updateContent(byte[] newContent) {
+        this.content = newContent;
     }
 }

@@ -21,9 +21,10 @@ public class User implements Serializable {
     private String name;
     private String phone;
     private String password;
-    private Optional<UUID> profileImageId;
+    private UUID profileImageId;
+    private UUID userStatusId;
 
-    public User(String name, String phone, String password, Optional<UUID> profileImageId) {
+    public User(String name, String phone, String password, UUID profileImageId, UUID userStatusId) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
@@ -31,6 +32,7 @@ public class User implements Serializable {
         this.phone = phone;
         this.password = password;
         this.profileImageId = profileImageId;
+        this.userStatusId = userStatusId;
     }
 
     public void update(String password) {
@@ -50,15 +52,15 @@ public class User implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        User user = (User) object;
-        return Objects.equals(phone, user.phone);
+    public boolean equals(Object o) { // User 객체는 UUID, name, phone 3개의 필드가 동일하면 같은 유저라고 판단한다.
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(phone, user.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(phone);
+        return Objects.hash(id, name, phone);
     }
 
     @Override

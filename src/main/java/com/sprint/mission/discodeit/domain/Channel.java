@@ -1,14 +1,12 @@
 package com.sprint.mission.discodeit.domain;
 
-import com.sprint.mission.discodeit.util.ChannelType;
+import com.sprint.mission.discodeit.util.type.ChannelFormat;
+import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,14 +18,16 @@ public class Channel implements Serializable {
     private Instant updatedAt;
     private String name;
     private String description;
+    private ChannelFormat channelFormat;
     private ChannelType channelType;
 
-    public Channel(String name, String description, ChannelType channelType) {
+    public Channel(String name, String description, ChannelFormat channelFormat, ChannelType channelType) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
         this.name = name;
         this.description = description;
+        this.channelFormat = channelFormat;
         this.channelType = channelType;
     }
 
@@ -43,8 +43,8 @@ public class Channel implements Serializable {
         return Objects.hashCode(name);
     }
 
-    public void changeType(ChannelType channelType) {
-        this.channelType = channelType;
+    public void changeFormat(ChannelFormat channelFormat) {
+        this.channelFormat = channelFormat;
         this.updatedAt = Instant.now();
     }
 

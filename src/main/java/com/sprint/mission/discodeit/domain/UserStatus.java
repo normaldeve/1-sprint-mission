@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.domain;
 
-import com.sprint.mission.discodeit.util.OnlineStatus;
+import com.sprint.mission.discodeit.util.type.OnlineStatusType;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -14,18 +14,16 @@ public class UserStatus { // 사용자 별 마지막으로 확인된 접속 시�
     private UUID id;
     private Instant createdAt;
     private Instant updateAt;
-    private UUID userId;
     private Instant lastActiveAt;
 
-    public UserStatus(UUID userId) {
+    public UserStatus() {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updateAt = Instant.now();
-        this.userId = userId;
         this.lastActiveAt = Instant.now();
     }
 
-    public OnlineStatus isOnline() {
-        return ChronoUnit.MINUTES.between(lastActiveAt, Instant.now()) <= 5 ? OnlineStatus.ACTIVE : OnlineStatus.SLEEP;
+    public OnlineStatusType isOnline() {
+        return ChronoUnit.MINUTES.between(lastActiveAt, Instant.now()) <= 5 ? OnlineStatusType.ACTIVE : OnlineStatusType.SLEEP;
     }
 }

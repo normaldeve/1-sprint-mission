@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface BinaryContentRepository {
     Optional<BinaryContent> findById(UUID uuid);
+
+    void deleteById(UUID uuid);
 }
