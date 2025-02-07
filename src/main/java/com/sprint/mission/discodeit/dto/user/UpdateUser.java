@@ -16,8 +16,7 @@ public class UpdateUser {
         @NonNull
         private UUID userId;
 
-        @NonNull
-        private UUID profileId;
+        private String password;
 
         private byte[] content;
     }

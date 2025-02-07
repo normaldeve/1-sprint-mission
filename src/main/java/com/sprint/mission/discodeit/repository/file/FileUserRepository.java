@@ -66,9 +66,8 @@ public class FileUserRepository implements UserRepository {
     }
 
     @Override
-    public User delete(User user) {
-        userMap.remove(user.getId());
+    public void delete(UUID id) {
+        userMap.remove(id);
         saveToFile(userMap, filePath);
-        return user;
     }
 }
