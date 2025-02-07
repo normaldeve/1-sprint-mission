@@ -32,20 +32,15 @@ public class Channel implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) { // 채널은 UUID와 채널이름이 동일하다면 동일 객체로 판단합니다.
         if (o == null || getClass() != o.getClass()) return false;
         Channel channel = (Channel) o;
-        return Objects.equals(name, channel.name);
+        return Objects.equals(id, channel.id) && Objects.equals(name, channel.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
-    }
-
-    public void changeFormat(ChannelFormat channelFormat) {
-        this.channelFormat = channelFormat;
-        this.updatedAt = Instant.now();
+        return Objects.hash(id, name);
     }
 
     public void changeDescription(String description) {

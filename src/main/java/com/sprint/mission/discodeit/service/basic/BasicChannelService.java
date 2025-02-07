@@ -3,10 +3,8 @@ package com.sprint.mission.discodeit.service.basic;
 import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.domain.ReadStatus;
 import com.sprint.mission.discodeit.domain.User;
-import com.sprint.mission.discodeit.dto.channel.ChannelCreateRequest;
-import com.sprint.mission.discodeit.dto.channel.PrivateChannelCreateRequest;
-import com.sprint.mission.discodeit.dto.channel.PrivateChannelDto;
-import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateRequest;
+import com.sprint.mission.discodeit.dto.channel.ChannelDTO;
+import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
@@ -26,26 +24,27 @@ public class BasicChannelService implements ChannelService  {
     private final ReadStatusRepository readStatusRepository;
 
     @Override
-    public Channel createPublicChannel(PublicChannelCreateRequest request) {
-        channelRepository.findByName(request.name()).ifPresent(channel -> {
+    public ChannelDTO.PublicChannel createPublicChannel(CreateChannel.PublicRequest request) {
+        channelRepository.findByName(request.getName()).ifPresent(channel -> {
             throw new ServiceException(ErrorCode.DUPLICATE_CHANNEL);});
-        Channel channel = new Channel(request.name(), request.description(), request.channelFormat(), ChannelType.PUBLIC);
+        Channel channel = new Channel(request.getName(), request.getDescription(), request.getChannelFormat(), ChannelType.PUBLIC);
         channelRepository.save(channel);
-        return channel;
+        return ChannelDTO.PublicChannel.fromDomain(channel);
     }
 
     @Override
-    public PrivateChannelDto createPrivateChannel(PrivateChannelCreateRequest request) {
-        List<User> users = request.users();
+    public ChannelDTO.PrivateChannel createPrivateChannel(CreateChannel.PrivateRequest request) {
+        List<User> users = request.getJoinUser();
+        Channel channel = new Channel(null, null, request.getChannelFormat(), ChannelType.PRIVATE);
+        channelRepository.save(channel);
         for (User user : users) {
-            ReadStatus readStatus = new ReadStatus(user.getId(), request.channelId());
+            ReadStatus readStatus = new ReadStatus(user.getId(), channel.getId());
             readStatusRepository.save(readStatus);
         }
 
-        Channel channel = new Channel(null, null, request.channelFormat(), ChannelType.PRIVATE);
-        channelRepository.save(channel);
-        return new PrivateChannelDto(channel.getId(), channel.getChannelType(), channel.getChannelFormat());
+        return ChannelDTO.PrivateChannel.fromDomain(channel, users);
     }
+
     @Override
     public Optional<Channel> getChannelByName(String name) {
         return channelRepository.findByName(name);
@@ -56,13 +55,6 @@ public class BasicChannelService implements ChannelService  {
         return channelRepository.findAll();
     }
 
-    @Override
-    public Channel updateType(Channel channel, ChannelType channelType) {
-        existChannel(channel);
-        channel.changeType(channelType);
-        channelRepository.save(channel);
-        return channel;
-    }
 
     @Override
     public Channel updateDescription(Channel channel, String description) {

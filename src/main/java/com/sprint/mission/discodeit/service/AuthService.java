@@ -20,6 +20,6 @@ public class AuthService {
         if (!findUser.getPassword().equals(request.password())) { // 비밀번호가 일치하지 않으면 에러 발생
             throw new ServiceException(ErrorCode.PASSWORD_MISMATCH);
         }
-        return new UserDTO(findUser.getId(), findUser.getName(), findUser.getPhone()); // 비밀번호를 보여주지 않기 위해서 DTO 사용
+        return UserDTO.fromDomain(findUser); // 비밀번호를 보여주지 않기 위해서 DTO 사용
     }
 }
