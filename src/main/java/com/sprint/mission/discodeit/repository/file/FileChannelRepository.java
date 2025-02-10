@@ -41,13 +41,6 @@ public class FileChannelRepository implements ChannelRepository {
     }
 
     @Override
-    public Optional<Channel> findByName(String channelName) {
-        return channelMap.values().stream()
-                .filter(channel -> channel.getName().equals(channelName))
-                .findFirst();
-    }
-
-    @Override
     public Optional<Channel> findById(UUID channelId) {
         return channelMap.values().stream()
                 .filter(channel -> channel.getId().equals(channelId))

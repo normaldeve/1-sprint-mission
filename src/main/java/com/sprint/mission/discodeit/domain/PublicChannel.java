@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @ToString
 public class PublicChannel extends Channel {
@@ -14,10 +16,17 @@ public class PublicChannel extends Channel {
     private ChannelFormat channelFormat;
     private ChannelType channelType;
 
-    public PublicChannel(String name, String description, ChannelFormat channelFormat) {
+    public PublicChannel(String name, String description, ChannelFormat channelFormat, List<User> joinMember) {
+        super(joinMember);
         this.name = name;
         this.description = description;
         this.channelFormat = channelFormat;
         this.channelType = ChannelType.PUBLIC;
+    }
+
+    public void update(String name, String description, User newUser) {
+        this.name = name;
+        this.description = description;
+        super.getJoinMembers().add(newUser);
     }
 }

@@ -9,13 +9,12 @@ import java.util.List;
 
 @Getter
 @ToString
-public class PrivateChannel extends Channel {
-    private List<User> joinMembers;
+public class PrivateChannel extends Channel { //
     private ChannelFormat channelFormat;
     private ChannelType channelType;
 
-    public PrivateChannel(List<User> joinMembers, ChannelFormat channelFormat) {
-        this.joinMembers = joinMembers;
+    public PrivateChannel(List<User> joinMember, ChannelFormat channelFormat) {
+        super(joinMember);
         this.channelFormat = channelFormat;
         this.channelType = ChannelType.PRIVATE;
     }

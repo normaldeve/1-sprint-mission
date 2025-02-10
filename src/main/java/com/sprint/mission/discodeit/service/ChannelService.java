@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit.service;
 import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.FindChannel;
+import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +20,9 @@ public interface ChannelService {
 
     List<Channel> findAllPublic();
 
-    List<Channel> findAllPrivate();
+    List<Channel> findAllPrivate(UUID userId);
 
-    Channel updateDescription(Channel channel, String description);
+    Channel update(UpdatePublicChannel.Request request);
 
-    void delete(Channel removeChannel);
+    void delete(UUID channelId);
 }

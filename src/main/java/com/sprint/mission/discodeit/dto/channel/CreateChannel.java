@@ -23,5 +23,6 @@ public class CreateChannel {
         private String name;
         private String description;
         ChannelFormat channelFormat;
+        private List<User> joinUser;
     }
 }
