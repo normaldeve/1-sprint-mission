@@ -1,10 +1,14 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.User;
+import com.sprint.mission.discodeit.dto.message.CreateMessage;
+import com.sprint.mission.discodeit.dto.message.UpdateMessage;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
+import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
@@ -23,41 +27,40 @@ public class BasicMessageService implements MessageService {
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
     private final ChannelRepository channelRepository;
+    private final BinaryContentRepository binaryContentRepository;
 
     @Override
-    public Message create(String content, User writer, Channel channel) {
-        if (content.isEmpty()) {
+    public Message create(CreateMessage.Request request) {
+        if (request.getContent().isEmpty()) {
             throw new ServiceException(ErrorCode.EMPTY_CONTENT);
         }
 
-        existUser(writer);
-        existChannel(channel);
-        Message message = new Message(content, writer, channel);
+        // 작성자와 채널에 대한 검증
+        validUser(request.getWriter().getId());
+        validChannel(request.getChannel().getId());
+
+        // 해당 첨부자료가 레포지토리에 저장되어 있는지 확인
+        for (UUID attachmentID : request.getAttachmentsID()) {
+            Optional<BinaryContent> attachment = binaryContentRepository.findById(attachmentID);
+            if (attachment.isEmpty()) {
+                throw new ServiceException(ErrorCode.CANNOT_FOUND_ATTACHMENT);
+            }
+        }
+
+        Message message = new Message(request.getContent(), request.getWriter().getId(), request.getChannel().getId(), request.getAttachmentsID());
         messageRepository.save(message);
         return message;
     }
 
     @Override
-    public Optional<Message> getMessage(UUID messageID) {
-        return messageRepository.findById(messageID);
-    }
+    public List<Message> findAllByChannelId(UUID channelID) {
+        validChannel(channelID);
 
-    @Override
-    public List<Message> getMessageWithWriter(User writer) {
-        existUser(writer);
-        List<Message> messageList = messageRepository.findAll();
-        return messageList.stream()
-                .filter(message -> message.getWriter().equals(writer))
+        List<Message> messages = messageRepository.findAll();
+        return messages.stream()
+                .filter(message -> message.getChannelID().equals(channelID))
                 .collect(Collectors.toList());
-    }
 
-    @Override
-    public List<Message> getMessageWithChannel(Channel channel) {
-        existChannel(channel);
-        List<Message> messageList = messageRepository.findAll();
-        return messageList.stream()
-                .filter(message -> message.getChannel().equals(channel))
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -66,29 +69,45 @@ public class BasicMessageService implements MessageService {
     }
 
     @Override
-    public Message updateMessageContent(Message message, String newContent) {
-        messageRepository.findById(message.getId())
+    public Message updateMessageContent(UpdateMessage.Request request) {
+        UUID messageId = request.getMessage().getId();
+        validMessage(messageId);
+
+        Message message = messageRepository.findById(messageId)
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
 
-        message.update(newContent);
+        message.update(request.getNewContent(), request.getNewAttachment());
 
-        messageRepository.save(message);
-        return message;
+        return messageRepository.save(message);
     }
+
 
     @Override
     public void deleteMessage(UUID messageID) {
-        Optional<Message> deleteMessage = messageRepository.findById(messageID);
-        messageRepository.delete(deleteMessage.orElse(null));
+        Message deleteMessage = messageRepository.findById(messageID).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
+        messageRepository.delete(deleteMessage);
+        List<UUID> attachmentsID = deleteMessage.getAttachmentsID();
+        if (attachmentsID != null && !attachmentsID.isEmpty()) {
+            attachmentsID.forEach(id -> {
+                binaryContentRepository.findById(id)
+                        .ifPresent(binaryContent -> binaryContentRepository.deleteById(id));
+            });
+        }
+
     }
 
-    private void existUser(User user) {
-        userRepository.findByPhone(user.getPhone())
+    private void validUser(UUID userId) {
+        userRepository.findById(userId)
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
     }
 
-    private void existChannel(Channel channel) {
-        channelRepository.findByName(channel.getName())
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
+    private void validChannel(UUID channelId) {
+        channelRepository.findById(channelId)
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL)));
+    }
+
+    private void validMessage(UUID messageId) {
+        messageRepository.findById(messageId)
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
     }
 }

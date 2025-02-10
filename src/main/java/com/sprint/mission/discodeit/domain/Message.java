@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,21 +18,23 @@ public class Message implements Serializable {
     private Instant createdAt;
     private Instant updatedAt;
     private String content;
-    private User writer;
-    private Channel channel;
-    private String attachmentId;
+    private UUID writerID;
+    private UUID channelID;
+    private List<UUID> attachmentsID;
 
-    public Message(String content, User writer, Channel channel) {
+    public Message(String content, UUID writerID, UUID channelID, List<UUID> attachmentsID) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
         this.content = content;
-        this.writer = writer;
-        this.channel = channel;
+        this.writerID = writerID;
+        this.channelID = channelID;
+        this.attachmentsID = attachmentsID;
     }
 
-    public void update(String content) {
+    public void update(String content, UUID newAttachment) {
         this.content = content;
+        this.attachmentsID.add(newAttachment);
         this.updatedAt = Instant.now();
     }
 

@@ -11,6 +11,7 @@ import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
+import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BasicChannelService implements ChannelService  {
+    private final MessageService messageService;
+
     private final ChannelRepository channelRepository;
     private final ReadStatusRepository readStatusRepository;
     private final MessageRepository messageRepository;
@@ -77,7 +80,7 @@ public class BasicChannelService implements ChannelService  {
         List<Message> messageList = messageRepository.findAll();
 
         for (Message message : messageList) {
-            if (message.getChannel().equals(findChannel)) {
+            if (message.getChannelID().equals(findChannel.getId())) {
                 if (message.getCreatedAt().isAfter(latestMessageTime)) {
                     latestMessageTime = message.getCreatedAt();
                 }
@@ -98,7 +101,7 @@ public class BasicChannelService implements ChannelService  {
         List<Message> messageList = messageRepository.findAll();
 
         for (Message message : messageList) {
-            if (message.getChannel().equals(findChannel)) {
+            if (message.getChannelID().equals(findChannel.getId())) {
                 if (message.getCreatedAt().isAfter(latestMessageTime)) {
                     latestMessageTime = message.getCreatedAt();
                 }
@@ -139,14 +142,29 @@ public class BasicChannelService implements ChannelService  {
         PublicChannel updateChannel = (PublicChannel) channelRepository.findById(request.getChannelId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
         updateChannel.update(request.getName(), request.getDescription(), request.getNewUser());
 
+        channelRepository.save(updateChannel);
         return updateChannel;
     }
 
     @Override
     public void delete(UUID channelId) {
         validChannel(channelId);
-        Optional<Channel> removeChannel = channelRepository.findById(channelId);
-        channelRepository.delete(removeChannel.orElse(null));
+
+        Channel removeChannel = channelRepository.findById(channelId)
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
+        channelRepository.delete(removeChannel);
+
+        // 채널에 포함된 메시지 삭제하기
+        List<Message> messages = messageService.findAllByChannelId(channelId);
+        if (!messages.isEmpty()) {
+            messages.forEach(message -> messageRepository.delete(message));
+        }
+
+        // 채널에 포함된 ReadStatus 삭제하기
+        List<ReadStatus> readStatuses = readStatusRepository.findByChannelId(channelId);
+        if (!readStatuses.isEmpty()) {
+            readStatuses.forEach(readStatus -> readStatusRepository.delete(readStatus));
+        }
     }
 
     // 채널 검증

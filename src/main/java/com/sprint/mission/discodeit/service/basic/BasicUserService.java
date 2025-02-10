@@ -74,7 +74,7 @@ public class BasicUserService implements UserService {
     public UserDTO update(UpdateUser.Request request) {
         User updateUser = userRepository.findById(request.getUserId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
 
-        updateUser.setPassword(request.getPassword()); // 비밀번호를 수정합니다.
+        updateUser.update(request.getPassword()); // 비밀번호를 수정합니다.
 
         if (request.getContent() != null) { // 만약 요청에 content가 있다면 프로필을 새로 교체합니다.
             if (updateUser.getProfileImageId() == null) {
@@ -85,6 +85,8 @@ public class BasicUserService implements UserService {
                 profile.get().updateContent(request.getContent());
             }
         }
+
+        userRepository.save(updateUser);
         return UserDTO.fromDomain(updateUser);
     }
 

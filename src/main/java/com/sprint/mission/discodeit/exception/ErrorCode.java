@@ -13,6 +13,7 @@ public enum ErrorCode {
     CANNOT_FOUND_USER("해당하는 회원을 찾을 수 없습니다"),
     CANNOT_FOUND_PROFILE("해당하는 프로필 데이터를 찾을 수 없습니다"),
     CANNOT_FOUND_USERSTATUS("해당하는 사용자의 상태 정보를 찾을 수 없습니다"),
+    CANNOT_FOUND_ATTACHMENT("해당하는 첨부자료를 찾을 수 없습니다"),
 
     DUPLICATE_NAME("이미 등록된 사용자 이름입니다."),
     DUPLICATE_PHONE("이미 등록된 핸드폰 번호 입니다."),
