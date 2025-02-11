@@ -1,12 +1,8 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.domain.BinaryContent;
-import com.sprint.mission.discodeit.domain.Channel;
 import com.sprint.mission.discodeit.domain.Message;
-import com.sprint.mission.discodeit.domain.User;
-import com.sprint.mission.discodeit.dto.message.CreateMessage;
 import com.sprint.mission.discodeit.dto.message.CreateMessageRequest;
-import com.sprint.mission.discodeit.dto.message.UpdateMessage;
 import com.sprint.mission.discodeit.dto.message.UpdateMessageRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
@@ -106,7 +102,7 @@ public class BasicMessageService implements MessageService {
 
     private void validChannel(UUID channelId) {
         channelRepository.findById(channelId)
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL)));
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
     }
 
     private void validMessage(UUID messageId) {
