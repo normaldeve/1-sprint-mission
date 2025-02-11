@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    UserDTO create(CreateUser.Request request);
+    UserDTO create(CreateUserRequest request);
 
     UserDTO find(UUID userId);
 
     List<UserDTO> findAll();
 
-    UserDTO update(UpdateUser.Request request);
+    UserDTO update(UpdateUser request);
 
     UserDTO delete(UUID id);
 }

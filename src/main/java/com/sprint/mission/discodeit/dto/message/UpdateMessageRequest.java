@@ -11,14 +11,5 @@ import lombok.Setter;
 import java.util.List;
 import java.util.UUID;
 
-public class UpdateMessage {
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Request {
-        private Message message;
-        private String newContent;
-        private UUID newAttachment;
-    }
+public record UpdateMessageRequest(Message message, String newContent, UUID newAttachment) {
 }

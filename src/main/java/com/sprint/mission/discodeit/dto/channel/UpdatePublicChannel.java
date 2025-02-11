@@ -8,15 +8,5 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-public class UpdatePublicChannel {
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Request {
-        private UUID channelId;
-        private String name;
-        private String description;
-        private User newUser;
-    }
+public record UpdatePublicChannel(UUID channelId, String name, String description, User newUser) {
 }

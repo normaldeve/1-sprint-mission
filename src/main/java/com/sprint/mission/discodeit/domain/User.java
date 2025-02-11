@@ -22,9 +22,8 @@ public class User implements Serializable {
     private String phone;
     private String password;
     private UUID profileImageId;
-    private UUID userStatusId;
 
-    public User(String name, String phone, String password, UUID profileImageId, UUID userStatusId) {
+    public User(String name, String phone, String password, UUID profileImageId) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
@@ -32,7 +31,6 @@ public class User implements Serializable {
         this.phone = phone;
         this.password = password;
         this.profileImageId = profileImageId;
-        this.userStatusId = userStatusId;
     }
 
     public void update(String password) {

@@ -10,10 +10,10 @@ import lombok.Getter;
 import java.time.Instant;
 import java.util.UUID;
 
-public class FindChannel {
+public class ChannelDTO {
     @Getter
     @Builder
-    public static class PublicResponse {
+    public static class PublicChannelDTO {
         private UUID id;
         private Instant createdAt;
         private Instant updatedAt;
@@ -23,8 +23,8 @@ public class FindChannel {
         private ChannelType channelType;
         private Instant latestMessageTime;
 
-        public static PublicResponse fromDomain(PublicChannel channel, Instant latestMessageTime) {
-            return FindChannel.PublicResponse.builder()
+        public static PublicChannelDTO fromDomain(PublicChannel channel, Instant latestMessageTime) {
+            return ChannelDTO.PublicChannelDTO.builder()
                     .id(channel.getId())
                     .createdAt(channel.getCreatedAt())
                     .updatedAt(channel.getUpdatedAt())
@@ -39,7 +39,7 @@ public class FindChannel {
 
     @Getter
     @Builder
-    public static class PrivateResponse {
+    public static class PrivateChannelDTO {
         private UUID id;
         private Instant createdAt;
         private Instant updatedAt;
@@ -47,8 +47,8 @@ public class FindChannel {
         private ChannelType channelType;
         private Instant latestMessageTime;
 
-        public static PrivateResponse fromDomain(PrivateChannel channel, Instant latestMessageTime) {
-            return FindChannel.PrivateResponse.builder()
+        public static PrivateChannelDTO fromDomain(PrivateChannel channel, Instant latestMessageTime) {
+            return ChannelDTO.PrivateChannelDTO.builder()
                     .id(channel.getId())
                     .createdAt(channel.getCreatedAt())
                     .updatedAt(channel.getUpdatedAt())

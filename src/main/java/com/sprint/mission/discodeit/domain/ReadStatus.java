@@ -15,18 +15,19 @@ public class ReadStatus { // 사용자가 채널 별 마지막 메시지를 읽�
     private Instant updateAt;
     private UUID userId;
     private UUID channelId;
-    private LocalDateTime lastReadAt;
+    private Instant lastReadAt;
 
-    public ReadStatus(UUID userId, UUID channelId) {
+    public ReadStatus(UUID userId, UUID channelId, Instant lastReadAt) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updateAt = Instant.now();
         this.userId = userId;
         this.channelId = channelId;
-        this.lastReadAt = null;
+        this.lastReadAt = lastReadAt;
     }
 
-    public void updateLastReadTime() {
+    public void updateLastReadTime(Instant lastReadAt) {
         this.updateAt = Instant.now();
+        this.lastReadAt = lastReadAt;
     }
 }
