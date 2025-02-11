@@ -30,8 +30,7 @@ public class JCFChannelRepository implements ChannelRepository {
 
     @Override
     public List<Channel> findAll() {
-        return channelMap.values().stream()
-                .collect(Collectors.toList());
+        return channelMap.values().stream().toList();
     }
 
     @Override

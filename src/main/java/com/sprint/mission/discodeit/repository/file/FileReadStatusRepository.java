@@ -19,7 +19,7 @@ public class FileReadStatusRepository implements ReadStatusRepository {
     private final Path filePath = Path.of("./result/readstatus.ser");
     private final Map<UUID, ReadStatus> readStatusMap;
 
-    public FileReadStatusRepository(Path filePath) {
+    public FileReadStatusRepository() {
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);

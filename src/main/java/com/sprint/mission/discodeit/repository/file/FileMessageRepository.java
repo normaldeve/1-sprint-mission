@@ -49,8 +49,7 @@ public class FileMessageRepository implements MessageRepository {
 
     @Override
     public List<Message> findAll() {
-        return messageMap.values().stream()
-                .collect(Collectors.toList());
+        return messageMap.values().stream().toList();
     }
 
     @Override
