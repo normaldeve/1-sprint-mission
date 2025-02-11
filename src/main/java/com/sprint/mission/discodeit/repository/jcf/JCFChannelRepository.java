@@ -5,7 +5,6 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 public class JCFChannelRepository implements ChannelRepository {
