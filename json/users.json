@@ -1,0 +1,11 @@
+{
+  "ad0d6e75-631f-4088-949e-ae573cde9bb3" : {
+    "id" : "ad0d6e75-631f-4088-949e-ae573cde9bb3",
+    "createdAt" : 1739257528.242419000,
+    "updatedAt" : 1739257528.242419000,
+    "name" : "student1",
+    "phone" : "010-1292-1188",
+    "password" : "Abcdefgh1231!!2",
+    "profileImageId" : null
+  }
+}

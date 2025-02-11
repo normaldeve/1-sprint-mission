@@ -1,25 +1,24 @@
 package com.sprint.mission.discodeit.domain;
 
-import com.sprint.mission.discodeit.util.type.ChannelFormat;
-import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-@Setter
 public abstract class Channel implements Serializable {
-    private UUID id;
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private final UUID id;
     private Instant createdAt;
     private Instant updatedAt;
-    private List<User> joinMembers;
+    private List<UUID> joinMembers;
 
-    public Channel(List<User> joinMembers) {
+    public Channel(List<UUID> joinMembers) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();

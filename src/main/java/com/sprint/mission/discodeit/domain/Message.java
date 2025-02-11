@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -12,9 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@Setter
 public class Message implements Serializable {
-    private UUID id;
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private final UUID id;
     private Instant createdAt;
     private Instant updatedAt;
     private String content;
@@ -40,16 +42,13 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        String writerUserName = writer != null ? writer.getName() : "Unknown";
-        String useChannelName = channel != null ? channel.getName() : "Unknown";
-
         return "Message{" +
                 "id=" + id +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", content='" + content + '\'' +
-                ", writer='" + writerUserName + '\'' +
-                ", channel='" + useChannelName + '\'' +
+                ", writer='" + writerID + '\'' +
+                ", channel='" + channelID + '\'' +
                 '}';
     }
 }

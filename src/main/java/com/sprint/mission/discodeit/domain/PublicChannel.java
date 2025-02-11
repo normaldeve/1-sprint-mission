@@ -3,10 +3,10 @@ package com.sprint.mission.discodeit.domain;
 import com.sprint.mission.discodeit.util.type.ChannelFormat;
 import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @ToString
@@ -16,7 +16,7 @@ public class PublicChannel extends Channel {
     private ChannelFormat channelFormat;
     private ChannelType channelType;
 
-    public PublicChannel(String name, String description, ChannelFormat channelFormat, List<User> joinMember) {
+    public PublicChannel(String name, String description, ChannelFormat channelFormat, List<UUID> joinMember) {
         super(joinMember);
         this.name = name;
         this.description = description;
@@ -24,9 +24,9 @@ public class PublicChannel extends Channel {
         this.channelType = ChannelType.PUBLIC;
     }
 
-    public void update(String name, String description, User newUser) {
+    public void update(String name, String description, UUID newUserID) {
         this.name = name;
         this.description = description;
-        super.getJoinMembers().add(newUser);
+        super.getJoinMembers().add(newUserID);
     }
 }

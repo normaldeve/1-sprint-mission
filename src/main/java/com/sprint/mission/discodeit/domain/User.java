@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,9 +14,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Getter
-@Setter
 public class User implements Serializable {
-    private UUID id;
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private final UUID id;
     private Instant createdAt;
     private Instant updatedAt;
     private String name;

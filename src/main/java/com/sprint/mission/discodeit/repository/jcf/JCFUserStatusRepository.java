@@ -45,4 +45,14 @@ public class JCFUserStatusRepository implements UserStatusRepository {
     public void deleteById(UUID id) {
         repository.remove(id);
     }
+
+    @Override
+    public void deleteByUserId(UUID userID) {
+        List<UUID> keysToRemove = repository.entrySet().stream()
+                .filter(entry -> entry.getValue().getUserId().equals(userID))
+                .map(Map.Entry::getKey)
+                .toList();
+
+        keysToRemove.forEach(repository::remove);
+    }
 }

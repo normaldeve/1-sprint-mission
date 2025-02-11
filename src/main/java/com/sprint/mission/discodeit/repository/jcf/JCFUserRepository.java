@@ -23,6 +23,11 @@ public class JCFUserRepository implements UserRepository {
     }
 
     @Override
+    public boolean userExistById(UUID userID) {
+        return userMap.containsKey(userID);
+    }
+
+    @Override
     public Optional<User> findByPhone(String phone) {
         return userMap.values().stream()
                 .filter(user -> user.getPhone().equals(phone))

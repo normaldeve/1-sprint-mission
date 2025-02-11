@@ -13,7 +13,7 @@ public class CreateChannel {
     @Getter
     @AllArgsConstructor
     public static class PrivateRequest {
-        private List<User> joinUser;
+        private List<UUID> joinUser;
         private ChannelFormat channelFormat;
     }
 
@@ -23,6 +23,6 @@ public class CreateChannel {
         private String name;
         private String description;
         ChannelFormat channelFormat;
-        private List<User> joinUser;
+        private List<UUID> joinUser;
     }
 }

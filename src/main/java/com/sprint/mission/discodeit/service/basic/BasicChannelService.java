@@ -35,8 +35,8 @@ public class BasicChannelService implements ChannelService  {
     @Override
     public Channel createPublicChannel(CreateChannel.PublicRequest request) {
         // User가 UserRepository에 저장되어 있는지 확인
-        for (User user : request.getJoinUser()) {
-            Optional<User> userOptional = userRepository.findById(user.getId());
+        for (UUID userID : request.getJoinUser()) {
+            Optional<User> userOptional = userRepository.findById(userID);
             if (userOptional.isEmpty()) {
                 throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
             }
@@ -49,11 +49,11 @@ public class BasicChannelService implements ChannelService  {
 
     @Override
     public Channel createPrivateChannel(CreateChannel.PrivateRequest request) {
-        List<User> users = request.getJoinUser();
+        List<UUID> users = request.getJoinUser();
 
         // User가 UserRepository에 저장되어 있는지 확인
-        for (User user : users) {
-            Optional<User> userOptional = userRepository.findById(user.getId());
+        for (UUID userID : users) {
+            Optional<User> userOptional = userRepository.findById(userID);
             if (userOptional.isEmpty()) {
                 throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
             }
@@ -63,9 +63,9 @@ public class BasicChannelService implements ChannelService  {
         channelRepository.save(channel);
 
         // User마다 ReadStatus 생성하기
-        for (User user : users) {
+        for (UUID userID : users) {
             Instant lastReadAt = Instant.now();
-            ReadStatus readStatus = new ReadStatus(user.getId(), channel.getId(), lastReadAt);
+            ReadStatus readStatus = new ReadStatus(userID, channel.getId(), lastReadAt);
             readStatusRepository.save(readStatus);
         }
 
@@ -131,17 +131,17 @@ public class BasicChannelService implements ChannelService  {
         return allChannels.stream()
                 .filter(channel -> channel instanceof PrivateChannel)
                 .filter(channel -> channel.getJoinMembers().stream()
-                        .anyMatch(user -> user.getId().equals(userId)))
+                        .anyMatch(userID -> userID.equals(userId)))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Channel update(UpdatePublicChannel request) { // 채널에 새로운 유저 참여, 채널 이름, 설명 수정 가능
         validChannel(request.channelId());
-        validUser(request.newUser().getId());
+        validUser(request.newUserID());
 
         PublicChannel updateChannel = (PublicChannel) channelRepository.findById(request.channelId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
-        updateChannel.update(request.name(), request.description(), request.newUser());
+        updateChannel.update(request.name(), request.description(), request.newUserID());
 
         channelRepository.save(updateChannel);
         return updateChannel;

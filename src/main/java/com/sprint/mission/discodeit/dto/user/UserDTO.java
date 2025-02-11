@@ -29,7 +29,6 @@ public class UserDTO {
                 .name(user.getName())
                 .phone(user.getPhone())
                 .profileImageId(user.getProfileImageId())
-                .userStatusId(user.getUserStatusId())
                 .build();
     }
 }

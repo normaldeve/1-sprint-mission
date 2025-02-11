@@ -62,4 +62,14 @@ public class FileUserStatusRepository implements UserStatusRepository {
         userStatusMap.remove(id);
         saveToFile(userStatusMap, filePath);
     }
+
+    @Override
+    public void deleteByUserId(UUID userID) {
+        List<UUID> keysToRemove = userStatusMap.entrySet().stream()
+                .filter(entry -> entry.getValue().getUserId().equals(userID))
+                .map(Map.Entry::getKey)
+                .toList();
+
+        keysToRemove.forEach(userStatusMap::remove);
+    }
 }

@@ -9,6 +9,8 @@ import java.util.UUID;
 public interface ChannelRepository {
     Channel save(Channel channel);
 
+    boolean channelExistById(UUID channelID);
+
     Optional<Channel> findById(UUID channelId);
 
     List<Channel> findAll();

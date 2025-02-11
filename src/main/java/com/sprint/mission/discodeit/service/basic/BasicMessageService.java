@@ -34,18 +34,21 @@ public class BasicMessageService implements MessageService {
         }
 
         // 작성자와 채널에 대한 검증
-        validUser(request.writer().getId());
-        validChannel(request.channel().getId());
+        validUser(request.writerID());
+        validChannel(request.channelID());
 
         // 해당 첨부자료가 레포지토리에 저장되어 있는지 확인
-        for (UUID attachmentID : request.attachmentsID()) {
-            Optional<BinaryContent> attachment = binaryContentRepository.findById(attachmentID);
-            if (attachment.isEmpty()) {
-                throw new ServiceException(ErrorCode.CANNOT_FOUND_ATTACHMENT);
+        if (request.attachmentsID() != null) {
+            for (UUID attachmentID : request.attachmentsID()) {
+                Optional<BinaryContent> attachment = binaryContentRepository.findById(attachmentID);
+                if (attachment.isEmpty()) {
+                    throw new ServiceException(ErrorCode.CANNOT_FOUND_ATTACHMENT);
+                }
             }
         }
 
-        Message message = new Message(request.content(), request.writer().getId(), request.channel().getId(), request.attachmentsID());
+
+        Message message = new Message(request.content(), request.writerID(), request.channelID(), request.attachmentsID());
         messageRepository.save(message);
         return message;
     }
@@ -96,13 +99,15 @@ public class BasicMessageService implements MessageService {
     }
 
     private void validUser(UUID userId) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+        if (!userRepository.userExistById(userId)) {
+            throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
+        }
     }
 
     private void validChannel(UUID channelId) {
-        channelRepository.findById(channelId)
-                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
+        if (!channelRepository.channelExistById(channelId)) {
+            throw new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL);
+        }
     }
 
     private void validMessage(UUID messageId) {

@@ -3,12 +3,16 @@ package com.sprint.mission.discodeit.domain;
 import com.sprint.mission.discodeit.util.type.BinaryContentType;
 import lombok.Getter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
 @Getter
-public class BinaryContent {
-    private UUID id;
+public class BinaryContent implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private final UUID id;
     private Instant createdAt;
     private byte[] content;
     private BinaryContentType contentType;
