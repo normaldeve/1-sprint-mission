@@ -1,7 +1,5 @@
 package com.sprint.mission.discodeit.dto.channel;
 
-import com.sprint.mission.discodeit.domain.Channel;
-import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.util.type.ChannelFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -54,6 +54,9 @@ public class BasicReadStatusService implements ReadStatusService {
         return readStatusRepository.findAllByUserId(userID);
     }
 
+    /*
+    User가 채널에서 메시지를 읽은 시간을 업데이트
+     */
     @Override
     public ReadStatus update(UpdateReadStatusRequest request) {
         ReadStatus readStatus = readStatusRepository.findById(request.readStatusID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_READSTATUS));

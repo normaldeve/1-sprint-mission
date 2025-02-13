@@ -12,6 +12,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UserDTO {
         private UUID id;
         private Instant createdAt;
@@ -29,6 +30,7 @@ public class UserDTO {
                 .name(user.getName())
                 .phone(user.getPhone())
                 .profileImageId(user.getProfileImageId())
+                .userStatusId(user.getUserStatusId())
                 .build();
     }
 }

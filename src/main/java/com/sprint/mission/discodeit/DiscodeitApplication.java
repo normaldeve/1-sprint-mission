@@ -8,6 +8,9 @@ import com.sprint.mission.discodeit.dto.message.CreateMessageRequest;
 import com.sprint.mission.discodeit.dto.user.CreateUserRequest;
 import com.sprint.mission.discodeit.dto.user.UserDTO;
 import com.sprint.mission.discodeit.dto.userstatus.CreateUserStatusRequest;
+import com.sprint.mission.discodeit.repository.ChannelRepository;
+import com.sprint.mission.discodeit.repository.MessageRepository;
+import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -49,11 +52,11 @@ public class DiscodeitApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(DiscodeitApplication.class, args);
 		UserService userService = context.getBean(UserService.class);
-		System.out.println("userService = " + userService);
 		ChannelService channelService = context.getBean(ChannelService.class);
-		System.out.println("channelService = " + channelService);
 		MessageService messageService = context.getBean(MessageService.class);
-		System.out.println("messageService = " + messageService);
+		System.out.println("UserRepository 의존성 주입 확인 :  " + context.getBean(UserRepository.class));
+		System.out.println("ChannelRepository 의존성 주입 확인 :  " + context.getBean(ChannelRepository.class));
+		System.out.println("MessageRepository 의존성 주입 확인 :  " + context.getBean(MessageRepository.class));
 
 		FileIOUtil.initializeFiles();
 

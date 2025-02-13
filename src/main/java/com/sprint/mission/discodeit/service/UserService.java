@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.service;
 
+import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.dto.user.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface UserService {
 
     List<UserDTO> findAll();
 
-    UserDTO update(UpdateUser request);
+    User update(UpdateUserRequest request);
 
     UserDTO delete(UUID id);
 }

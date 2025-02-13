@@ -10,13 +10,13 @@ import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.util.type.BinaryContentType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -34,7 +34,7 @@ public class BasicUserService implements UserService {
         }
 
         if (!User.isValidPhone(request.phone())) {
-            throw new ServiceException(ErrorCode.INVALID_WRITER);
+            throw new ServiceException(ErrorCode.INVALID_PHONE);
         }
 
         userRepository.findByPhone(request.phone()).ifPresent(x -> {
@@ -48,11 +48,13 @@ public class BasicUserService implements UserService {
                     .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
         }
 
-        User createdUser = new User(request.name(), request.phone(), request.password(), request.profileId());
+        User createdUser = new User(request.name(), request.phone(), request.password(), request.profileId(), null);
         userRepository.save(createdUser); // User 레포지토리에 저장하기
 
         Instant lastActiveAt = Instant.now();
-        UserStatus userStatus = new UserStatus(createdUser.getId(), lastActiveAt); // UserStatus 생성
+        UserStatus userStatus = new UserStatus(createdUser.getId(), lastActiveAt);// UserStatus 생성
+        createdUser.setUserStatusId(userStatus.getId());
+
         userStatusRepository.save(userStatus);
 
         return UserDTO.fromDomain(createdUser);
@@ -73,7 +75,7 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public UserDTO update(UpdateUser request) {
+    public User update(UpdateUserRequest request) {
         User updateUser = userRepository.findById(request.userId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
 
         updateUser.update(request.password()); // 비밀번호를 수정합니다.
@@ -81,15 +83,17 @@ public class BasicUserService implements UserService {
         if (request.profile() != null) { // 만약 요청에 content가 있다면 프로필을 새로 교체합니다.
             if (updateUser.getProfileImageId() == null) {
                 // 새로운 Profile 을 생성하고 저장합니다.
-                //binaryContentRepository 만들고 다시 작성할 것 !!!
-            } else {
-                Optional<BinaryContent> profile = binaryContentRepository.findById(updateUser.getProfileImageId());
-                profile.get().updateContent(request.profile());
+                BinaryContent profile = new BinaryContent(request.profile(), BinaryContentType.IMAGE);
+                binaryContentRepository.save(profile);
+                updateUser.setProfileImageId(profile.getId());
+            } else { // 이미 프로필이 존재한다면
+                BinaryContent profile = binaryContentRepository.findById(updateUser.getProfileImageId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
+                profile.updateContent(request.profile());
+                updateUser.setProfileImageId(profile.getId());
             }
         }
-
         userRepository.save(updateUser);
-        return UserDTO.fromDomain(updateUser);
+        return updateUser;
     }
 
     @Override
@@ -99,7 +103,6 @@ public class BasicUserService implements UserService {
         if (deleteUser.getProfileImageId() != null) { // 만약 프로필이 등록되어 있다면 해당 프로필도 같이 삭제
             binaryContentRepository.deleteById(deleteUser.getProfileImageId());
         }
-
         userStatusRepository.deleteByUserId(deleteUser.getId()); // UserStatus 도 같이 삭제
 
         userRepository.delete(id);

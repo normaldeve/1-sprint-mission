@@ -2,7 +2,10 @@ package com.sprint.mission.discodeit.repository.file;
 
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -13,13 +16,14 @@ import java.util.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
+@Profile("file")
 @Repository
-@Primary
 public class FileUserRepository implements UserRepository {
-    private final Path filePath = Path.of("./result/users.ser");
+    private final Path filePath;
     private final Map<UUID, User> userMap;
 
-    public FileUserRepository() {
+    public FileUserRepository(@Value("${discodeit.repository.user-file-path}") Path filePath) {
+        this.filePath = filePath;
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);

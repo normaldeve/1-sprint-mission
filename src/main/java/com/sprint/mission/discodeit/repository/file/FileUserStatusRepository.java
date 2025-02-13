@@ -2,7 +2,8 @@ package com.sprint.mission.discodeit.repository.file;
 
 import com.sprint.mission.discodeit.domain.UserStatus;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -13,13 +14,16 @@ import java.util.*;
 import static com.sprint.mission.discodeit.util.FileIOUtil.loadFromFile;
 import static com.sprint.mission.discodeit.util.FileIOUtil.saveToFile;
 
+@Profile("file")
 @Repository
-@Primary
 public class FileUserStatusRepository implements UserStatusRepository {
-    private final Path filePath = Path.of("./result/userstatus.ser");
+    private final Path filePath;
     private final Map<UUID, UserStatus> userStatusMap;
 
-    public FileUserStatusRepository() {
+    // 생성자에서 Path를 입력받도록 변경
+    public FileUserStatusRepository(@Value("${discodeit.repository.user-status-file-path}") Path filePath) {
+        this.filePath = filePath;
+
         if (!Files.exists(this.filePath)) {
             try {
                 Files.createFile(this.filePath);
@@ -28,6 +32,7 @@ public class FileUserStatusRepository implements UserStatusRepository {
                 throw new RuntimeException("회원 파일을 초기화 하던 중에 문제가 발생했습니다", e);
             }
         }
+
         this.userStatusMap = loadFromFile(this.filePath);
     }
 

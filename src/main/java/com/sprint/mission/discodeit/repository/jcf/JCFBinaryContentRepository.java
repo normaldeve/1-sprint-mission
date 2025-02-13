@@ -2,10 +2,12 @@ package com.sprint.mission.discodeit.repository.jcf;
 
 import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Profile("jcf")
 @Repository
 public class JCFBinaryContentRepository implements BinaryContentRepository {
     private final Map<UUID, BinaryContent> repository;

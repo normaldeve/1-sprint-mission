@@ -2,10 +2,12 @@ package com.sprint.mission.discodeit.repository.jcf;
 
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Profile("jcf")
 @Repository
 public class JCFUserRepository implements UserRepository {
     private final Map<UUID, User> userMap;

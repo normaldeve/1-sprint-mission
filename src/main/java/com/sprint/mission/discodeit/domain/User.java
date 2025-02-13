@@ -6,14 +6,11 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Getter
+@Setter
 public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -24,8 +21,9 @@ public class User implements Serializable {
     private String phone;
     private String password;
     private UUID profileImageId;
+    private UUID userStatusId;
 
-    public User(String name, String phone, String password, UUID profileImageId) {
+    public User(String name, String phone, String password, UUID profileImageId, UUID userStatusId) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
@@ -33,6 +31,7 @@ public class User implements Serializable {
         this.phone = phone;
         this.password = password;
         this.profileImageId = profileImageId;
+        this.userStatusId = userStatusId;
     }
 
     public void update(String password) {
