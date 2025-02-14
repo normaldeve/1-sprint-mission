@@ -1,0 +1,18 @@
+{
+  "8a2aa151-7b46-4a7f-8109-087091e5ba4f" : {
+    "id" : "8a2aa151-7b46-4a7f-8109-087091e5ba4f",
+    "createdAt" : 1739497294.350500000,
+    "updateAt" : 1739497294.350500000,
+    "lastActiveAt" : 1739497294.350436000,
+    "userId" : "53a66b75-fd69-4b1a-9a00-764619bbb980",
+    "onlineStatusType" : "ACTIVE"
+  },
+  "cbab1e4e-dbb1-454b-a95d-8da59b42ee62" : {
+    "id" : "cbab1e4e-dbb1-454b-a95d-8da59b42ee62",
+    "createdAt" : 1739497294.353037000,
+    "updateAt" : 1739497294.353037000,
+    "lastActiveAt" : 1739497294.353008000,
+    "userId" : "c77a7fde-2f03-4eb7-801e-103577678c98",
+    "onlineStatusType" : "ACTIVE"
+  }
+}

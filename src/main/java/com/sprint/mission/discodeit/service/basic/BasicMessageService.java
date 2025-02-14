@@ -87,6 +87,7 @@ public class BasicMessageService implements MessageService {
         Message message = messageRepository.findById(request.messageID())
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
 
+        // 메시지 수정은 작성자만이 할 수 있다.
         if (!message.getWriterID().equals(request.writerID())) {
             throw new ServiceException(ErrorCode.MESSAGE_EDIT_NOT_ALLOWED);
         }
