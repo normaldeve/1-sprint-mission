@@ -52,6 +52,14 @@ public class JCFUserRepository implements UserRepository {
     }
 
     @Override
+    public List<User> findAllById(List<UUID> userIds) {
+        return userIds.stream()
+                .map(userMap::get)
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+    @Override
     public void delete(UUID id) {
         userMap.remove(id);
     }

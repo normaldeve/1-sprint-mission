@@ -2,8 +2,10 @@ package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.domain.Message;
+import com.sprint.mission.discodeit.domain.UserStatus;
 import com.sprint.mission.discodeit.dto.message.CreateMessageRequest;
 import com.sprint.mission.discodeit.dto.message.UpdateMessageRequest;
+import com.sprint.mission.discodeit.dto.userstatus.UpdateUserStatusRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
@@ -11,9 +13,11 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.MessageService;
+import com.sprint.mission.discodeit.service.UserStatusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +30,7 @@ public class BasicMessageService implements MessageService {
     private final UserRepository userRepository;
     private final ChannelRepository channelRepository;
     private final BinaryContentRepository binaryContentRepository;
+    private final UserStatusService userStatusService;
 
     @Override
     public Message create(CreateMessageRequest request) {
@@ -36,6 +41,11 @@ public class BasicMessageService implements MessageService {
         // 작성자와 채널에 대한 검증
         validUser(request.writerID());
         validChannel(request.channelID());
+
+        // User가 메시지를 만들면 UserStatus 업데이트하기
+        UserStatus userStatus = userStatusService.findByUserId(request.writerID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
+        userStatusService.update(updateRequest);
 
         // 해당 첨부자료가 레포지토리에 저장되어 있는지 확인
         if (request.attachmentsID() != null) {
@@ -71,11 +81,20 @@ public class BasicMessageService implements MessageService {
 
     @Override
     public Message updateMessageContent(UpdateMessageRequest request) {
-        UUID messageId = request.message().getId();
-        validMessage(messageId);
+        validMessage(request.messageID());
+        validUser(request.writerID());
 
-        Message message = messageRepository.findById(messageId)
+        Message message = messageRepository.findById(request.messageID())
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
+
+        if (!message.getWriterID().equals(request.writerID())) {
+            throw new ServiceException(ErrorCode.MESSAGE_EDIT_NOT_ALLOWED);
+        }
+
+        // User가 메시지를 수정하면 UserStatus 업데이트하기
+        UserStatus userStatus = userStatusService.findByUserId(request.writerID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
+        userStatusService.update(updateRequest);
 
         message.update(request.newContent(), request.newAttachment());
 

@@ -4,13 +4,16 @@ import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.domain.UserStatus;
 import com.sprint.mission.discodeit.dto.user.*;
+import com.sprint.mission.discodeit.dto.userstatus.UpdateUserStatusRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.service.UserStatusService;
 import com.sprint.mission.discodeit.util.type.BinaryContentType;
+import com.sprint.mission.discodeit.util.type.OnlineStatusType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,7 @@ public class BasicUserService implements UserService {
     private final UserRepository userRepository;
     private final BinaryContentRepository binaryContentRepository;
     private final UserStatusRepository userStatusRepository;
+    private final UserStatusService userStatusService;
 
     @Override
     public UserDTO create(CreateUserRequest request) {
@@ -68,6 +72,18 @@ public class BasicUserService implements UserService {
     }
 
     @Override
+    public List<UserDTO> getOnlineUsers() {
+        List<UUID> onlineUserIds = userStatusRepository.findAll().stream()
+                .filter(userStatus -> userStatus.getOnlineStatusType().equals(OnlineStatusType.ACTIVE))
+                .map(UserStatus::getUserId)
+                .toList();
+
+        return userRepository.findAllById(onlineUserIds).stream()
+                .map(UserDTO::fromDomain)
+                .toList();
+    }
+
+    @Override
     public List<UserDTO> findAll() {
         return userRepository.findAll().stream()
                 .map(UserDTO::fromDomain)
@@ -92,6 +108,12 @@ public class BasicUserService implements UserService {
                 updateUser.setProfileImageId(profile.getId());
             }
         }
+
+        // User가 회원 정보를 UserStatus 업데이트하기
+        UserStatus userStatus = userStatusService.findByUserId(request.userId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
+        userStatusService.update(updateRequest);
+
         userRepository.save(updateUser);
         return updateUser;
     }

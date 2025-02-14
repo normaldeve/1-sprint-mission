@@ -3,8 +3,6 @@ package com.sprint.mission.discodeit.repository.file;
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -69,6 +67,14 @@ public class FileUserRepository implements UserRepository {
     @Override
     public List<User> findAll() {
         return userMap.values().stream().toList();
+    }
+
+    @Override
+    public List<User> findAllById(List<UUID> userIds) {
+        return userIds.stream()
+                .map(userMap::get)
+                .filter(Objects::nonNull)
+                .toList();
     }
 
     @Override

@@ -11,5 +11,5 @@ import lombok.Setter;
 import java.util.List;
 import java.util.UUID;
 
-public record UpdateMessageRequest(Message message, String newContent, UUID newAttachment) {
+public record UpdateMessageRequest(UUID messageID, String newContent, UUID newAttachment, UUID writerID) {
 }

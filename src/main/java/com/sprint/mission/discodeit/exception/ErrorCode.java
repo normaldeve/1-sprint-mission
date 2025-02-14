@@ -27,7 +27,10 @@ public enum ErrorCode {
     INVALID_WRITER("작성자가 올바르지 않습니다"),
     INVALID_PHONE("올바르지 않은 핸드폰 번호 형식 입니다."),
 
+    MESSAGE_EDIT_NOT_ALLOWED("메시지 수정은 작성자 본인만 가능합니다"),
+
     PASSWORD_MISMATCH("비밀번호가 일치하지 않습니다"),
+    USERNAME_MISMATCH("이름이 일치하지 않습니다"),
     CHANNEL_TYPE_MISMATCH("채널 타입이 일치하지 않습니다");
 
 

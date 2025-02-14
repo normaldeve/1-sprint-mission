@@ -11,6 +11,8 @@ public interface UserService {
 
     UserDTO find(UUID userId);
 
+    List<UserDTO> getOnlineUsers();
+
     List<UserDTO> findAll();
 
     User update(UpdateUserRequest request);

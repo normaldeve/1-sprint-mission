@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.domain.*;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.ChannelDTO;
 import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
+import com.sprint.mission.discodeit.dto.userstatus.UpdateUserStatusRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
@@ -12,6 +13,7 @@ import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
+import com.sprint.mission.discodeit.service.UserStatusService;
 import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class BasicChannelService implements ChannelService  {
     private final ReadStatusRepository readStatusRepository;
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
+    private final UserStatusService userStatusService;
 
     @Override
     public Channel createPublicChannel(CreateChannel.PublicRequest request) {
@@ -126,6 +129,12 @@ public class BasicChannelService implements ChannelService  {
         // 해당 userId를 갖는 User가 repository에 저장되어 있는지 확인하기
         validUser(userId);
 
+        // User가 채널을 찾으면 UserStatus 업데이트하기
+        UserStatus userStatus = userStatusService.findByUserId(userId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
+        userStatusService.update(updateRequest);
+
+
         // Private 채널 내에서 userId가 같은 회원을 joinMembers 리스트에 갖고 있는 채널만 선택한다.
         List<Channel> allChannels = channelRepository.findAll();
         return allChannels.stream()
@@ -139,6 +148,11 @@ public class BasicChannelService implements ChannelService  {
     public Channel update(UpdatePublicChannel request) { // 채널에 새로운 유저 참여, 채널 이름, 설명 수정 가능
         validChannel(request.channelId());
         validUser(request.newUserID());
+
+        // User가 채널에 참여하면 UserStatus 업데이트하기
+        UserStatus userStatus = userStatusService.findByUserId(request.newUserID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
+        userStatusService.update(updateRequest);
 
         PublicChannel updateChannel = (PublicChannel) channelRepository.findById(request.channelId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
         updateChannel.update(request.name(), request.description(), request.newUserID());
