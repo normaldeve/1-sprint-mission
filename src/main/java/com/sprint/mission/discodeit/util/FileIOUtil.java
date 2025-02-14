@@ -50,7 +50,7 @@ public class FileIOUtil {
 
     // 파일 초기화 및 새로 생성
     public static void initializeFiles() {
-        String[] fileNames = { "users.ser", "messages.ser", "channels.ser" };
+        String[] fileNames = { "users.ser", "messages.ser", "channels.ser", "binarycontent.ser", "userstatus.ser" };
         for (String fileName : fileNames) {
             Path filePath = Paths.get("./result/" + fileName);
             try {
