@@ -117,14 +117,6 @@ public class BasicChannelService implements ChannelService  {
     }
 
     @Override
-    public List<Channel> findAllPublic() {
-        List<Channel> allChannels = channelRepository.findAll();
-        return allChannels.stream()
-                .filter(channel -> channel instanceof PublicChannel)  // Public 채널만 필터링
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Channel> findAllPrivate(UUID userId) { // 통일성을 위해 findAllByUserId보다는 findAllPrivate으로 하였습니다.
         // 해당 userId를 갖는 User가 repository에 저장되어 있는지 확인하기
         validUser(userId);
@@ -145,6 +137,11 @@ public class BasicChannelService implements ChannelService  {
     }
 
     @Override
+    public List<Channel> findAll() {
+        return channelRepository.findAll();
+    }
+
+    @Override
     public Channel update(UpdatePublicChannel request) { // 채널에 새로운 유저 참여, 채널 이름, 설명 수정 가능
         validChannel(request.channelId());
         validUser(request.newUserID());
@@ -162,7 +159,7 @@ public class BasicChannelService implements ChannelService  {
     }
 
     @Override
-    public void delete(UUID channelId) {
+    public Channel deletePrivate(UUID channelId) {
         validChannel(channelId);
 
         Channel removeChannel = channelRepository.findById(channelId)
@@ -179,6 +176,24 @@ public class BasicChannelService implements ChannelService  {
         readStatusRepository.delete(readStatuses);
 
         channelRepository.delete(removeChannel);
+        return removeChannel;
+    }
+
+    @Override
+    public Channel deletePublic(UUID channelId) {
+        validChannel(channelId);
+
+        Channel removeChannel = channelRepository.findById(channelId)
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
+
+        // 채널에 포함된 메시지 삭제하기
+        List<Message> messages = messageService.findAllByChannelId(channelId);
+        if (!messages.isEmpty()) {
+            messages.forEach(message -> messageRepository.delete(message));
+        }
+
+        channelRepository.delete(removeChannel);
+        return removeChannel;
     }
 
     // 채널 검증
