@@ -10,14 +10,12 @@ import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
 import com.sprint.mission.discodeit.util.FileIOUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-@Slf4j
 @SpringBootTest
 public class UserServiceTest {
     @Autowired
@@ -45,7 +43,6 @@ public class UserServiceTest {
     void createUser() {
         CreateUserRequest request = new CreateUserRequest("홍길동", "010-2189-9191", "Aldnweasdf1234!", null);
         UserDTO user = userService.create(request);
-        log.info(user.toString());
         Assertions.assertEquals("홍길동", user.getName());
     }
 

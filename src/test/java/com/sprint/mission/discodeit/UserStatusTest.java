@@ -10,15 +10,12 @@ import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
 import com.sprint.mission.discodeit.util.FileIOUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.nio.file.Path;
-import java.util.Optional;
 
-@Slf4j
 @SpringBootTest
 public class UserStatusTest {
     @Autowired
@@ -47,9 +44,6 @@ public class UserStatusTest {
         CreateUserRequest request = new CreateUserRequest("홍길동", "010-2189-9191", "Aldnweasdf1234!", null);
         UserDTO user = userService.create(request); // 유저 생성과 동시에 UserStatus가 생성된다.
         UserStatus findUserStatus = userStatusService.findByUserId(user.getId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
-
-        log.info(user.toString());
-        log.info(findUserStatus.toString());
 
         Assertions.assertNotNull(findUserStatus);
     }
