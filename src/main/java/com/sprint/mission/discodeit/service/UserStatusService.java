@@ -11,9 +11,9 @@ import java.util.UUID;
 public interface UserStatusService {
     UserStatus create(CreateUserStatusRequest request);
 
-    Optional<UserStatus> find(UUID id);
+    UserStatus find(UUID id);
 
-    Optional<UserStatus> findByUserId(UUID userID);
+    UserStatus findByUserId(UUID userID);
 
     List<UserStatus> findAll();
 

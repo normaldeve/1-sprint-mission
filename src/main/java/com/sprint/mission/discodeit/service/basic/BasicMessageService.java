@@ -43,7 +43,7 @@ public class BasicMessageService implements MessageService {
         validChannel(request.channelID());
 
         // User가 메시지를 만들면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.writerID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UserStatus userStatus = userStatusService.findByUserId(request.writerID());
         UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
         userStatusService.update(updateRequest);
 
@@ -93,7 +93,7 @@ public class BasicMessageService implements MessageService {
         }
 
         // User가 메시지를 수정하면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.writerID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UserStatus userStatus = userStatusService.findByUserId(request.writerID());
         UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
         userStatusService.update(updateRequest);
 

@@ -33,7 +33,7 @@ public class BasicAuthService {
         }
 
         // 로그인을 하면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.userID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UserStatus userStatus = userStatusService.findByUserId(request.userID());
         UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
         userStatusService.update(updateRequest);
 

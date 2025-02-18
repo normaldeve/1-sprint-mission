@@ -130,7 +130,7 @@ public class BasicChannelService implements ChannelService  {
         validUser(userId);
 
         // User가 채널을 찾으면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(userId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UserStatus userStatus = userStatusService.findByUserId(userId);
         UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
         userStatusService.update(updateRequest);
 
@@ -150,7 +150,7 @@ public class BasicChannelService implements ChannelService  {
         validUser(request.newUserID());
 
         // User가 채널에 참여하면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.newUserID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UserStatus userStatus = userStatusService.findByUserId(request.newUserID());
         UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
         userStatusService.update(updateRequest);
 

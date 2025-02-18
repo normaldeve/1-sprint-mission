@@ -36,13 +36,19 @@ public class BasicUserStatusService implements UserStatusService {
     }
 
     @Override
-    public Optional<UserStatus> find(UUID id) {
-        return userStatusRepository.findById(id);
+    public UserStatus find(UUID id) {
+        UserStatus userStatus = userStatusRepository.findById(id).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        // UserStatus를 조회하면 Online 상태 업데이트 하기
+        userStatus.setOnlineStatusType(userStatus.isOnline());
+        return userStatusRepository.save(userStatus);
     }
 
     @Override
-    public Optional<UserStatus> findByUserId(UUID userID) {
-        return userStatusRepository.findByUserId(userID);
+    public UserStatus findByUserId(UUID userID) {
+        UserStatus userStatus = userStatusRepository.findByUserId(userID).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        // UserStatus를 조회하면 Online 상태 업데이트 하기
+        userStatus.setOnlineStatusType(userStatus.isOnline());
+        return userStatusRepository.save(userStatus);
     }
 
     @Override

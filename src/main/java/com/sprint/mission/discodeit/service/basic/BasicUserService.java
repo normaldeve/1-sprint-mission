@@ -111,7 +111,7 @@ public class BasicUserService implements UserService {
         }
 
         // User가 회원 정보를 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.userId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+        UserStatus userStatus = userStatusService.findByUserId(request.userId());
         UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
         userStatusService.update(updateRequest);
 
