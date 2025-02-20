@@ -16,5 +16,5 @@ public interface MessageService {
 
     Message updateMessageContent(UUID writerID, UpdateMessageRequest request);
 
-    void deleteMessage(UUID messageID);
+    Message deleteMessage(UUID messageID);
 }

@@ -40,9 +40,12 @@ public class BasicBinaryContentService implements BinaryContentService {
 
     @Override
     public List<BinaryContent> findAllByIdIn(List<UUID> uuidList) {
-        return binaryContentRepository.findAll().stream()
-                .filter(bi -> uuidList.contains(bi.getId()))
-                .collect(Collectors.toList());
+        return binaryContentRepository.findAllIdIn(uuidList);
+    }
+
+    @Override
+    public List<BinaryContent> findAll() {
+        return binaryContentRepository.findAll();
     }
 
     @Override

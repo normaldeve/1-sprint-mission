@@ -152,8 +152,8 @@ public class BasicChannelService implements ChannelService  {
         }
 
         // 채널에 포함된 ReadStatus 삭제하기
-        ReadStatus readStatuses = readStatusRepository.findByChannelId(channelId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_READSTATUS));
-        readStatusRepository.delete(readStatuses);
+        List<ReadStatus> readStatuses = readStatusRepository.findAllByChannelId(channelId);
+        readStatusRepository.deleteAll(readStatuses);
 
         channelRepository.delete(removeChannel);
         return removeChannel;

@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.aspect.UpdateReadStatus;
 import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.domain.Message;
@@ -57,6 +58,7 @@ public class BasicMessageService implements MessageService {
         return message;
     }
 
+    @UpdateReadStatus
     @Override
     public List<Message> findAllByChannelId(UUID channelID) {
         validChannel(channelID);
@@ -90,7 +92,7 @@ public class BasicMessageService implements MessageService {
 
 
     @Override
-    public void deleteMessage(UUID messageID) {
+    public Message deleteMessage(UUID messageID) {
         Message deleteMessage = messageRepository.findById(messageID).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
 
         List<UUID> attachmentsID = deleteMessage.getAttachmentsID();
@@ -101,7 +103,8 @@ public class BasicMessageService implements MessageService {
             });
         }
 
-        messageRepository.delete(deleteMessage);
+        Message delete = messageRepository.delete(deleteMessage);
+        return delete;
     }
 
     private void validUser(UUID userId) {

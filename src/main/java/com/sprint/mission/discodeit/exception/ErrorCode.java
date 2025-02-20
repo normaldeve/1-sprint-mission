@@ -26,6 +26,7 @@ public enum ErrorCode {
     INVALID_PASSWORD("올바르지 않은 비밀번호 형식 입니다. 비밀번호는 8자리 이상 15자리 이하 대문자 및 특수문자 하나 이상 포함해야 합니다."),
     INVALID_WRITER("작성자가 올바르지 않습니다"),
     INVALID_PHONE("올바르지 않은 핸드폰 번호 형식 입니다."),
+    INVALID_PROFILE("기존 프로필과 동일한 프로필입니다"),
 
     MESSAGE_EDIT_NOT_ALLOWED("메시지 수정은 작성자 본인만 가능합니다"),
     PASSWORD_EDIT_NOT_ALLOWED("이전 비밀번호와 일치하지 않습니다"),

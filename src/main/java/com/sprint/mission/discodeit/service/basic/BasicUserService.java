@@ -83,19 +83,25 @@ public class BasicUserService implements UserService {
 
     @UpdateUserStatus
     @Override
-    public User update(UUID userId, UpdateUserRequest request) {
+    public User updatePassword(UUID userId, UpdatePasswordRequest request) {
         User updateUser = userRepository.findById(userId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
-
-        updateUser.update(request.oldPassword(), request.newPassword()); // 비밀번호를 수정합니다.
-
-        if (request.fileId() != null) { // 만약 요청에 content가 있다면 프로필을 새로 교체합니다.
-            BinaryContent newBinaryContent = binaryContentRepository.findById(request.fileId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
-            updateUser.setProfileImageId(newBinaryContent.getId());
-        }
+        updateUser.updatePassword(request.oldPassword(), request.newPassword()); // 비밀번호를 수정합니다.
 
         userRepository.save(updateUser);
         return updateUser;
     }
+
+    @UpdateUserStatus
+    @Override
+    public User updateProfile(UUID userId, UpdateProfileRequest request) {
+        User updateUser = userRepository.findById(userId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+        BinaryContent profile = binaryContentRepository.findById(request.profileId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
+
+        updateUser.updateProfile(request.profileId(), request.newProfileId());
+        userRepository.save(updateUser);
+        return updateUser;
+    }
+
 
     @Override
     public UserDTO delete(UUID id) {

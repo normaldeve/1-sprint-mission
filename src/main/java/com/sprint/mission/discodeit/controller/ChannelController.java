@@ -12,48 +12,48 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/channel")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ChannelController {
     private final ChannelService channelService;
 
-    @RequestMapping(value = "/create/public", method = RequestMethod.POST)
+    @PostMapping( "/channels/public")
     public ResponseEntity<Channel> createPublicChannel(@RequestBody CreateChannel.PublicRequest request) {
         Channel publicChannel = channelService.createPublicChannel(request);
         return ResponseEntity.ok(publicChannel);
     }
 
-    @RequestMapping(value = "/create/private", method = RequestMethod.POST)
+    @PostMapping("/channels/private")
     public ResponseEntity<Channel> createPrivateChannel(@RequestBody CreateChannel.PrivateRequest request) {
         Channel privateChannel = channelService.createPrivateChannel(request);
         return ResponseEntity.ok(privateChannel);
     }
 
-    @RequestMapping(value = "/get/public", method = RequestMethod.GET)
+    @GetMapping("/channels/public")
     public ResponseEntity<ChannelDTO.PublicChannelDTO> getPublicChannel(@RequestParam("id") UUID uuid) {
         ChannelDTO.PublicChannelDTO publicChannel = channelService.findPublicChannel(uuid);
         return ResponseEntity.ok(publicChannel);
     }
 
-    @RequestMapping(value = "/get/private", method = RequestMethod.GET)
+    @GetMapping("/channels/private")
     public ResponseEntity<ChannelDTO.PrivateChannelDTO> getPrivateChannel(@RequestParam("id") UUID uuid) {
         ChannelDTO.PrivateChannelDTO privateChannel = channelService.findPrivateChannel(uuid);
         return ResponseEntity.ok(privateChannel);
     }
 
-    @RequestMapping(value = "getAll/private", method = RequestMethod.GET)
+    @GetMapping("/channels")
     public ResponseEntity<List<Channel>> getAllPrivateChannel(@RequestParam("id") UUID userId) {
         List<Channel> allPrivate = channelService.findAllPrivate(userId);
         return ResponseEntity.ok(allPrivate);
     }
 
-    @RequestMapping(value = "getAll", method = RequestMethod.GET)
+    @GetMapping("/channels/all")
     public ResponseEntity<List<Channel>> getAllPrivateChannel() {
         List<Channel> allChannel = channelService.findAll();
         return ResponseEntity.ok(allChannel);
     }
 
-    @RequestMapping(value = "delete/private", method = RequestMethod.DELETE)
+    @DeleteMapping("/channels/private")
     public ResponseEntity<String> deletePrivateChannel(@RequestParam("id") UUID uuid) {
         Channel removeChannel = channelService.deletePrivate(uuid);
         return ResponseEntity.ok(
@@ -62,7 +62,7 @@ public class ChannelController {
         );
     }
 
-    @RequestMapping(value = "delete/public", method = RequestMethod.DELETE)
+    @DeleteMapping("/channels/public")
     public ResponseEntity<String> deletePublicChannel(@RequestParam("id") UUID uuid) {
         Channel removeChannel = channelService.deletePublic(uuid);
         return ResponseEntity.ok(

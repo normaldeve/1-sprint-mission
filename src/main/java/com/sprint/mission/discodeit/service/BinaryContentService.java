@@ -2,7 +2,6 @@ package com.sprint.mission.discodeit.service;
 
 import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.dto.binarycontent.SaveFileRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +14,8 @@ public interface BinaryContentService {
     Optional<BinaryContent> find(UUID id);
 
     List<BinaryContent> findAllByIdIn(List<UUID> uuidList);
+
+    List<BinaryContent> findAll();
 
     void delete(UUID id);
 }

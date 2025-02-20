@@ -55,6 +55,17 @@ public class FileBinaryContentRepository implements BinaryContentRepository {
     }
 
     @Override
+    public List<BinaryContent> findAllIdIn(List<UUID> uuidList) {
+        if (uuidList == null || uuidList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return uuidList.stream()
+                .map(repository::get)  // UUID에 해당하는 BinaryContent 찾기
+                .filter(Objects::nonNull)  // 존재하는 항목만 필터링
+                .toList();
+    }
+
+    @Override
     public void deleteById(UUID uuid) {
         repository.remove(uuid);
         saveToFile(repository, filePath);

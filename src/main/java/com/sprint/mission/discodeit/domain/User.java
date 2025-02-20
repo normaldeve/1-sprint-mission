@@ -42,11 +42,19 @@ public class User implements Serializable {
         this.userStatusId = userStatusId;
     }
 
-    public void update(String oldPassword, String newPassword) {
+    public void updatePassword(String oldPassword, String newPassword) {
         if (!this.password.equals(oldPassword) || oldPassword.equals(newPassword)) {
             throw new ServiceException(ErrorCode.INVALID_PASSWORD);
         }
         this.password = newPassword;
+        this.updatedAt = Instant.now();
+    }
+
+    public void updateProfile(UUID profileImageId, UUID newProfileImageId) {
+        if (!this.profileImageId.equals(profileImageId) || profileImageId.equals(newProfileImageId)) {
+            throw new ServiceException(ErrorCode.INVALID_PROFILE);
+        }
+        this.profileImageId = profileImageId;
         this.updatedAt = Instant.now();
     }
 
