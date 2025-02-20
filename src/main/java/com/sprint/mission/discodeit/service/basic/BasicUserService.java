@@ -34,14 +34,6 @@ public class BasicUserService implements UserService {
 
     @Override
     public UserDTO create(CreateUserRequest request) {
-        if (!User.isValidPassword(request.password())) {
-            throw new ServiceException(ErrorCode.INVALID_PASSWORD);
-        }
-
-        if (!User.isValidPhone(request.phone())) {
-            throw new ServiceException(ErrorCode.INVALID_PHONE);
-        }
-
         userRepository.findByPhone(request.phone()).ifPresent(x -> {
                     throw new ServiceException(ErrorCode.DUPLICATE_PHONE);}); // 저는 이메일 대신 핸드폰 번호로 했습니다
 
@@ -97,17 +89,9 @@ public class BasicUserService implements UserService {
 
         updateUser.update(request.password()); // 비밀번호를 수정합니다.
 
-        if (request.profile() != null) { // 만약 요청에 content가 있다면 프로필을 새로 교체합니다.
-            if (updateUser.getProfileImageId() == null) {
-                // 새로운 Profile 을 생성하고 저장합니다.
-                BinaryContent profile = new BinaryContent(request.profile(), BinaryContentType.IMAGE);
-                binaryContentRepository.save(profile);
-                updateUser.setProfileImageId(profile.getId());
-            } else { // 이미 프로필이 존재한다면
-                BinaryContent profile = binaryContentRepository.findById(updateUser.getProfileImageId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
-                profile.updateContent(request.profile());
-                updateUser.setProfileImageId(profile.getId());
-            }
+        if (request.fileId() != null) { // 만약 요청에 content가 있다면 프로필을 새로 교체합니다.
+            BinaryContent newBinaryContent = binaryContentRepository.findById(request.fileId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
+            updateUser.setProfileImageId(newBinaryContent.getId());
         }
 
         // User가 회원 정보를 UserStatus 업데이트하기

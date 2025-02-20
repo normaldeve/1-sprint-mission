@@ -1,7 +1,8 @@
 package com.sprint.mission.discodeit.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -9,16 +10,21 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private final UUID id;
     private Instant createdAt;
     private Instant updatedAt;
+
+    @NotNull(message = "회원 이름은 필수 입력 값입니다")
     private String name;
+
+    @Pattern(regexp = "^010-\\d{4}-\\d{4}$", message = "전화번호 형식에 맞춰 입력해주세요")
     private String phone;
+
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[\\W_])(?=.*[a-zA-Z\\d]).{8,15}$", message = "8자리 이상 15자리 이하 대문자 및 특수문자 하나 이상 포함해야 합니다")
     private String password;
     private UUID profileImageId;
     private UUID userStatusId;
@@ -39,17 +45,6 @@ public class User implements Serializable {
         this.updatedAt = Instant.now();
     }
 
-    //8자리 이상 15자리 이하 대문자 및 특수문자 하나 이상 포함해야 한다
-    public static boolean isValidPassword(String password) {
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[\\W_])(?=.*[a-zA-Z\\d]).{8,15}$";
-        return password.matches(passwordRegex);
-    }
-
-    public static boolean isValidPhone(String phoneNumber) {
-        String phoneRegex = "^010-\\d{4}-\\d{4}$";
-        return phoneNumber.matches(phoneRegex);
-    }
-
     @Override
     public boolean equals(Object o) { // User 객체는 UUID, name, phone 3개의 필드가 동일하면 같은 유저라고 판단한다.
         if (o == null || getClass() != o.getClass()) return false;
@@ -60,17 +55,5 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, phone);
-    }
-
-    @Override
-    public String toString() {
-        return "User {\n" +
-                "  id=" + id + ",\n" +
-                "  name='" + name + "',\n" +
-                "  phone='" + phone + "',\n" +
-                "  password='" + password + "',\n" +
-                "  createdAt=" + createdAt + ",\n" +
-                "  updatedAt=" + updatedAt + "\n" +
-                "}";
     }
 }

@@ -22,18 +22,14 @@ public class BasicAuthService {
     private final UserStatusService userStatusService;
 
     public UserDTO login(LoginRequest request) { // 요청으로 name과 password가 들어온 상황
-        User findUser = userRepository.findById(request.userID()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+        User findUser = userRepository.findByName(request.userName()).orElseThrow(() -> new ServiceException(ErrorCode.USERNAME_MISMATCH));
 
         if (!findUser.getPassword().equals(request.password())) { // 비밀번호가 일치하지 않으면 에러 발생
             throw new ServiceException(ErrorCode.PASSWORD_MISMATCH);
         }
 
-        if (!findUser.getName().equals(request.userName())) {
-            throw new ServiceException(ErrorCode.USERNAME_MISMATCH);
-        }
-
         // 로그인을 하면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.userID());
+        UserStatus userStatus = userStatusService.findByUserId(findUser.getId());
         UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
         userStatusService.update(updateRequest);
 
