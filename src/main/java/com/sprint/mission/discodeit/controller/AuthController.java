@@ -5,10 +5,9 @@ import com.sprint.mission.discodeit.dto.user.UserDTO;
 import com.sprint.mission.discodeit.service.basic.BasicAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
@@ -17,8 +16,8 @@ public class AuthController {
     private final BasicAuthService authService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        UserDTO login = authService.login(request);
+    public ResponseEntity<String> login(@RequestParam("id") UUID userId, @RequestBody LoginRequest request) {
+        UserDTO login = authService.login(userId, request);
         return ResponseEntity.ok(
                 "User Id: " + login.getId() +
                         "User Name: " + login.getName() +

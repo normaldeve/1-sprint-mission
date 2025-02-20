@@ -16,7 +16,7 @@ public interface UserService {
 
     List<UserDTO> findAll();
 
-    User update(UpdateUserRequest request);
+    User update(UUID userId, UpdateUserRequest request);
 
     UserDTO delete(UUID id);
 }

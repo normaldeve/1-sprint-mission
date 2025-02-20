@@ -1,10 +1,10 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.*;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.ChannelDTO;
 import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
-import com.sprint.mission.discodeit.dto.userstatus.UpdateUserStatusRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
@@ -106,16 +106,11 @@ public class BasicChannelService implements ChannelService  {
         return ChannelDTO.PrivateChannelDTO.fromDomain(findChannel, latestMessageTime);
     }
 
+    @UpdateUserStatus
     @Override
     public List<Channel> findAllPrivate(UUID userId) { // 통일성을 위해 findAllByUserId보다는 findAllPrivate으로 하였습니다.
         // 해당 userId를 갖는 User가 repository에 저장되어 있는지 확인하기
         validUser(userId);
-
-        // User가 채널을 찾으면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(userId);
-        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
-        userStatusService.update(updateRequest);
-
 
         // Private 채널 내에서 userId가 같은 회원을 joinMembers 리스트에 갖고 있는 채널만 선택한다.
         List<Channel> allChannels = channelRepository.findAll();
@@ -135,11 +130,6 @@ public class BasicChannelService implements ChannelService  {
     public Channel update(UpdatePublicChannel request) { // 채널에 새로운 유저 참여, 채널 이름, 설명 수정 가능
         validChannel(request.channelId());
         validUser(request.newUserID());
-
-        // User가 채널에 참여하면 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.newUserID());
-        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
-        userStatusService.update(updateRequest);
 
         PublicChannel updateChannel = (PublicChannel) channelRepository.findById(request.channelId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
         updateChannel.update(request.name(), request.description(), request.newUserID());

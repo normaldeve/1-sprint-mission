@@ -1,10 +1,10 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.domain.UserStatus;
 import com.sprint.mission.discodeit.dto.user.*;
-import com.sprint.mission.discodeit.dto.userstatus.UpdateUserStatusRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
@@ -12,7 +12,6 @@ import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
-import com.sprint.mission.discodeit.util.type.BinaryContentType;
 import com.sprint.mission.discodeit.util.type.OnlineStatusType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -83,9 +81,10 @@ public class BasicUserService implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @UpdateUserStatus
     @Override
-    public User update(UpdateUserRequest request) {
-        User updateUser = userRepository.findById(request.userId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+    public User update(UUID userId, UpdateUserRequest request) {
+        User updateUser = userRepository.findById(userId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
 
         updateUser.update(request.oldPassword(), request.newPassword()); // 비밀번호를 수정합니다.
 
@@ -93,11 +92,6 @@ public class BasicUserService implements UserService {
             BinaryContent newBinaryContent = binaryContentRepository.findById(request.fileId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
             updateUser.setProfileImageId(newBinaryContent.getId());
         }
-
-        // User가 회원 정보를 UserStatus 업데이트하기
-        UserStatus userStatus = userStatusService.findByUserId(request.userId());
-        UpdateUserStatusRequest updateRequest = new UpdateUserStatusRequest(userStatus.getId(), Instant.now());
-        userStatusService.update(updateRequest);
 
         userRepository.save(updateUser);
         return updateUser;
