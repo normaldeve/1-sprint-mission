@@ -15,6 +15,7 @@ public class BinaryContent implements Serializable {
     private final UUID id;
     private Instant createdAt;
     private byte[] content;
+    private String filePath;
     private BinaryContentType contentType;
 
     public BinaryContent(byte[] content, BinaryContentType contentType) {

@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface ReadStatusService {
     ReadStatus create(CreateReadStatusRequest request);
 
-    Optional<ReadStatus> find(UUID id);
+    ReadStatus find(UUID id);
 
     List<ReadStatus> findAllByUserId(UUID userID);
 

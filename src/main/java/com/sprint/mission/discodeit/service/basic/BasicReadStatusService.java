@@ -44,8 +44,8 @@ public class BasicReadStatusService implements ReadStatusService {
     }
 
     @Override
-    public Optional<ReadStatus> find(UUID id) {
-        return readStatusRepository.findById(id);
+    public ReadStatus find(UUID id) {
+        return readStatusRepository.findById(id).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_READSTATUS));
     }
 
     @Override
