@@ -87,7 +87,7 @@ public class BasicUserService implements UserService {
     public User update(UpdateUserRequest request) {
         User updateUser = userRepository.findById(request.userId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
 
-        updateUser.update(request.password()); // 비밀번호를 수정합니다.
+        updateUser.update(request.oldPassword(), request.newPassword()); // 비밀번호를 수정합니다.
 
         if (request.fileId() != null) { // 만약 요청에 content가 있다면 프로필을 새로 교체합니다.
             BinaryContent newBinaryContent = binaryContentRepository.findById(request.fileId()).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));

@@ -4,5 +4,5 @@ import com.sprint.mission.discodeit.util.type.BinaryContentType;
 
 import java.util.UUID;
 
-public record UpdateUserRequest(UUID userId, String password, UUID fileId) {
+public record UpdateUserRequest(UUID userId, String oldPassword ,String newPassword, UUID fileId) {
 }

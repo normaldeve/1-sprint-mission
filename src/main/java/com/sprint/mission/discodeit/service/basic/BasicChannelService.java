@@ -79,18 +79,8 @@ public class BasicChannelService implements ChannelService  {
     public ChannelDTO.PublicChannelDTO findPublicChannel(UUID channelId) {
         PublicChannel findChannel = (PublicChannel) channelRepository.findById(channelId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
 
-        // 해당 채널의 가장 최근 메시지의 시간 정보를 포함합니다.
-        Instant latestMessageTime = Instant.EPOCH; // 초기값 설정
-        List<Message> messageList = messageRepository.findAll();
-
-        for (Message message : messageList) {
-            if (message.getChannelID().equals(findChannel.getId())) {
-                if (message.getCreatedAt().isAfter(latestMessageTime)) {
-                    latestMessageTime = message.getCreatedAt();
-                }
-            }
-        }
-        return ChannelDTO.PublicChannelDTO.fromDomain(findChannel, latestMessageTime);
+        Message lastestMessage = messageRepository.findLatestByChannelId(channelId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
+        return ChannelDTO.PublicChannelDTO.fromDomain(findChannel, lastestMessage.getCreatedAt());
     }
 
     @Override

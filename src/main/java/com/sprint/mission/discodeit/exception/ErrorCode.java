@@ -28,6 +28,7 @@ public enum ErrorCode {
     INVALID_PHONE("올바르지 않은 핸드폰 번호 형식 입니다."),
 
     MESSAGE_EDIT_NOT_ALLOWED("메시지 수정은 작성자 본인만 가능합니다"),
+    PASSWORD_EDIT_NOT_ALLOWED("이전 비밀번호와 일치하지 않습니다"),
 
     PASSWORD_MISMATCH("비밀번호가 일치하지 않습니다"),
     USERNAME_MISMATCH("이름이 일치하지 않습니다"),

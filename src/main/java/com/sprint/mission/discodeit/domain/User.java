@@ -1,5 +1,7 @@
 package com.sprint.mission.discodeit.domain;
 
+import com.sprint.mission.discodeit.exception.ErrorCode;
+import com.sprint.mission.discodeit.exception.ServiceException;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -40,8 +42,11 @@ public class User implements Serializable {
         this.userStatusId = userStatusId;
     }
 
-    public void update(String password) {
-        this.password = password;
+    public void update(String oldPassword, String newPassword) {
+        if (!this.password.equals(oldPassword) || oldPassword.equals(newPassword)) {
+            throw new ServiceException(ErrorCode.INVALID_PASSWORD);
+        }
+        this.password = newPassword;
         this.updatedAt = Instant.now();
     }
 
