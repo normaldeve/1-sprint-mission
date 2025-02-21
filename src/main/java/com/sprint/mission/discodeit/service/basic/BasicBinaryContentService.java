@@ -1,17 +1,17 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.domain.BinaryContent;
-import com.sprint.mission.discodeit.dto.binarycontent.SaveFileRequest;
+import com.sprint.mission.discodeit.exception.ErrorCode;
+import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,23 +19,24 @@ public class BasicBinaryContentService implements BinaryContentService {
     private final BinaryContentRepository binaryContentRepository;
 
     @Override
-    public BinaryContent saveFile(SaveFileRequest request) throws IOException {
-        if (request.file().isEmpty()) {
+    public BinaryContent saveFile(MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
             throw new IllegalArgumentException("파일이 비어 있습니다.");
         }
 
-        String originalFileName = request.file().getOriginalFilename();
+        String originalFileName = file.getOriginalFilename();
         String storedFileName = UUID.randomUUID() + "_" + originalFileName; // 고유 저장 이름
-        byte[] content = request.file().getBytes();
+        byte[] content = file.getBytes();
+        String contentType = file.getContentType();
 
-        BinaryContent binaryContent = new BinaryContent(content, storedFileName, request.contentType(), originalFileName, storedFileName);
+        BinaryContent binaryContent = new BinaryContent(content, storedFileName, contentType, originalFileName, storedFileName);
 
         return binaryContentRepository.save(binaryContent);
     }
 
     @Override
-    public Optional<BinaryContent> find(UUID id) {
-        return binaryContentRepository.findById(id);
+    public BinaryContent find(UUID id) {
+        return binaryContentRepository.findById(id).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
     }
 
     @Override

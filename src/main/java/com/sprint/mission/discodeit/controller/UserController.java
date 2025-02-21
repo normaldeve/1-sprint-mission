@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.dto.user.UpdatePasswordRequest;
 import com.sprint.mission.discodeit.dto.user.UpdateProfileRequest;
 import com.sprint.mission.discodeit.dto.user.UserDTO;
 import com.sprint.mission.discodeit.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users")
-    public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody CreateUserRequest request) {
         UserDTO userDTO = userService.create(request);
         return ResponseEntity.ok(userDTO);
     }
@@ -31,8 +32,8 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getAllUser() {
+    @GetMapping("/user/findAll")
+    public ResponseEntity<List<UserDTO>> findAllUsers() {
         List<UserDTO> all = userService.findAll();
         return ResponseEntity.ok(all);
     }

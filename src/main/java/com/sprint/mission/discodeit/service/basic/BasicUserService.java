@@ -32,8 +32,8 @@ public class BasicUserService implements UserService {
 
     @Override
     public UserDTO create(CreateUserRequest request) {
-        userRepository.findByPhone(request.phone()).ifPresent(x -> {
-                    throw new ServiceException(ErrorCode.DUPLICATE_PHONE);}); // 저는 이메일 대신 핸드폰 번호로 했습니다
+        userRepository.findByEmail(request.email()).ifPresent(x -> {
+                    throw new ServiceException(ErrorCode.DUPLICATE_EMAIL);});
 
         userRepository.findByName(request.name()).ifPresent(x -> {
             throw new ServiceException(ErrorCode.DUPLICATE_NAME);}); // 유저의 이름이 같으면 안된다.
@@ -43,7 +43,7 @@ public class BasicUserService implements UserService {
                     .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
         }
 
-        User createdUser = new User(request.name(), request.phone(), request.password(), request.profileId(), null);
+        User createdUser = new User(request.name(), request.email(), request.password(), request.profileId(), null);
         userRepository.save(createdUser); // User 레포지토리에 저장하기
 
         Instant lastActiveAt = Instant.now();
@@ -64,8 +64,7 @@ public class BasicUserService implements UserService {
 
     @Override
     public List<UserDTO> getOnlineUsers() {
-        List<UUID> onlineUserIds = userStatusRepository.findAll().stream()
-                .filter(userStatus -> userStatus.getOnlineStatusType().equals(OnlineStatusType.ACTIVE))
+        List<UUID> onlineUserIds = userStatusRepository.findByIsOnlineTrue().stream()
                 .map(UserStatus::getUserId)
                 .toList();
 
