@@ -35,7 +35,7 @@ public class BinaryContentController {
 
     return ResponseEntity.ok()
         .contentType(MediaType.parseMediaType(binaryContent.getContentType())) // MIME 타입 지정
-        .body(binaryContent.getContent()); // 파일 데이터 반환
+        .body(binaryContent.getBytes()); // 파일 데이터 반환
   }
 
   @GetMapping("/{binaryContentIds}")

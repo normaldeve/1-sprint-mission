@@ -16,41 +16,42 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BasicBinaryContentService implements BinaryContentService {
-    private final BinaryContentRepository binaryContentRepository;
 
-    @Override
-    public BinaryContent saveFile(MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            throw new IllegalArgumentException("파일이 비어 있습니다.");
-        }
+  private final BinaryContentRepository binaryContentRepository;
 
-        String originalFileName = file.getOriginalFilename();
-        String storedFileName = UUID.randomUUID() + "_" + originalFileName; // 고유 저장 이름
-        byte[] content = file.getBytes();
-        String contentType = file.getContentType();
-
-        BinaryContent binaryContent = new BinaryContent(content, storedFileName, contentType, originalFileName, storedFileName);
-
-        return binaryContentRepository.save(binaryContent);
+  @Override
+  public BinaryContent saveFile(MultipartFile file) throws IOException {
+    if (file.isEmpty()) {
+      throw new IllegalArgumentException("파일이 비어 있습니다.");
     }
 
-    @Override
-    public BinaryContent find(UUID id) {
-        return binaryContentRepository.findById(id).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
-    }
+    String filename = file.getOriginalFilename();
+    byte[] bytes = file.getBytes();
+    String contentType = file.getContentType();
 
-    @Override
-    public List<BinaryContent> findAllByIdIn(List<UUID> uuidList) {
-        return binaryContentRepository.findAllIdIn(uuidList);
-    }
+    BinaryContent binaryContent = new BinaryContent(bytes, contentType, filename);
 
-    @Override
-    public List<BinaryContent> findAll() {
-        return binaryContentRepository.findAll();
-    }
+    return binaryContentRepository.save(binaryContent);
+  }
 
-    @Override
-    public void delete(UUID id) {
-        binaryContentRepository.deleteById(id);
-    }
+  @Override
+  public BinaryContent find(UUID id) {
+    return binaryContentRepository.findById(id)
+        .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
+  }
+
+  @Override
+  public List<BinaryContent> findAllByIdIn(List<UUID> uuidList) {
+    return binaryContentRepository.findAllIdIn(uuidList);
+  }
+
+  @Override
+  public List<BinaryContent> findAll() {
+    return binaryContentRepository.findAll();
+  }
+
+  @Override
+  public void delete(UUID id) {
+    binaryContentRepository.deleteById(id);
+  }
 }

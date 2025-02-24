@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service;
 
 import com.sprint.mission.discodeit.domain.User;
+import com.sprint.mission.discodeit.dto.binarycontent.CreateBinaryContentRequest;
 import com.sprint.mission.discodeit.dto.user.*;
 
 import java.util.List;
@@ -8,17 +9,19 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserService {
-    UserDTO create(CreateUserRequest request);
 
-    UserDTO find(UUID userId);
+  UserDTO create(CreateUserRequest request,
+      Optional<CreateBinaryContentRequest> binaryContentRequest);
 
-    List<UserDTO> getOnlineUsers();
+  UserDTO find(UUID userId);
 
-    List<UserDTO> findAll();
+  List<UserDTO> getOnlineUsers();
 
-    User updatePassword(UUID userId, UpdatePasswordRequest request);
+  List<UserDTO> findAll();
 
-    User updateProfile(UUID userId, UpdateProfileRequest request);
+  User updatePassword(UUID userId, UpdatePasswordRequest request);
 
-    UserDTO delete(UUID id);
+  User updateProfile(UUID userId, UpdateProfileRequest request);
+
+  UserDTO delete(UUID id);
 }
