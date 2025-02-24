@@ -10,3 +10,7 @@ discodeit:
     user-file-path: ./result/users.ser
     read-status-file-path: ./result/readstatus.ser
     message-file-path: ./result/messages.ser
+
+springdoc:
+  swagger-ui:
+    path: /api-docs
