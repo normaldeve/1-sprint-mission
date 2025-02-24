@@ -15,39 +15,36 @@ import java.util.UUID;
 @RequestMapping("/api/messages")
 @RequiredArgsConstructor
 public class MessageController {
-    private final MessageService messageService;
 
-    @PostMapping
-    public ResponseEntity<Message> createMessage(@RequestParam("id") UUID writerId, @RequestBody CreateMessageRequest request) {
-        Message message = messageService.create(writerId, request);
-        return ResponseEntity.ok(message);
-    }
+  private final MessageService messageService;
 
-    @GetMapping
-    public ResponseEntity<List<Message>> getAll() {
-        List<Message> messages = messageService.getAllMessage();
-        return ResponseEntity.ok(messages);
-    }
+  @PostMapping
+  public ResponseEntity<Message> createMessage(@RequestParam("id") UUID writerId,
+      @RequestBody CreateMessageRequest request) {
+    Message message = messageService.create(writerId, request);
+    return ResponseEntity.ok(message);
+  }
 
-    @GetMapping("/channel")
-    public ResponseEntity<List<Message>> getAllByChannelId(@RequestParam("id") UUID channelId) {
-        List<Message> messages = messageService.findAllByChannelId(channelId);
-        return ResponseEntity.ok(messages);
-    }
+  @GetMapping
+  public ResponseEntity<List<Message>> getAllByChannelId(
+      @RequestParam("channelId") UUID channelId) {
+    List<Message> messages = messageService.findAllByChannelId(channelId);
+    return ResponseEntity.ok(messages);
+  }
 
-    @PutMapping // 첨부자료를 더 올리거나, 내용을 수정하고 싶을 때
-    public ResponseEntity<Message> update(@RequestParam("id") UUID userId, @RequestBody UpdateMessageRequest request) {
-        Message message = messageService.updateMessageContent(userId, request);
-        return ResponseEntity.ok(message);
-    }
+  @PatchMapping("/{messageId}") // 첨부자료를 더 올리거나, 내용을 수정하고 싶을 때
+  public ResponseEntity<Message> update(@PathVariable UUID messageId,
+      @RequestBody UpdateMessageRequest request) {
+    Message message = messageService.updateMessageContent(messageId, request);
+    return ResponseEntity.ok(message);
+  }
 
-    @DeleteMapping
-    public ResponseEntity<String> delete(@RequestParam("id") UUID messageId) {
-        Message message = messageService.deleteMessage(messageId);
-        return ResponseEntity.ok(
-                "메시지 ID: " + message.getId() +
-                        " 삭제가 완료되었습니다."
-        );
-
-    }
+  @DeleteMapping
+  public ResponseEntity<String> delete(@RequestParam("messageId") UUID messageId) {
+    Message message = messageService.deleteMessage(messageId);
+    return ResponseEntity.ok(
+        "메시지 ID: " + message.getId() +
+            " 삭제가 완료되었습니다."
+    );
+  }
 }

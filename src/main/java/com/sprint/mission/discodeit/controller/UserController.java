@@ -15,48 +15,45 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
 
-    @PostMapping("/users")
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody CreateUserRequest request) {
-        UserDTO userDTO = userService.create(request);
-        return ResponseEntity.ok(userDTO);
-    }
+  private final UserService userService;
 
-    @GetMapping("/user")
-    public ResponseEntity<UserDTO> getUser(@RequestParam("id") UUID userId) {
-        UserDTO userDTO = userService.find(userId);
-        return ResponseEntity.ok(userDTO);
-    }
+  @PostMapping
+  public ResponseEntity<UserDTO> createUser(@Valid @RequestBody CreateUserRequest request) {
+    UserDTO userDTO = userService.create(request);
+    return ResponseEntity.ok(userDTO);
+  }
 
-    @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> findAllUsers() {
-        List<UserDTO> all = userService.findAll();
-        return ResponseEntity.ok(all);
-    }
+  @GetMapping
+  public ResponseEntity<List<UserDTO>> findAllUsers() {
+    List<UserDTO> all = userService.findAll();
+    return ResponseEntity.ok(all);
+  }
 
-    @PutMapping("/user/password")
-    public ResponseEntity<User> updatePassword(@RequestParam("id") UUID userId, @RequestBody UpdatePasswordRequest request) {
-        User update = userService.updatePassword(userId, request);
-        return ResponseEntity.ok(update);
-    }
+  @PatchMapping("/{userId}/password")
+  public ResponseEntity<User> updatePassword(@RequestParam("userId") UUID userId,
+      @RequestBody UpdatePasswordRequest request) {
+    User update = userService.updatePassword(userId, request);
+    return ResponseEntity.ok(update);
+  }
 
-    @PutMapping( "/user/profile")
-    public ResponseEntity<User> updateProfile(@RequestParam("id") UUID userId, @RequestBody UpdateProfileRequest request) {
-        User update = userService.updateProfile(userId, request);
-        return ResponseEntity.ok(update);
-    }
+  @PatchMapping("/{userId}/profile")
+  public ResponseEntity<User> updateProfile(@RequestParam("userId") UUID userId,
+      @RequestBody UpdateProfileRequest request) {
+    User update = userService.updateProfile(userId, request);
+    return ResponseEntity.ok(update);
+  }
 
-    @DeleteMapping( "/users")
-    public ResponseEntity<String> deleteUser(@RequestParam("id") UUID id) {
-        UserDTO delete = userService.delete(id);
-        return ResponseEntity.ok(
-                "Delete user ID: " + delete.getId() +
-                        " name: " + delete.getName() +
-                        " delete complete!"
-        );
-    }
+  @DeleteMapping
+  public ResponseEntity<String> deleteUser(@RequestParam("id") UUID id) {
+    UserDTO delete = userService.delete(id);
+    return ResponseEntity.ok(
+        "Delete user ID: " + delete.getId() +
+            " name: " + delete.getName() +
+            " delete complete!"
+    );
+  }
 }
