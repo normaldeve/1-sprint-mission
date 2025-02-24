@@ -32,19 +32,19 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
-    @GetMapping("/user/findAll")
+    @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         List<UserDTO> all = userService.findAll();
         return ResponseEntity.ok(all);
     }
 
-    @PutMapping("/users/password")
+    @PutMapping("/user/password")
     public ResponseEntity<User> updatePassword(@RequestParam("id") UUID userId, @RequestBody UpdatePasswordRequest request) {
         User update = userService.updatePassword(userId, request);
         return ResponseEntity.ok(update);
     }
 
-    @PutMapping( "/users/profile")
+    @PutMapping( "/user/profile")
     public ResponseEntity<User> updateProfile(@RequestParam("id") UUID userId, @RequestBody UpdateProfileRequest request) {
         User update = userService.updateProfile(userId, request);
         return ResponseEntity.ok(update);
