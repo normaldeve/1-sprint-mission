@@ -1,12 +1,10 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.domain.UserStatus;
 import com.sprint.mission.discodeit.dto.binarycontent.CreateBinaryContentRequest;
 import com.sprint.mission.discodeit.dto.user.CreateUserRequest;
-import com.sprint.mission.discodeit.dto.user.UpdatePasswordRequest;
-import com.sprint.mission.discodeit.dto.user.UpdateProfileRequest;
+import com.sprint.mission.discodeit.dto.user.UpdateUserRequest;
 import com.sprint.mission.discodeit.dto.user.UserDTO;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
@@ -57,25 +55,31 @@ public class UserController {
         .body(createdUser);
   }
 
-
   @GetMapping
   public ResponseEntity<List<UserDTO>> findAllUsers() {
     List<UserDTO> all = userService.findAll();
     return ResponseEntity.ok(all);
   }
 
-  @PatchMapping("/{userId}/password")
+  @PatchMapping("/{userId}")
   public ResponseEntity<User> updatePassword(@RequestParam("userId") UUID userId,
-      @RequestBody UpdatePasswordRequest request) {
-    User update = userService.updatePassword(userId, request);
-    return ResponseEntity.ok(update);
-  }
-
-  @PatchMapping("/{userId}/profile")
-  public ResponseEntity<User> updateProfile(@RequestParam("userId") UUID userId,
-      @RequestBody UpdateProfileRequest request) {
-    User update = userService.updateProfile(userId, request);
-    return ResponseEntity.ok(update);
+      @RequestPart("updateUserRequest") UpdateUserRequest updateUserRequest,
+      @RequestPart(value = "profile", required = false) MultipartFile profile) {
+    Optional<CreateBinaryContentRequest> profileRequest = Optional.empty();
+    if (profile != null && !profile.isEmpty()) {
+      try {
+        profileRequest = Optional.of(new CreateBinaryContentRequest(
+            profile.getOriginalFilename(),
+            profile.getContentType(),
+            profile.getBytes()
+        ));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    User updateUser = userService.update(userId, updateUserRequest, profileRequest);
+    log.info("회원 수정이 완료되었습니다");
+    return ResponseEntity.ok(updateUser);
   }
 
   @PatchMapping("/{userId}/userStatus")

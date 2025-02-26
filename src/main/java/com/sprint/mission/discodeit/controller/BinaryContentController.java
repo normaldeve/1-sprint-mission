@@ -38,9 +38,9 @@ public class BinaryContentController {
         .body(binaryContent.getBytes()); // 파일 데이터 반환
   }
 
-  @GetMapping("/{binaryContentIds}")
+  @GetMapping()
   public ResponseEntity<List<BinaryContent>> getFiles(
-      @PathVariable List<UUID> binaryContentIds) {
+      @RequestParam("binaryContentIds") List<UUID> binaryContentIds) {
     List<BinaryContent> binaryContents = binaryContentService.findAllByIdIn(binaryContentIds);
     return ResponseEntity.ok(binaryContents);
   }
@@ -52,7 +52,8 @@ public class BinaryContentController {
   }
 
   @GetMapping("/{binaryContentId}")
-  public ResponseEntity<BinaryContent> findFile(@PathVariable UUID binaryContentId) {
+  public ResponseEntity<BinaryContent> findFile(
+      @PathVariable("binaryContentId") UUID binaryContentId) {
     BinaryContent binaryContent = binaryContentService.find(binaryContentId);
     return ResponseEntity.ok(binaryContent);
   }

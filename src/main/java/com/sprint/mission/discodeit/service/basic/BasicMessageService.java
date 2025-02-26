@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.UserStatus;
+import com.sprint.mission.discodeit.dto.binarycontent.CreateBinaryContentRequest;
 import com.sprint.mission.discodeit.dto.message.CreateMessageRequest;
 import com.sprint.mission.discodeit.dto.message.UpdateMessageRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
@@ -34,27 +35,29 @@ public class BasicMessageService implements MessageService {
 
   @UpdateUserStatus
   @Override
-  public Message create(UUID writerID, CreateMessageRequest request) {
-    if (request.content().isEmpty()) {
+  public Message create(CreateMessageRequest messageRequest,
+      Optional<CreateBinaryContentRequest> binaryContentRequest) {
+    if (messageRequest.content().isEmpty()) {
       throw new ServiceException(ErrorCode.EMPTY_CONTENT);
     }
 
     // 작성자와 채널에 대한 검증
-    validUser(writerID);
-    validChannel(request.channelID());
+    validUser(messageRequest.userId());
+    validChannel(messageRequest.channelId());
 
-    // 해당 첨부자료가 레포지토리에 저장되어 있는지 확인
-    if (request.attachmentsID() != null) {
-      for (UUID attachmentID : request.attachmentsID()) {
-        Optional<BinaryContent> attachment = binaryContentRepository.findById(attachmentID);
-        if (attachment.isEmpty()) {
-          throw new ServiceException(ErrorCode.CANNOT_FOUND_ATTACHMENT);
-        }
-      }
+    BinaryContent file = null;
+    if (binaryContentRequest.isPresent()) {
+      CreateBinaryContentRequest contentRequest = binaryContentRequest.get();
+
+      file = new BinaryContent(contentRequest.bytes(), contentRequest.contentType(),
+          contentRequest.fileName());
+
+      binaryContentRepository.save(file);
     }
 
-    Message message = new Message(request.content(), writerID, request.channelID(),
-        request.attachmentsID());
+    Message message = new Message(messageRequest.content(), messageRequest.userId(),
+        messageRequest.channelId());
+    message.getAttachmentsID().add(file.getId());
     messageRepository.save(message);
     return message;
   }
@@ -74,19 +77,24 @@ public class BasicMessageService implements MessageService {
 
   @UpdateUserStatus
   @Override
-  public Message updateMessageContent(UUID messageId, UpdateMessageRequest request) {
+  public Message updateMessageContent(UUID messageId, UpdateMessageRequest request,
+      Optional<CreateBinaryContentRequest> binaryContentRequest) {
     validMessage(messageId);
-    validUser(request.writerId());
 
     Message message = messageRepository.findById(messageId)
         .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE));
 
-    // 메시지 수정은 작성자만이 할 수 있다.
-    if (!message.getWriterID().equals(request.writerId())) {
-      throw new ServiceException(ErrorCode.MESSAGE_EDIT_NOT_ALLOWED);
+    BinaryContent file = null;
+    if (binaryContentRequest.isPresent()) {
+      CreateBinaryContentRequest contentRequest = binaryContentRequest.get();
+
+      file = new BinaryContent(contentRequest.bytes(), contentRequest.contentType(),
+          contentRequest.fileName());
+
+      binaryContentRepository.save(file);
     }
 
-    message.update(request.newContent(), request.newAttachment());
+    message.update(request.newContent(), file.getId());
 
     return messageRepository.save(message);
   }

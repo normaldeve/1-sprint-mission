@@ -15,17 +15,14 @@ public interface ChannelService {
 
   Channel createPrivateChannel(CreateChannel.PrivateRequest request);
 
-  ChannelDTO.PublicChannelDTO findPublicChannel(UUID channelId);
-
-  ChannelDTO.PrivateChannelDTO findPrivateChannel(UUID channelId);
-
   List<Channel> findAllPrivate(UUID userId);
+
+  List<Channel> findAllPublic();
 
   List<Channel> findAll();
 
   PublicChannel update(UUID channelId, UpdatePublicChannel request);
 
-  Channel deletePrivate(UUID channelId);
+  Channel delete(UUID channelId);
 
-  Channel deletePublic(UUID channelId);
 }

@@ -19,9 +19,8 @@ public interface UserService {
 
   List<UserDTO> findAll();
 
-  User updatePassword(UUID userId, UpdatePasswordRequest request);
-
-  User updateProfile(UUID userId, UpdateProfileRequest request);
+  User update(UUID userId, UpdateUserRequest updateUserRequest,
+      Optional<CreateBinaryContentRequest> binaryContentRequest);
 
   UserDTO delete(UUID id);
 }

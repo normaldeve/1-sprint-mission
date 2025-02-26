@@ -7,6 +7,7 @@ import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
 import com.sprint.mission.discodeit.service.ChannelService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,34 +36,35 @@ public class ChannelController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Channel>> getAllChannels() {
-    List<Channel> allChannel = channelService.findAll();
-    return ResponseEntity.ok(allChannel);
+  public ResponseEntity<List<Channel>> getAllChannels(@RequestParam("userId") UUID userId) {
+    List<Channel> allChannel = channelService.findAllPrivate(userId);
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(allChannel);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Channel>> getAllPublicChannels() {
+    List<Channel> allPublic = channelService.findAllPublic();
+    return ResponseEntity.ok(allPublic);
   }
 
   // 채널 정보 수정은 Public channel 만 가능합니다.
   @PatchMapping("/{channelId}")
   public ResponseEntity<PublicChannel> updateChannel(
-      @PathVariable UUID channelId,
-      UpdatePublicChannel request) {
+      @PathVariable("channelId") UUID channelId,
+      @RequestBody UpdatePublicChannel request) {
     PublicChannel update = channelService.update(channelId, request);
-    return ResponseEntity.ok(update);
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(update);
   }
 
-  @DeleteMapping("/private")
-  public ResponseEntity<String> deletePrivateChannel(@RequestParam("id") UUID uuid) {
-    Channel removeChannel = channelService.deletePrivate(uuid);
+  @DeleteMapping("/{channelId}")
+  public ResponseEntity<String> deletePrivateChannel(@PathVariable("channelId") UUID channelId) {
+    Channel removeChannel = channelService.delete(channelId);
     return ResponseEntity.ok(
         "Remove Private Channel ID: " + removeChannel.getId() +
-            " delete complete!"
-    );
-  }
-
-  @DeleteMapping("/public")
-  public ResponseEntity<String> deletePublicChannel(@RequestParam("id") UUID uuid) {
-    Channel removeChannel = channelService.deletePublic(uuid);
-    return ResponseEntity.ok(
-        "Remove Public Channel ID: " + removeChannel.getId() +
             " delete complete!"
     );
   }

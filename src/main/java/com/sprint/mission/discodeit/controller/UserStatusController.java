@@ -16,7 +16,7 @@ public class UserStatusController {
 
   private final UserStatusService userStatusService;
 
-  @GetMapping("/all")
+  @GetMapping
   public ResponseEntity<List<UserStatus>> getAll() {
     List<UserStatus> all = userStatusService.findAll();
     return ResponseEntity.ok(all);

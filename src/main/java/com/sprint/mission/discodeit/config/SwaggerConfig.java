@@ -18,10 +18,6 @@ public class SwaggerConfig {
             .description("디스코드와 비슷한 서비스를 제공하는 백엔드 API입니다")
             .version("1.0")
             .contact(new Contact()
-                .name("개발팀")
-                .email("junnukim1007@gmail.com"))
-            .license(new License()
-                .name("Apache 2.0")
-                .url("http://www.apache.org/licenses/LICENSE-2.0")));
+                .email("junnukim1007@gmail.com")));
   }
 }

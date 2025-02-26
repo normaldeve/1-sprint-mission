@@ -95,30 +95,27 @@ public class BasicUserService implements UserService {
         .collect(Collectors.toList());
   }
 
-  @UpdateUserStatus
   @Override
-  public User updatePassword(UUID userId, UpdatePasswordRequest request) {
-    User updateUser = userRepository.findById(userId)
+  public User update(UUID userId, UpdateUserRequest updateUserRequest,
+      Optional<CreateBinaryContentRequest> binaryContentRequest) {
+    User findUser = userRepository.findById(userId)
         .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
-    updateUser.updatePassword(request.oldPassword(), request.newPassword()); // 비밀번호를 수정합니다.
+    findUser.updatePassword(updateUserRequest.oldPassword(), updateUserRequest.newPassword());
+    if (binaryContentRequest.isPresent()) {
+      if (findUser.getProfileImageId() != null) { // 이미 프로필이 등록되어 있다면 기존 프로필은 삭제
+        binaryContentRepository.deleteById(findUser.getProfileImageId());
+      }
+      CreateBinaryContentRequest contentRequest = binaryContentRequest.get();
 
-    userRepository.save(updateUser);
-    return updateUser;
+      BinaryContent profile = new BinaryContent(contentRequest.bytes(),
+          contentRequest.contentType(),
+          contentRequest.fileName());
+
+      binaryContentRepository.save(profile);
+      findUser.updateProfile(findUser.getProfileImageId(), profile.getId());
+    }
+    return findUser;
   }
-
-  @UpdateUserStatus
-  @Override
-  public User updateProfile(UUID userId, UpdateProfileRequest request) {
-    User updateUser = userRepository.findById(userId)
-        .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
-    BinaryContent profile = binaryContentRepository.findById(request.profileId())
-        .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_PROFILE));
-
-    updateUser.updateProfile(request.profileId(), request.newProfileId());
-    userRepository.save(updateUser);
-    return updateUser;
-  }
-
 
   @Override
   public UserDTO delete(UUID id) {
