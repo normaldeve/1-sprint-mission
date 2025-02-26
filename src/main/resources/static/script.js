@@ -3,7 +3,7 @@ const API_BASE_URL = '/api';
 const ENDPOINTS = {
   USERS: `${API_BASE_URL}/users`,
   USER_STATUS: `${API_BASE_URL}/userStatuses`,
-  BINARY_CONTENT: `${API_BASE_URL}/binaryContents`
+  BINARY_CONTENT: `${API_BASE_URL}/binaryContents/check`
 };
 
 // Initialize the application

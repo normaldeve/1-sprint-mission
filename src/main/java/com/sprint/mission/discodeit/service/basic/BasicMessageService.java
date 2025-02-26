@@ -1,7 +1,5 @@
 package com.sprint.mission.discodeit.service.basic;
 
-import com.sprint.mission.discodeit.aspect.UpdateReadStatus;
-import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.BinaryContent;
 import com.sprint.mission.discodeit.domain.Message;
 import com.sprint.mission.discodeit.domain.UserStatus;
@@ -33,7 +31,6 @@ public class BasicMessageService implements MessageService {
   private final ChannelRepository channelRepository;
   private final BinaryContentRepository binaryContentRepository;
 
-  @UpdateUserStatus
   @Override
   public Message create(CreateMessageRequest messageRequest,
       Optional<CreateBinaryContentRequest> binaryContentRequest) {
@@ -62,7 +59,6 @@ public class BasicMessageService implements MessageService {
     return message;
   }
 
-  @UpdateReadStatus
   @Override
   public List<Message> findAllByChannelId(UUID channelID) {
     validChannel(channelID);
@@ -74,8 +70,7 @@ public class BasicMessageService implements MessageService {
   public List<Message> getAllMessage() {
     return messageRepository.findAll();
   }
-
-  @UpdateUserStatus
+  
   @Override
   public Message updateMessageContent(UUID messageId, UpdateMessageRequest request,
       Optional<CreateBinaryContentRequest> binaryContentRequest) {

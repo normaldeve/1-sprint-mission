@@ -38,16 +38,10 @@ public class BinaryContentController {
         .body(binaryContent.getBytes()); // 파일 데이터 반환
   }
 
-  @GetMapping()
-  public ResponseEntity<List<BinaryContent>> getFiles(
-      @RequestParam("binaryContentIds") List<UUID> binaryContentIds) {
+  @GetMapping("{binaryContentIds}")
+  public ResponseEntity<List<BinaryContent>> getFilesById(
+      @PathVariable("binaryContentIds") List<UUID> binaryContentIds) {
     List<BinaryContent> binaryContents = binaryContentService.findAllByIdIn(binaryContentIds);
-    return ResponseEntity.ok(binaryContents);
-  }
-
-  @GetMapping
-  public ResponseEntity<List<BinaryContent>> getFiles() {
-    List<BinaryContent> binaryContents = binaryContentService.findAll();
     return ResponseEntity.ok(binaryContents);
   }
 
@@ -56,5 +50,11 @@ public class BinaryContentController {
       @PathVariable("binaryContentId") UUID binaryContentId) {
     BinaryContent binaryContent = binaryContentService.find(binaryContentId);
     return ResponseEntity.ok(binaryContent);
+  }
+
+  @GetMapping()
+  public ResponseEntity<List<BinaryContent>> findAll() {
+    List<BinaryContent> all = binaryContentService.findAll();
+    return ResponseEntity.ok(all);
   }
 }

@@ -43,7 +43,7 @@ public class ChannelController {
         .body(allChannel);
   }
 
-  @GetMapping
+  @GetMapping("/public")
   public ResponseEntity<List<Channel>> getAllPublicChannels() {
     List<Channel> allPublic = channelService.findAllPublic();
     return ResponseEntity.ok(allPublic);

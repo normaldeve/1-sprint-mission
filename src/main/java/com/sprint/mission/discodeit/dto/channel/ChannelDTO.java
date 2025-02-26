@@ -2,7 +2,6 @@ package com.sprint.mission.discodeit.dto.channel;
 
 import com.sprint.mission.discodeit.domain.PrivateChannel;
 import com.sprint.mission.discodeit.domain.PublicChannel;
-import com.sprint.mission.discodeit.util.type.ChannelFormat;
 import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +41,6 @@ public class ChannelDTO {
     private UUID id;
     private Instant createdAt;
     private Instant updatedAt;
-    private ChannelFormat channelFormat;
     private ChannelType channelType;
     private Instant latestMessageTime;
 
@@ -51,7 +49,6 @@ public class ChannelDTO {
           .id(channel.getId())
           .createdAt(channel.getCreatedAt())
           .updatedAt(channel.getUpdatedAt())
-          .channelFormat(channel.getChannelFormat())
           .channelType(ChannelType.PRIVATE)
           .latestMessageTime(latestMessageTime)
           .build();

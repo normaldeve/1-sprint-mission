@@ -1,6 +1,5 @@
 package com.sprint.mission.discodeit.service.basic;
 
-import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.*;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
@@ -63,8 +62,7 @@ public class BasicChannelService implements ChannelService {
 
     return channel;
   }
-
-  @UpdateUserStatus
+  
   @Override
   public List<Channel> findAllPrivate(UUID userId) {
     validUser(userId);

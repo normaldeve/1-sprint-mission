@@ -1,6 +1,5 @@
 package com.sprint.mission.discodeit.service.basic;
 
-import com.sprint.mission.discodeit.aspect.UpdateUserStatus;
 import com.sprint.mission.discodeit.domain.User;
 import com.sprint.mission.discodeit.dto.login.LoginRequest;
 import com.sprint.mission.discodeit.dto.user.UserDTO;
@@ -15,8 +14,7 @@ import org.springframework.stereotype.Service;
 public class BasicAuthService {
 
   private final UserRepository userRepository;
-
-  @UpdateUserStatus
+  
   public UserDTO login(LoginRequest request) { // 요청으로 name과 password가 들어온 상황
     User findUser = userRepository.findByName(request.username())
         .orElseThrow(() -> new ServiceException(ErrorCode.USERNAME_MISMATCH));
