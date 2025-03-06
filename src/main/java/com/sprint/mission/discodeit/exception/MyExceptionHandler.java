@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.exception;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
+@Log4j2
 @RestControllerAdvice
 public class MyExceptionHandler {
 
@@ -61,5 +62,18 @@ public class MyExceptionHandler {
     });
 
     return ResponseEntity.badRequest().body(errors);
+  }
+
+  // 데이터 무결성이 위반되었을 때
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+  public ResponseEntity<Map<String, String>> handelFKException(Exception e) {
+    log.error(e);
+
+    Map<String, String> errorMap = new HashMap<>();
+
+    errorMap.put("time", "" + System.currentTimeMillis());
+    errorMap.put("msg", "constraint fails");
+    return ResponseEntity.badRequest().body(errorMap);
   }
 }
