@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.service.basic;
 
-import com.sprint.mission.discodeit.domain.User;
+import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.dto.login.LoginRequest;
 import com.sprint.mission.discodeit.dto.user.UserDTO;
 import com.sprint.mission.discodeit.exception.ErrorCode;

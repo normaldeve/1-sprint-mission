@@ -1,8 +1,8 @@
 package com.sprint.mission.discodeit.service.basic;
 
-import com.sprint.mission.discodeit.domain.BinaryContent;
-import com.sprint.mission.discodeit.domain.User;
-import com.sprint.mission.discodeit.domain.UserStatus;
+import com.sprint.mission.discodeit.entity.BinaryContent;
+import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.dto.binarycontent.CreateBinaryContentRequest;
 import com.sprint.mission.discodeit.dto.user.*;
 import com.sprint.mission.discodeit.exception.ErrorCode;

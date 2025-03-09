@@ -1,8 +1,12 @@
-package com.sprint.mission.discodeit.domain;
+package com.sprint.mission.discodeit.entity;
 
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,13 +14,16 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
-@Data
-public class User implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-    private final UUID id;
-    private Instant createdAt;
-    private Instant updatedAt;
+@Entity
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class User extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
     private String email;
     private String password;
@@ -24,23 +31,11 @@ public class User implements Serializable {
     private UUID userStatusId;
     private boolean online;
 
-    public User(String name, String email, String password, UUID profileImageId, UUID userStatusId) {
-        this.id = UUID.randomUUID();
-        this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.profileImageId = profileImageId;
-        this.userStatusId = userStatusId;
-    }
-
     public void updatePassword(String oldPassword, String newPassword) {
         if (!this.password.equals(oldPassword) || oldPassword.equals(newPassword)) {
             throw new ServiceException(ErrorCode.PASSWORD_MISMATCH);
         }
         this.password = newPassword;
-        this.updatedAt = Instant.now();
     }
 
     public void updateProfile(UUID profileImageId, UUID newProfileImageId) {
@@ -48,7 +43,6 @@ public class User implements Serializable {
             throw new ServiceException(ErrorCode.INVALID_PROFILE);
         }
         this.profileImageId = newProfileImageId;
-        this.updatedAt = Instant.now();
     }
 
     @Override

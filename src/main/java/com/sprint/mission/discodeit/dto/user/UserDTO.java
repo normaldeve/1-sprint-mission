@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.dto.user;
 
-import com.sprint.mission.discodeit.domain.User;
+import com.sprint.mission.discodeit.entity.User;
 import lombok.*;
 
 import java.time.Instant;

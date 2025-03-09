@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.domain.ReadStatus;
+import com.sprint.mission.discodeit.entity.ReadStatus;
 import com.sprint.mission.discodeit.dto.readstatus.CreateReadStatusRequest;
 import com.sprint.mission.discodeit.service.ReadStatusService;
 import jakarta.websocket.server.PathParam;

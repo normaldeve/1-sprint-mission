@@ -1,8 +1,7 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.domain.Channel;
-import com.sprint.mission.discodeit.domain.PublicChannel;
-import com.sprint.mission.discodeit.dto.channel.ChannelDTO;
+import com.sprint.mission.discodeit.entity.Channel;
+import com.sprint.mission.discodeit.entity.PublicChannel;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
 import com.sprint.mission.discodeit.service.ChannelService;

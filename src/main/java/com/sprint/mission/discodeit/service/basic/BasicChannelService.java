@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.service.basic;
 
-import com.sprint.mission.discodeit.domain.*;
+import com.sprint.mission.discodeit.entity.*;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
 import com.sprint.mission.discodeit.exception.ErrorCode;
