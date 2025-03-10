@@ -1,5 +1,9 @@
 package com.sprint.mission.discodeit.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 
 import java.io.Serial;
@@ -7,14 +11,12 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
+@MappedSuperclass
 @Getter
-public abstract class Channel extends BaseEntity implements Serializable {
+public abstract class Channel extends BaseEntity {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
-  private final UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-  public Channel() {
-    this.id = UUID.randomUUID();
-  }
 }

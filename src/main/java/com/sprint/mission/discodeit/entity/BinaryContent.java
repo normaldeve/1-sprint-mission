@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString
+@ToString(exclude = "message")
 public class BinaryContent {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,4 +26,7 @@ public class BinaryContent {
   private byte[] bytes;
   private String contentType;
   private String fileName;
+
+  @ManyToOne
+  private Message message;
 }

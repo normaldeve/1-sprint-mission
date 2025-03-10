@@ -1,16 +1,10 @@
 package com.sprint.mission.discodeit.entity;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Getter
@@ -25,10 +19,12 @@ public class Message extends BaseEntity {
   private String content;
   private UUID writerID;
   private UUID channelID;
-  private List<BinaryContent> binaryContents = new HashSet<>();
+  @OneToOne(mappedBy = "message",
+  cascade = {CascadeType.ALL},
+  fetch = FetchType.LAZY,
+  orphanRemoval = true)
+  @Builder.Default
+  @BatchSize(size = 20)
+  private Set<BinaryContent> binaryContents = new HashSet<>();
 
-  public void update(String content, UUID newAttachment) {
-    this.content = content;
-    this.attachmentsID.add(newAttachment);
-  }
 }
