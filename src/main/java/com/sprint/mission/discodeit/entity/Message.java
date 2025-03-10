@@ -12,10 +12,21 @@ import org.hibernate.annotations.BatchSize;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"author", "channel"})
 public class Message extends BaseUpdateEntity {
   private String content;
+
+  @ManyToOne
   private Channel channel;
+
+  @ManyToOne
   private User author;
+
+  @ManyToMany
+  @JoinTable(
+          name = "message_attachments", // 중간 테이블 이름
+          joinColumns = @JoinColumn(name = "message_id"), // `Message` 테이블 외래 키
+          inverseJoinColumns = @JoinColumn(name = "attachment_id") // `BinaryContent` 테이블 외래 키
+  )
   private List<BinaryContent> attachments;
 }

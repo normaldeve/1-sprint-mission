@@ -5,8 +5,6 @@ import com.sprint.mission.discodeit.util.type.ChannelType;
 import jakarta.persistence.Entity;
 import lombok.*;
 
-import java.util.UUID;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

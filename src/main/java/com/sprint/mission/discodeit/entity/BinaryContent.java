@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString(exclude = "message")
+@ToString
 public class BinaryContent extends BaseEntity {
   private String fileName;
   private Long size;
