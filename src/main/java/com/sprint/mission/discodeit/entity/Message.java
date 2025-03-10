@@ -4,10 +4,11 @@ import java.util.*;
 
 import com.sprint.mission.discodeit.entity.base.BaseUpdateEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
 
 @Entity
+@Table(name = "messages")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -17,6 +18,7 @@ public class Message extends BaseUpdateEntity {
   private String content;
 
   @ManyToOne
+  @NotNull
   private Channel channel;
 
   @ManyToOne

@@ -1,25 +1,22 @@
 package com.sprint.mission.discodeit.entity;
 
 import com.sprint.mission.discodeit.entity.base.BaseUpdateEntity;
-import com.sprint.mission.discodeit.exception.ErrorCode;
-import com.sprint.mission.discodeit.exception.ServiceException;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
-
 @Entity
+@Table(name = "users")
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class User extends BaseUpdateEntity {
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
 
     @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
