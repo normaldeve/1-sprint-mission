@@ -1,22 +1,22 @@
 package com.sprint.mission.discodeit.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.Getter;
+import com.sprint.mission.discodeit.entity.base.BaseUpdateEntity;
+import com.sprint.mission.discodeit.util.type.ChannelType;
+import jakarta.persistence.Entity;
+import lombok.*;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.Instant;
 import java.util.UUID;
 
-@MappedSuperclass
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
-public abstract class Channel extends BaseEntity {
+@ToString
+public class Channel extends BaseUpdateEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+  private ChannelType type;
+  private String name;
+  private String description;
 
 }

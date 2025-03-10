@@ -2,6 +2,7 @@ package com.sprint.mission.discodeit.entity;
 
 import java.util.*;
 
+import com.sprint.mission.discodeit.entity.base.BaseUpdateEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
@@ -12,19 +13,9 @@ import org.hibernate.annotations.BatchSize;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Message extends BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+public class Message extends BaseUpdateEntity {
   private String content;
-  private UUID writerID;
-  private UUID channelID;
-  @OneToOne(mappedBy = "message",
-  cascade = {CascadeType.ALL},
-  fetch = FetchType.LAZY,
-  orphanRemoval = true)
-  @Builder.Default
-  @BatchSize(size = 20)
-  private Set<BinaryContent> binaryContents = new HashSet<>();
-
+  private Channel channel;
+  private User author;
+  private List<BinaryContent> attachments;
 }

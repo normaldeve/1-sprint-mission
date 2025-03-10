@@ -1,13 +1,8 @@
 package com.sprint.mission.discodeit.entity;
 
+import com.sprint.mission.discodeit.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -15,18 +10,9 @@ import java.util.UUID;
 @Getter
 @Builder
 @ToString(exclude = "message")
-public class BinaryContent {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
-  @CreatedDate
-  @Column(name = "createdAt", updatable = false)
-  private Instant createdAt;
-
-  private byte[] bytes;
-  private String contentType;
+public class BinaryContent extends BaseEntity {
   private String fileName;
-
-  @ManyToOne
-  private Message message;
+  private String size;
+  private String contentType;
+  private byte[] bytes;
 }

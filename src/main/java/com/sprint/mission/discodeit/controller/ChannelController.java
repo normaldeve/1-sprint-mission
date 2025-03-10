@@ -1,6 +1,5 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.PublicChannel;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
 import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;

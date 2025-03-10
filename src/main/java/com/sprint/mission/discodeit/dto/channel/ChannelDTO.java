@@ -1,6 +1,5 @@
 package com.sprint.mission.discodeit.dto.channel;
 
-import com.sprint.mission.discodeit.entity.PrivateChannel;
 import com.sprint.mission.discodeit.entity.PublicChannel;
 import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.Builder;
