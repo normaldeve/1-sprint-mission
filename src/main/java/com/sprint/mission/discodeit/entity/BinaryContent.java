@@ -12,7 +12,7 @@ import lombok.*;
 @ToString(exclude = "message")
 public class BinaryContent extends BaseEntity {
   private String fileName;
-  private String size;
+  private Long size;
   private String contentType;
   private byte[] bytes;
 }

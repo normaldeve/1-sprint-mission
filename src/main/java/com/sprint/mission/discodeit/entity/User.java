@@ -18,6 +18,7 @@ public class User extends BaseUpdateEntity {
     private String username;
     private String email;
     private String password;
+
     private BinaryContent profile;
     private UserStatus status;
 }
