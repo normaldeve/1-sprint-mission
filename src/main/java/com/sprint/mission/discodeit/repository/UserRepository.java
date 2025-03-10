@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
-    User save(User user);
 
     boolean userExistById(UUID userID);
 
@@ -16,11 +15,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByName(String name);
 
-    Optional<User> findById(UUID userId);
-
-    List<User> findAll();
-
     List<User> findAllById(List<UUID> userIds);
 
-    void delete(UUID id);
 }

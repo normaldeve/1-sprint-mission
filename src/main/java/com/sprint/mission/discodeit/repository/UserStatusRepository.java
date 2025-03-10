@@ -8,17 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserStatusRepository extends JpaRepository<UserStatus, UUID> {
-    UserStatus save(UserStatus userStatus);
-
     Optional<UserStatus> findByUserId(UUID userID);
 
-    Optional<UserStatus> findById(UUID id);
-
     List<UserStatus> findByIsOnlineTrue();
-
-    List<UserStatus> findAll();
-
-    void deleteById(UUID id);
 
     void deleteByUserId(UUID userID);
 }

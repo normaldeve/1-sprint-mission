@@ -8,13 +8,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ChannelRepository extends JpaRepository<Channel, UUID> {
-    Channel save(Channel channel);
-
     boolean channelExistById(UUID channelID);
-
-    Optional<Channel> findById(UUID channelId);
-
-    List<Channel> findAll();
-
-    Channel delete(Channel channel);
 }
