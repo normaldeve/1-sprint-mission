@@ -16,45 +16,45 @@ import java.util.UUID;
 @RequestMapping("/api/binaryContents")
 @RequiredArgsConstructor
 public class BinaryContentController {
-
-  private final BinaryContentService binaryContentService;
-
-  @PostMapping
-  public ResponseEntity<BinaryContent> uploadFile(@RequestParam("file") MultipartFile file) {
-    try {
-      BinaryContent binaryContent = binaryContentService.saveFile(file);
-      return ResponseEntity.ok(binaryContent);
-    } catch (IOException e) {
-      throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
-    }
-  }
-
-  @GetMapping("/view/{id}")
-  public ResponseEntity<byte[]> viewFile(@PathVariable("id") UUID id) {
-    BinaryContent binaryContent = binaryContentService.find(id);
-
-    return ResponseEntity.ok()
-        .contentType(MediaType.parseMediaType(binaryContent.getContentType())) // MIME 타입 지정
-        .body(binaryContent.getBytes()); // 파일 데이터 반환
-  }
-
-  @GetMapping("{binaryContentIds}")
-  public ResponseEntity<List<BinaryContent>> getFilesById(
-      @PathVariable("binaryContentIds") List<UUID> binaryContentIds) {
-    List<BinaryContent> binaryContents = binaryContentService.findAllByIdIn(binaryContentIds);
-    return ResponseEntity.ok(binaryContents);
-  }
-
-  @GetMapping("/{binaryContentId}")
-  public ResponseEntity<BinaryContent> findFile(
-      @PathVariable("binaryContentId") UUID binaryContentId) {
-    BinaryContent binaryContent = binaryContentService.find(binaryContentId);
-    return ResponseEntity.ok(binaryContent);
-  }
-
-  @GetMapping()
-  public ResponseEntity<List<BinaryContent>> findAll() {
-    List<BinaryContent> all = binaryContentService.findAll();
-    return ResponseEntity.ok(all);
-  }
+//
+//  private final BinaryContentService binaryContentService;
+//
+//  @PostMapping
+//  public ResponseEntity<BinaryContent> uploadFile(@RequestParam("file") MultipartFile file) {
+//    try {
+//      BinaryContent binaryContent = binaryContentService.saveFile(file);
+//      return ResponseEntity.ok(binaryContent);
+//    } catch (IOException e) {
+//      throw new RuntimeException("파일 업로드 실패: " + e.getMessage());
+//    }
+//  }
+//
+//  @GetMapping("/view/{id}")
+//  public ResponseEntity<byte[]> viewFile(@PathVariable("id") UUID id) {
+//    BinaryContent binaryContent = binaryContentService.find(id);
+//
+//    return ResponseEntity.ok()
+//        .contentType(MediaType.parseMediaType(binaryContent.getContentType())) // MIME 타입 지정
+//        .body(binaryContent.getBytes()); // 파일 데이터 반환
+//  }
+//
+//  @GetMapping("{binaryContentIds}")
+//  public ResponseEntity<List<BinaryContent>> getFilesById(
+//      @PathVariable("binaryContentIds") List<UUID> binaryContentIds) {
+//    List<BinaryContent> binaryContents = binaryContentService.findAllByIdIn(binaryContentIds);
+//    return ResponseEntity.ok(binaryContents);
+//  }
+//
+//  @GetMapping("/{binaryContentId}")
+//  public ResponseEntity<BinaryContent> findFile(
+//      @PathVariable("binaryContentId") UUID binaryContentId) {
+//    BinaryContent binaryContent = binaryContentService.find(binaryContentId);
+//    return ResponseEntity.ok(binaryContent);
+//  }
+//
+//  @GetMapping()
+//  public ResponseEntity<List<BinaryContent>> findAll() {
+//    List<BinaryContent> all = binaryContentService.findAll();
+//    return ResponseEntity.ok(all);
+//  }
 }

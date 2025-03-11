@@ -1,66 +1,93 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.dto.userstatus.UserStatusDTO;
 import com.sprint.mission.discodeit.entity.UserStatus;
-import com.sprint.mission.discodeit.dto.userstatus.CreateUserStatusRequest;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import com.sprint.mission.discodeit.service.UserStatusService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BasicUserStatusService implements UserStatusService {
     private final UserStatusRepository userStatusRepository;
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
+    @Transactional
     @Override
-    public UserStatus create(CreateUserStatusRequest request) {
-        validUser(request.userID());
+    public UserStatusDTO create(UUID userId) {
+        validUser(userId);
 
-        userStatusRepository.findByUserId(request.userID())
+        userStatusRepository.findByUserId(userId)
                 .ifPresent(userStatus -> {
                     throw new ServiceException(ErrorCode.ALREADY_EXIST_USERSTAUTS);
                 });
 
-        UserStatus userStatus = new UserStatus(request.userID(), request.lastActiveAt());
+        UserStatusDTO userStatusDTO = UserStatusDTO.builder()
+                .userId(userId)
+                .lastActiveAt(Instant.now())
+                .build();
+
+        UserStatus userStatus = modelMapper.map(userStatusDTO, UserStatus.class);
         userStatusRepository.save(userStatus);
-        return userStatus;
+        return userStatusDTO;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public UserStatus find(UUID id) {
-        UserStatus userStatus = userStatusRepository.findById(id).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
-        return userStatusRepository.save(userStatus);
+    public UserStatusDTO find(UUID id) {
+        UserStatus userStatus = userStatusRepository.findById(id)
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+
+        return modelMapper.map(userStatus, UserStatusDTO.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public UserStatus findByUserId(UUID userID) {
-        UserStatus userStatus = userStatusRepository.findByUserId(userID).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
-        return userStatusRepository.save(userStatus);
+    public UserStatusDTO findByUserId(UUID userId) {
+        validUser(userId);
+
+        UserStatus userStatus = userStatusRepository.findByUserId(userId)
+                .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
+
+        return modelMapper.map(userStatus, UserStatusDTO.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<UserStatus> findAll() {
-        return userStatusRepository.findAll();
+    public List<UserStatusDTO> findAll() {
+        List<UserStatus> userStatusList = userStatusRepository.findAll();
+
+        // UserStatus 리스트를 UserStatusDTO 리스트로 변환
+        return userStatusList.stream()
+                .map(userStatus -> modelMapper.map(userStatus, UserStatusDTO.class))
+                .collect(Collectors.toList());
     }
 
+
+    @Transactional
     @Override
-    public UserStatus updateByUserId(UUID userId) {
+    public UserStatusDTO updateByUserId(UUID userId) {
         validUser(userId);
 
         UserStatus userStatus = userStatusRepository.findByUserId(userId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
-        userStatus.update(Instant.now());
+        userStatus.update();
         userStatusRepository.save(userStatus);
-        return userStatus;
+        return modelMapper.map(userStatus, UserStatusDTO.class);
     }
 
+    @Transactional
     @Override
     public void delete(UUID id) {
         userStatusRepository.deleteById(id);

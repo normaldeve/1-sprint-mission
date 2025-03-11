@@ -26,75 +26,75 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
-
-  private final UserService userService;
-  private final UserStatusService userStatusService;
-
-  @PostMapping
-  public ResponseEntity<UserDTO> createUser(
-      @Valid @RequestPart("userCreateRequest") CreateUserRequest userCreateRequest,
-      @RequestPart(value = "profile", required = false) MultipartFile profile) {
-
-    Optional<CreateBinaryContentRequest> profileRequest = Optional.empty();
-    if (profile != null && !profile.isEmpty()) {
-      try {
-        profileRequest = Optional.of(new CreateBinaryContentRequest(
-            profile.getOriginalFilename(),
-            profile.getContentType(),
-            profile.getBytes()
-        ));
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    }
-
-    UserDTO createdUser = userService.create(userCreateRequest, profileRequest);
-    log.info(createdUser.getName() + "님 환영합니다. 회원가입이 완료되었습니다.");
-    return ResponseEntity
-        .status(HttpStatus.CREATED)
-        .body(createdUser);
-  }
-
-  @GetMapping
-  public ResponseEntity<List<UserDTO>> findAllUsers() {
-    List<UserDTO> all = userService.findAll();
-    return ResponseEntity.ok(all);
-  }
-
-  @PatchMapping("/{userId}")
-  public ResponseEntity<User> updatePassword(@RequestParam("userId") UUID userId,
-      @RequestPart("updateUserRequest") UpdateUserRequest updateUserRequest,
-      @RequestPart(value = "profile", required = false) MultipartFile profile) {
-    Optional<CreateBinaryContentRequest> profileRequest = Optional.empty();
-    if (profile != null && !profile.isEmpty()) {
-      try {
-        profileRequest = Optional.of(new CreateBinaryContentRequest(
-            profile.getOriginalFilename(),
-            profile.getContentType(),
-            profile.getBytes()
-        ));
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    }
-    User updateUser = userService.update(userId, updateUserRequest, profileRequest);
-    log.info("회원 수정이 완료되었습니다");
-    return ResponseEntity.ok(updateUser);
-  }
-
-  @PatchMapping("/{userId}/userStatus")
-  public ResponseEntity<UserStatus> updateUserStatus(@PathVariable("userId") UUID userId) {
-    UserStatus userStatus = userStatusService.updateByUserId(userId);
-    return ResponseEntity.ok(userStatus);
-  }
-
-  @DeleteMapping
-  public ResponseEntity<String> deleteUser(@RequestParam("id") UUID id) {
-    UserDTO delete = userService.delete(id);
-    return ResponseEntity.ok(
-        "Delete user ID: " + delete.getId() +
-            " name: " + delete.getName() +
-            " delete complete!"
-    );
-  }
+//
+//  private final UserService userService;
+//  private final UserStatusService userStatusService;
+//
+//  @PostMapping
+//  public ResponseEntity<UserDTO> createUser(
+//      @Valid @RequestPart("userCreateRequest") CreateUserRequest userCreateRequest,
+//      @RequestPart(value = "profile", required = false) MultipartFile profile) {
+//
+//    Optional<CreateBinaryContentRequest> profileRequest = Optional.empty();
+//    if (profile != null && !profile.isEmpty()) {
+//      try {
+//        profileRequest = Optional.of(new CreateBinaryContentRequest(
+//            profile.getOriginalFilename(),
+//            profile.getContentType(),
+//            profile.getBytes()
+//        ));
+//      } catch (IOException e) {
+//        throw new RuntimeException(e);
+//      }
+//    }
+//
+//    UserDTO createdUser = userService.create(userCreateRequest, profileRequest);
+//    log.info(createdUser.getName() + "님 환영합니다. 회원가입이 완료되었습니다.");
+//    return ResponseEntity
+//        .status(HttpStatus.CREATED)
+//        .body(createdUser);
+//  }
+//
+//  @GetMapping
+//  public ResponseEntity<List<UserDTO>> findAllUsers() {
+//    List<UserDTO> all = userService.findAll();
+//    return ResponseEntity.ok(all);
+//  }
+//
+//  @PatchMapping("/{userId}")
+//  public ResponseEntity<User> updatePassword(@RequestParam("userId") UUID userId,
+//      @RequestPart("updateUserRequest") UpdateUserRequest updateUserRequest,
+//      @RequestPart(value = "profile", required = false) MultipartFile profile) {
+//    Optional<CreateBinaryContentRequest> profileRequest = Optional.empty();
+//    if (profile != null && !profile.isEmpty()) {
+//      try {
+//        profileRequest = Optional.of(new CreateBinaryContentRequest(
+//            profile.getOriginalFilename(),
+//            profile.getContentType(),
+//            profile.getBytes()
+//        ));
+//      } catch (IOException e) {
+//        throw new RuntimeException(e);
+//      }
+//    }
+//    User updateUser = userService.update(userId, updateUserRequest, profileRequest);
+//    log.info("회원 수정이 완료되었습니다");
+//    return ResponseEntity.ok(updateUser);
+//  }
+//
+//  @PatchMapping("/{userId}/userStatus")
+//  public ResponseEntity<UserStatus> updateUserStatus(@PathVariable("userId") UUID userId) {
+//    UserStatus userStatus = userStatusService.updateByUserId(userId);
+//    return ResponseEntity.ok(userStatus);
+//  }
+//
+//  @DeleteMapping
+//  public ResponseEntity<String> deleteUser(@RequestParam("id") UUID id) {
+//    UserDTO delete = userService.delete(id);
+//    return ResponseEntity.ok(
+//        "Delete user ID: " + delete.getId() +
+//            " name: " + delete.getName() +
+//            " delete complete!"
+//    );
+//  }
 }

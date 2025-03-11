@@ -16,15 +16,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
-
-  private final BasicAuthService authService;
-
-  @PostMapping("/login")
-  public ResponseEntity<UserDTO> login(@RequestBody LoginRequest request) {
-    UserDTO login = authService.login(request);
-    log.info(request.username() + "님 환영합니다~. 로그인이 완료되었습니다");
-    return ResponseEntity
-        .status(HttpStatus.OK)
-        .body(login);
-  }
+//
+//  private final BasicAuthService authService;
+//
+//  @PostMapping("/login")
+//  public ResponseEntity<UserDTO> login(@RequestBody LoginRequest request) {
+//    UserDTO login = authService.login(request);
+//    log.info(request.username() + "님 환영합니다~. 로그인이 완료되었습니다");
+//    return ResponseEntity
+//        .status(HttpStatus.OK)
+//        .body(login);
+//  }
 }

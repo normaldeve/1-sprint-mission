@@ -14,7 +14,7 @@ public class CreateChannel {
   @NoArgsConstructor
   public static class PrivateRequest {
 
-    private List<UUID> joinUser;
+    private List<UUID> participantIds;
   }
 
   @Getter

@@ -1,8 +1,9 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.dto.channel.ChannelDTO;
+import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
 import com.sprint.mission.discodeit.entity.*;
 import com.sprint.mission.discodeit.dto.channel.CreateChannel;
-import com.sprint.mission.discodeit.dto.channel.UpdatePublicChannel;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
@@ -11,14 +12,15 @@ import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
+import com.sprint.mission.discodeit.util.type.ChannelType;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,113 +32,87 @@ public class BasicChannelService implements ChannelService {
   private final ReadStatusRepository readStatusRepository;
   private final MessageRepository messageRepository;
   private final UserRepository userRepository;
+  private final ModelMapper modelMapper;
 
+  @Transactional
   @Override
-  public Channel createPublicChannel(CreateChannel.PublicRequest request) {
-    Channel channel = new PublicChannel(request.getName(), request.getDescription());
-    channelRepository.save(channel);
-    return channel;
-  }
+  public ChannelDTO createPublicChannel(CreateChannel.PublicRequest request) {
+    Channel channel = Channel.builder()
+            .type(ChannelType.PUBLIC)
+            .name(request.getName())
+            .description(request.getDescription())
+            .build();
 
-  @Override
-  public Channel createPrivateChannel(CreateChannel.PrivateRequest request) {
-    List<UUID> users = request.getJoinUser();
-
-    // User가 UserRepository에 저장되어 있는지 확인
-    for (UUID userID : users) {
-      Optional<User> userOptional = userRepository.findById(userID);
-      if (userOptional.isEmpty()) {
-        throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
-      }
-    }
-    // Private 채널 생성 후 저장
-    Channel channel = new PrivateChannel(users);
     channelRepository.save(channel);
 
-    // User마다 ReadStatus 생성하기
-    for (UUID userID : users) {
-      Instant lastReadAt = Instant.now();
-      ReadStatus readStatus = new ReadStatus(userID, channel.getId(), lastReadAt);
-      readStatusRepository.save(readStatus);
+    return modelMapper.map(channel, ChannelDTO.class);
+  }
+
+  @Transactional
+  @Override
+  public ChannelDTO createPrivateChannel(CreateChannel.PrivateRequest request) {
+    Channel channel = new Channel(ChannelType.PRIVATE, null, null);
+    Channel createdChannel = channelRepository.save(channel);
+
+    List<ReadStatus> readStatuses = request.getParticipantIds().stream()
+            .map(userId -> {
+              User user = userRepository.findById(userId)
+                      .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+              return new ReadStatus(user, createdChannel, createdChannel.getCreatedAt());
+            })
+            .toList();
+
+    readStatusRepository.saveAll(readStatuses);
+
+    return modelMapper.map(createdChannel, ChannelDTO.class);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public ChannelDTO find(UUID channelId) {
+    Channel channel = channelRepository.findById(channelId).orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
+
+    return modelMapper.map(channel, ChannelDTO.class);
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<ChannelDTO> findAllByUserId(UUID userId) {
+    List<UUID> mySubscribedChannelIds = readStatusRepository.findAllByUserId(userId).stream()
+            .map(readStatus -> readStatus.getChannel().getId())
+            .toList();
+
+    List<Channel> list = channelRepository.findAll().stream()
+            .filter(channel ->
+                    channel.getType().equals(ChannelType.PUBLIC)
+                            || mySubscribedChannelIds.contains(channel.getId())
+            )
+            .toList();
+
+    return list.stream().map(channel -> modelMapper.map(channel, ChannelDTO.class)).toList();
+  }
+
+  @Transactional
+  @Override
+  public ChannelDTO update(UUID channelId, UpdatePublicChannel request) {
+    Channel channel = channelRepository.findById(channelId)
+            .orElseThrow(
+                    () -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
+    if (channel.getType().equals(ChannelType.PRIVATE)) {
+      throw new ServiceException(ErrorCode.CANNOT_MODIFY_PRIVATE_CHANNEL);
     }
+    channel.update(request.name(), request.description());
 
-    return channel;
+    return modelMapper.map(channel, ChannelDTO.class);
   }
-  
+
+  @Transactional
   @Override
-  public List<Channel> findAllPrivate(UUID userId) {
-    validUser(userId);
-    List<Channel> allChannels = channelRepository.findAll();
+  public void delete(UUID channelId) {
+    Channel channel = channelRepository.findById(channelId)
+            .orElseThrow(
+                    () -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
 
-    // PrivateChannel 타입 필터링 및 joinMembers에 userId가 있는지 확인
-    return allChannels.stream()
-        .filter(channel -> channel instanceof PrivateChannel)
-        .map(channel -> (PrivateChannel) channel)
-        .filter(privateChannel -> privateChannel.getJoinMembers().contains(userId))
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<Channel> findAllPublic() {
-    List<Channel> allChannels = channelRepository.findAll();
-
-    // PrivateChannel 타입 필터링 및 joinMembers에 userId가 있는지 확인
-    return allChannels.stream()
-        .filter(channel -> channel instanceof PublicChannel)
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<Channel> findAll() {
-    return channelRepository.findAll();
-  }
-
-  @Override
-  public PublicChannel update(UUID channelId,
-      UpdatePublicChannel request) { // 채널에 새로운 유저 참여, 채널 이름, 설명 수정 가능
-    validChannel(channelId);
-    validUser(request.newUserID());
-
-    PublicChannel updateChannel = (PublicChannel) channelRepository.findById(channelId)
-        .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
-    updateChannel.update(request.name(), request.description(), request.newUserID());
-
-    channelRepository.save(updateChannel);
-    return updateChannel;
-  }
-
-  @Override
-  public Channel delete(UUID channelId) {
-    validChannel(channelId);
-
-    Channel removeChannel = channelRepository.findById(channelId)
-        .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
-
-    // 채널에 포함된 메시지 삭제하기
-    List<Message> messages = messageService.findAllByChannelId(channelId);
-    if (!messages.isEmpty()) {
-      messages.forEach(message -> messageRepository.delete(message));
-    }
-
-    if (removeChannel instanceof PrivateChannel) {
-      // 채널에 포함된 ReadStatus 삭제하기
-      List<ReadStatus> readStatuses = readStatusRepository.findAllByChannelId(channelId);
-      readStatusRepository.deleteAll(readStatuses);
-    }
-
-    channelRepository.delete(removeChannel);
-    return removeChannel;
-  }
-
-  // 채널 검증
-  private void validChannel(UUID channelId) {
-    channelRepository.findById(channelId)
-        .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_CHANNEL));
-  }
-
-  // 유저 검증
-  private void validUser(UUID userId) {
-    userRepository.findById(userId)
-        .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
+    channelRepository.delete(channel);
   }
 }

@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.entity.base.BaseUpdateEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "messages")
@@ -17,7 +18,7 @@ import lombok.*;
 public class Message extends BaseUpdateEntity {
   private String content;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @NotNull
   private Channel channel;
 

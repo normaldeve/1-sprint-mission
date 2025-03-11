@@ -12,14 +12,13 @@ import java.util.UUID;
 public interface MessageService {
 
   Message create(CreateMessageRequest messageRequest,
-      Optional<CreateBinaryContentRequest> binaryContentRequest);
+      List<CreateBinaryContentRequest> binaryContentRequests);
+
+  Message find(UUID messageId);
 
   List<Message> findAllByChannelId(UUID channelID);
 
-  List<Message> getAllMessage();
+  Message update(UUID messageId, UpdateMessageRequest request;
 
-  Message updateMessageContent(UUID messageId, UpdateMessageRequest request,
-      Optional<CreateBinaryContentRequest> binaryContentRequest);
-
-  Message deleteMessage(UUID messageID);
+  void delete(UUID messageID);
 }

@@ -21,4 +21,8 @@ public class UserStatus extends BaseUpdateEntity { // 사용자 별 마지막으
     private User user;
 
     private Instant lastActiveAt;
+
+    public void update() {
+        this.lastActiveAt = Instant.now();
+    }
 }

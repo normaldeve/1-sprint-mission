@@ -18,9 +18,13 @@ public class ReadStatus extends BaseUpdateEntity { // 사용자가 채널 별 �
     @ManyToOne
     @JoinColumn(unique = true)
     private User user;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Channel channel;
     @Column(nullable = false)
     private Instant lastReadAt;
+
+    public void updateLastReadTime() {
+        this.lastReadAt = Instant.now();
+    }
 }

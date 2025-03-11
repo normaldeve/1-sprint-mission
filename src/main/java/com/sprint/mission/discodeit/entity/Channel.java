@@ -20,4 +20,8 @@ public class Channel extends BaseUpdateEntity {
   private String name;
   private String description;
 
+  public void update(String name, String description) {
+    this.name = name;
+    this.description = description;
+  }
 }

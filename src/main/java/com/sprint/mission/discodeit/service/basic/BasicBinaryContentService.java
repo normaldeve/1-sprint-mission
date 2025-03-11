@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
@@ -20,7 +21,8 @@ public class BasicBinaryContentService implements BinaryContentService {
   private final BinaryContentRepository binaryContentRepository;
 
   @Override
-  public BinaryContent saveFile(MultipartFile file) throws IOException {
+  public BinaryContent create(BinaryContentCreateRequest request) throws IOException {
+
     if (file.isEmpty()) {
       throw new IllegalArgumentException("파일이 비어 있습니다.");
     }
@@ -43,11 +45,6 @@ public class BasicBinaryContentService implements BinaryContentService {
   @Override
   public List<BinaryContent> findAllByIdIn(List<UUID> uuidList) {
     return binaryContentRepository.findAllIdIn(uuidList);
-  }
-
-  @Override
-  public List<BinaryContent> findAll() {
-    return binaryContentRepository.findAll();
   }
 
   @Override

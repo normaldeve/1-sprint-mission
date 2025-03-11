@@ -47,7 +47,7 @@ public class MyExceptionHandler {
   @ExceptionHandler(NoHandlerFoundException.class)
   public ResponseEntity<String> notFound(NoHandlerFoundException ex) {
     log.error("404 Error: " + ex.getMessage());
-    return new ResponseEntity<>("custom404", HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>("404", HttpStatus.NOT_FOUND);
   }
 
   // 객체 바인딩 예외 처리

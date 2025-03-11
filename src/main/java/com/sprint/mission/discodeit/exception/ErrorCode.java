@@ -32,8 +32,10 @@ public enum ErrorCode {
 
   PASSWORD_MISMATCH(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다"),
   USERNAME_MISMATCH(HttpStatus.UNAUTHORIZED, "이름이 일치하지 않습니다"),
-  CHANNEL_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "채널 타입이 일치하지 않습니다");
+  CHANNEL_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "채널 타입이 일치하지 않습니다"),
 
+  SAME_AS_OLD_PASSWORD(HttpStatus.BAD_REQUEST, "이전 비밀번호와 동일한 비밀번호입니다"),
+  CANNOT_MODIFY_PRIVATE_CHANNEL(HttpStatus.BAD_REQUEST, "Private 채널은 수정할 수 없습니다");
   private final HttpStatus status;
   private final String description;
 }
