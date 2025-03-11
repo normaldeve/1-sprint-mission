@@ -1,56 +1,32 @@
 package com.sprint.mission.discodeit.dto.channel;
 
-import com.sprint.mission.discodeit.entity.PublicChannel;
+import com.sprint.mission.discodeit.dto.user.UserDTO;
 import com.sprint.mission.discodeit.util.type.ChannelType;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ChannelDTO {
+  private UUID id;
 
-  @Getter
-  @Builder
-  public static class PublicChannelDTO {
+  @NotNull
+  private ChannelType type;
 
-    private UUID id;
-    private Instant createdAt;
-    private Instant updatedAt;
-    private String name;
-    private String description;
-    private Instant latestMessageTime;
+  private String name;
 
-    public static PublicChannelDTO fromDomain(PublicChannel channel, Instant latestMessageTime) {
-      return ChannelDTO.PublicChannelDTO.builder()
-          .id(channel.getId())
-          .createdAt(channel.getCreatedAt())
-          .updatedAt(channel.getUpdatedAt())
-          .name(channel.getName())
-          .description(channel.getDescription())
-          .latestMessageTime(latestMessageTime)
-          .build();
-    }
-  }
+  private String description;
 
-  @Getter
-  @Builder
-  public static class PrivateChannelDTO {
+  private List<UserDTO> participants;
 
-    private UUID id;
-    private Instant createdAt;
-    private Instant updatedAt;
-    private ChannelType channelType;
-    private Instant latestMessageTime;
-
-    public static PrivateChannelDTO fromDomain(PrivateChannel channel, Instant latestMessageTime) {
-      return ChannelDTO.PrivateChannelDTO.builder()
-          .id(channel.getId())
-          .createdAt(channel.getCreatedAt())
-          .updatedAt(channel.getUpdatedAt())
-          .channelType(ChannelType.PRIVATE)
-          .latestMessageTime(latestMessageTime)
-          .build();
-    }
-  }
+  private Instant lastMessageAt;
 }

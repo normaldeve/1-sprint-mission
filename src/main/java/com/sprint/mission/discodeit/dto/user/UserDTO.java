@@ -1,35 +1,25 @@
 package com.sprint.mission.discodeit.dto.user;
 
-import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDTO;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
-import java.time.Instant;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class UserDTO {
-        private UUID id;
-        private Instant createdAt;
-        private Instant updatedAt;
-        private String name;
-        private String email;
-        private UUID profileImageId;
-        private UUID userStatusId;
+    private UUID id;
 
-    public static UserDTO fromDomain(User user) {
-        return UserDTO.builder()
-                .id(user.getId())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
-                .name(user.getName())
-                .email(user.getEmail())
-                .profileImageId(user.getProfileImageId())
-                .userStatusId(user.getUserStatusId())
-                .build();
-    }
+    @NotEmpty
+    private String username;
+
+    @NotEmpty
+    private String email;
+
+    private BinaryContentDTO profile;
+
+    private Boolean online;
 }
