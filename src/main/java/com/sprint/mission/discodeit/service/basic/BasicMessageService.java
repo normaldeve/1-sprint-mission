@@ -110,7 +110,7 @@ public class BasicMessageService implements MessageService {
   }
 
   private void validUser(UUID userId) {
-    if (!userRepository.userExistById(userId)) {
+    if (!userRepository.existsById(userId)) {
       throw new ServiceException(ErrorCode.CANNOT_FOUND_USER);
     }
   }

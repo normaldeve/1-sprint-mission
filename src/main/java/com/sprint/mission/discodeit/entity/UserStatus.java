@@ -21,9 +21,4 @@ public class UserStatus extends BaseUpdateEntity { // 사용자 별 마지막으
     private User user;
 
     private Instant lastActiveAt;
-
-    public boolean isOnline() {
-        return ChronoUnit.MINUTES.between(lastActiveAt, Instant.now()) <= 5;
-    }
-
 }

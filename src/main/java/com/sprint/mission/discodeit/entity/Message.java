@@ -30,5 +30,6 @@ public class Message extends BaseUpdateEntity {
           joinColumns = @JoinColumn(name = "message_id"), // `Message` 테이블 외래 키
           inverseJoinColumns = @JoinColumn(name = "attachment_id") // `BinaryContent` 테이블 외래 키
   )
+  @Builder.Default
   private List<BinaryContent> attachments;
 }
