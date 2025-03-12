@@ -46,8 +46,8 @@ public class BasicUserStatusService implements UserStatusService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserStatusDTO find(UUID id) {
-        UserStatus userStatus = userStatusRepository.findById(id)
+    public UserStatusDTO find(UUID userStatusId) {
+        UserStatus userStatus = userStatusRepository.findById(userStatusId)
                 .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
 
         return modelMapper.map(userStatus, UserStatusDTO.class);
@@ -89,8 +89,8 @@ public class BasicUserStatusService implements UserStatusService {
 
     @Transactional
     @Override
-    public void delete(UUID id) {
-        userStatusRepository.deleteById(id);
+    public void delete(UUID userStatusId) {
+        userStatusRepository.deleteById(userStatusId);
     }
 
     private void validUser(UUID userId) {

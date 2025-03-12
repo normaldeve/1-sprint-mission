@@ -143,10 +143,10 @@ public class BasicUserService implements UserService {
 
   @Transactional
   @Override
-  public void delete(UUID id) {
-    User deleteUser = userRepository.findById(id)
+  public void delete(UUID userId) {
+    User deleteUser = userRepository.findById(userId)
         .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USER));
 
-    userRepository.deleteById(id);
+    userRepository.deleteById(userId);
   }
 }

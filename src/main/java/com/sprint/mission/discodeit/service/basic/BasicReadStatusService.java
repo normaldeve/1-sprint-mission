@@ -57,8 +57,8 @@ public class BasicReadStatusService implements ReadStatusService {
 
   @Transactional(readOnly = true)
   @Override
-  public ReadStatusDTO find(UUID id) {
-    ReadStatus readStatus = readStatusRepository.findById(id)
+  public ReadStatusDTO find(UUID readStatusId) {
+    ReadStatus readStatus = readStatusRepository.findById(readStatusId)
             .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_READSTATUS));
 
     return modelMapper.map(readStatus, ReadStatusDTO.class);
@@ -96,8 +96,8 @@ public class BasicReadStatusService implements ReadStatusService {
 
   @Transactional
   @Override
-  public ReadStatusDTO update(UUID id) {
-    ReadStatus readStatus = readStatusRepository.findById(id)
+  public ReadStatusDTO update(UUID readStatusId) {
+    ReadStatus readStatus = readStatusRepository.findById(readStatusId)
         .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_READSTATUS));
 
     readStatus.updateLastReadTime();
@@ -109,8 +109,8 @@ public class BasicReadStatusService implements ReadStatusService {
 
   @Transactional
   @Override
-  public void delete(UUID id) {
-    Optional.ofNullable(readStatusRepository.findById(id))
+  public void delete(UUID readStatusId) {
+    Optional.ofNullable(readStatusRepository.findById(readStatusId))
             .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_READSTATUS))
             .ifPresent(readStatusRepository::delete);
   }

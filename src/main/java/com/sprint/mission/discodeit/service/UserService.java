@@ -22,5 +22,5 @@ public interface UserService {
   UserDTO update(UUID userId, UpdateUserRequest updateUserRequest,
       Optional<CreateBinaryContentRequest> binaryContentRequest);
 
-  void delete(UUID id);
+  void delete(UUID userId);
 }

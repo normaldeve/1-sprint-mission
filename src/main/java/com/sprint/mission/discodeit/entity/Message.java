@@ -32,5 +32,10 @@ public class Message extends BaseUpdateEntity {
           inverseJoinColumns = @JoinColumn(name = "attachment_id") // `BinaryContent` 테이블 외래 키
   )
   @Builder.Default
+  @Cascade(org.hibernate.annotations.CascadeType.ALL)
   private List<BinaryContent> attachments;
+
+  public void update(String newContent) {
+    this.content = newContent;
+  }
 }
