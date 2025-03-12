@@ -14,7 +14,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "status")
 public class User extends BaseUpdateEntity {
     @Column(nullable = false, unique = true)
     private String username;

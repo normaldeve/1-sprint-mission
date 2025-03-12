@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "user")
 public class UserStatus extends BaseUpdateEntity { // 사용자 별 마지막으로 확인된 접속 시간을 표현하는 도메인 모델
     @OneToOne
     @JoinColumn(name = "user_id")

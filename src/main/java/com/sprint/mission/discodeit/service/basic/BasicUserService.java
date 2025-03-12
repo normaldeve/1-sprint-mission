@@ -75,6 +75,8 @@ public class BasicUserService implements UserService {
             .build();
     createdUser.setStatus(userStatus);
 
+    userStatusRepository.save(userStatus);
+
     userRepository.save(createdUser);
 
     return modelMapper.map(createdUser, UserDTO.class);
@@ -88,18 +90,6 @@ public class BasicUserService implements UserService {
     UserStatus status = userStatusRepository.findByUserId(findUser.getId())
         .orElseThrow(() -> new ServiceException(ErrorCode.CANNOT_FOUND_USERSTATUS));
     return modelMapper.map(findUser, UserDTO.class);
-  }
-
-  @Transactional(readOnly = true)
-  @Override
-  public List<UserDTO> getOnlineUsers() {
-    List<UUID> onlineUserIds = userStatusRepository.findByIsOnlineTrue().stream()
-        .map(userStatus -> userStatus.getUser().getId())
-        .toList();
-
-    return userRepository.findAllById(onlineUserIds).stream()
-        .map(user -> modelMapper.map(user, UserDTO.class))
-        .toList();
   }
 
   @Transactional(readOnly = true)

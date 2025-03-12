@@ -11,7 +11,4 @@ import java.util.UUID;
 
 public interface MessageRepository extends JpaRepository<Message, UUID> {
     List<Message> findByChannelId(UUID channelId);
-
-    @Query("SELECT m FROM Message m WHERE m.channel.id = :channelId ORDER BY m.createdAt DESC")
-    Optional<Message> findLatestByChannelId(@Param("channelId") UUID channelId);
 }

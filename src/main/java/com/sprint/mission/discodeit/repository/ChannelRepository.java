@@ -8,5 +8,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ChannelRepository extends JpaRepository<Channel, UUID> {
-    boolean channelExistById(UUID channelId);
+    boolean existsById(UUID id);
 }

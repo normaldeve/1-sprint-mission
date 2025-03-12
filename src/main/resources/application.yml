@@ -1,13 +1,4 @@
 spring:
-  profiles:
-    active: file
-
-logging:
-  level:
-    org.springframework: info
-    com.sprint.mission.discodeit: debug
-
-
   datasource:
     url: jdbc:postgresql://localhost:5432/discodeit
     username: discodeit_user
@@ -20,6 +11,11 @@ logging:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+logging:
+  level:
+    org.springframework: info
+    com.sprint.mission.discodeit: debug
 
 springdoc:
   swagger-ui:
