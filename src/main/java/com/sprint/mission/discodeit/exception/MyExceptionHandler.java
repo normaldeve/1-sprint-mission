@@ -27,22 +27,20 @@ public class MyExceptionHandler {
 
   @ResponseBody
   @ExceptionHandler(Exception.class)
-  public String exceptCommon(Exception ex) {
+  public ResponseEntity<Map<String, Object>> exceptCommon(Exception ex) {
     log.error("---------------------------------------------");
-    log.error(ex.getMessage());
+    log.error(ex.getMessage(), ex);
 
-    StringBuilder buffer = new StringBuilder("<ul>");
+    Map<String, Object> errorResponse = new HashMap<>();
+    errorResponse.put("message", ex.getMessage());
+    errorResponse.put("details", Arrays.stream(ex.getStackTrace())
+            .map(StackTraceElement::toString)
+            .toArray());
+    errorResponse.put("timestamp", System.currentTimeMillis());
 
-    buffer.append("<li>" + ex.getMessage() + "</li>");
-
-    Arrays.stream(ex.getStackTrace()).forEach(stackTraceElement -> {
-      buffer.append("<li>" + stackTraceElement.toString() + "</li>");
-    });
-
-    buffer.append("</ul>");
-
-    return buffer.toString();
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
   }
+
 
   @ExceptionHandler(NoHandlerFoundException.class)
   public ResponseEntity<String> notFound(NoHandlerFoundException ex) {

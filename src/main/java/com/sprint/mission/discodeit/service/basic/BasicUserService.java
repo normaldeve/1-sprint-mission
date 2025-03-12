@@ -10,10 +10,12 @@ import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
+import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
 import java.util.Optional;
 
+import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class BasicUserService implements UserService {
   private final UserStatusRepository userStatusRepository;
   private final UserStatusService userStatusService;
   private final ModelMapper modelMapper;
+  private final BinaryContentStorage binaryContentStorage;
 
   @Transactional
   @Override
@@ -52,13 +55,14 @@ public class BasicUserService implements UserService {
       CreateBinaryContentRequest contentRequest = binaryContentRequest.get();
 
       profile = BinaryContent.builder()
-              .bytes(contentRequest.bytes())
               .contentType(contentRequest.contentType())
               .fileName(contentRequest.fileName())
               .size(contentRequest.size())
               .build();
 
-      binaryContentRepository.save(profile);
+      BinaryContent save = binaryContentRepository.save(profile);
+
+      binaryContentStorage.put(save.getId(), binaryContentRequest.get().bytes());
     }
 
     User createdUser = User.builder()
@@ -68,6 +72,8 @@ public class BasicUserService implements UserService {
             .profile(profile)
             .build();
 
+    userRepository.save(createdUser);
+
     Instant lastActiveAt = Instant.now();
     UserStatus userStatus = UserStatus.builder()
             .user(createdUser)
@@ -76,8 +82,6 @@ public class BasicUserService implements UserService {
     createdUser.setStatus(userStatus);
 
     userStatusRepository.save(userStatus);
-
-    userRepository.save(createdUser);
 
     return modelMapper.map(createdUser, UserDTO.class);
   }
@@ -110,15 +114,18 @@ public class BasicUserService implements UserService {
 
     findUser.updatePassword(updateUserRequest.oldPassword(), updateUserRequest.newPassword());
 
+    userStatusService.updateByUserId(findUser.getId());
+
     binaryContentRequest.ifPresent(contentRequest -> {
       BinaryContent newProfile = BinaryContent.builder()
               .size(contentRequest.size())
-              .bytes(contentRequest.bytes())
               .contentType(contentRequest.contentType())
               .fileName(contentRequest.fileName())
               .build();
 
-      binaryContentRepository.save(newProfile);
+      BinaryContent save = binaryContentRepository.save(newProfile);
+
+      binaryContentStorage.put(save.getId(), contentRequest.bytes());
 
       if (findUser.getProfile() != null) {
         binaryContentRepository.delete(findUser.getProfile());

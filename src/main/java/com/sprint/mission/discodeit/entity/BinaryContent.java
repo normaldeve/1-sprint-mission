@@ -19,6 +19,4 @@ public class BinaryContent extends BaseEntity {
   private Long size;
   @Column(nullable = false)
   private String contentType;
-  @Column(nullable = false)
-  private byte[] bytes;
 }

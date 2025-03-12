@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.dto.user.UserDTO;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.ServiceException;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import com.sprint.mission.discodeit.service.UserStatusService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class BasicAuthService {
 
   private final UserRepository userRepository;
   private final ModelMapper modelMapper;
+  private final UserStatusService userStatusService;
 
   public UserDTO login(LoginRequest request) { // 요청으로 name과 password가 들어온 상황
     User findUser = userRepository.findByUsername(request.username())
@@ -24,6 +26,8 @@ public class BasicAuthService {
     if (!findUser.getPassword().equals(request.password())) { // 비밀번호가 일치하지 않으면 에러 발생
       throw new ServiceException(ErrorCode.PASSWORD_MISMATCH);
     }
+
+    userStatusService.updateByUserId(findUser.getId());
 
     return modelMapper.map(findUser, UserDTO.class); // 비밀번호를 보여주지 않기 위해서 DTO 사용
   }

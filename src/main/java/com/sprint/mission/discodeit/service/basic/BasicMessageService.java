@@ -15,6 +15,9 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.MessageService;
+import com.sprint.mission.discodeit.service.ReadStatusService;
+import com.sprint.mission.discodeit.service.UserStatusService;
+import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BasicMessageService implements MessageService {
 
+  private final UserStatusService userStatusService;
+  private final BinaryContentStorage binaryContentStorage;
   private final MessageRepository messageRepository;
   private final UserRepository userRepository;
   private final ChannelRepository channelRepository;
@@ -43,15 +48,21 @@ public class BasicMessageService implements MessageService {
     User user = validAuthor(authorId);
     Channel channel = validChannel(channelId);
 
+    userStatusService.updateByUserId(authorId);
+
     List<BinaryContent> attachments = binaryContentRequest.stream()
             .map(attachmentRequest -> {
               BinaryContent binaryContent = BinaryContent.builder()
                       .fileName(attachmentRequest.fileName())
                       .size(attachmentRequest.size())
                       .contentType(attachmentRequest.contentType())
-                      .bytes(attachmentRequest.bytes())
                       .build();
-              return binaryContentRepository.save(binaryContent);
+
+              BinaryContent save = binaryContentRepository.save(binaryContent);
+
+              binaryContentStorage.put(save.getId(), attachmentRequest.bytes());
+
+              return save;
             })
             .toList();
 
@@ -78,10 +89,10 @@ public class BasicMessageService implements MessageService {
 
   @Transactional(readOnly = true)
   @Override
-  public List<MessageDTO> findAllByChannelId(UUID channelID) {
-    Channel channel = validChannel(channelID);
+  public List<MessageDTO> findAllByChannelId(UUID channelId) {
+    Channel channel = validChannel(channelId);
 
-    List<Message> messages = messageRepository.findByChannelId(channelID);
+    List<Message> messages = messageRepository.findByChannelId(channelId);
     return messages.stream()
             .map(message -> modelMapper.map(message,MessageDTO.class))
             .toList();

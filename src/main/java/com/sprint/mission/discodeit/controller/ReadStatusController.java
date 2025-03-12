@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
+import com.sprint.mission.discodeit.dto.readstatus.ReadStatusDTO;
 import com.sprint.mission.discodeit.entity.ReadStatus;
 import com.sprint.mission.discodeit.dto.readstatus.CreateReadStatusRequest;
 import com.sprint.mission.discodeit.service.ReadStatusService;
@@ -16,24 +17,25 @@ import java.util.UUID;
 @RequestMapping("/api/readStatuses")
 @RequiredArgsConstructor
 public class ReadStatusController {
-//
-//  private final ReadStatusService readStatusService;
-//
-//  @GetMapping
-//  public ResponseEntity<List<ReadStatus>> getStatusesByUserId(@RequestParam("userId") UUID userID) {
-//    List<ReadStatus> allByUserId = readStatusService.findAllByUserId(userID);
-//    return ResponseEntity.ok(allByUserId);
-//  }
-//
-//  @PostMapping
-//  public ResponseEntity<ReadStatus> createReadStatus(@RequestBody CreateReadStatusRequest request) {
-//    ReadStatus readStatus = readStatusService.create(request);
-//    return ResponseEntity.ok(readStatus);
-//  }
-//
-//  @PatchMapping
-//  public ResponseEntity<ReadStatus> update(@PathParam("readStatusId") UUID readStatusId) {
-//    ReadStatus updateReadStatus = readStatusService.update(readStatusId);
-//    return ResponseEntity.ok(updateReadStatus);
-//  }
+
+  private final ReadStatusService readStatusService;
+    @PostMapping
+    public ResponseEntity<ReadStatusDTO> create(@RequestBody CreateReadStatusRequest request) {
+        ReadStatusDTO readStatus = readStatusService.create(request);
+        return ResponseEntity.ok(readStatus);
+    }
+
+  @GetMapping
+  public ResponseEntity<List<ReadStatusDTO>> findAllByUserId(@RequestParam("userId") UUID userId) {
+    List<ReadStatusDTO> readStatuses = readStatusService.findAllByUserId(userId);
+    return ResponseEntity.ok(readStatuses);
+  }
+
+
+
+  @PatchMapping(path = "{readStatusId}")
+  public ResponseEntity<ReadStatusDTO> update(@PathParam("readStatusId") UUID readStatusId) {
+    ReadStatusDTO updateReadStatus = readStatusService.update(readStatusId);
+    return ResponseEntity.ok(updateReadStatus);
+  }
 }

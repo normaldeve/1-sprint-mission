@@ -4,12 +4,14 @@ import com.sprint.mission.discodeit.entity.base.BaseUpdateEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 @Entity
+@Table(name = "user_statuses")
 @Builder
 @Getter
 @AllArgsConstructor

@@ -24,7 +24,4 @@ public class BinaryContentDTO {
 
     @NotEmpty
     private String contentType;
-
-    @NotNull
-    private byte[] bytes;
 }
