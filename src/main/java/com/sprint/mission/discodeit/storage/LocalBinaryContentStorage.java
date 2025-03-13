@@ -65,7 +65,6 @@ public class LocalBinaryContentStorage implements BinaryContentStorage {
         }
 
         try {
-            // InputStream을 try-with-resources로 안전하게 처리
             InputStream inputStream = Files.newInputStream(targetPath);
 
             StreamingResponseBody streamingResponseBody = outputStream -> {
@@ -79,14 +78,12 @@ public class LocalBinaryContentStorage implements BinaryContentStorage {
                     throw new RuntimeException("Error during streaming file", e);
                 } finally {
                     try {
-                        inputStream.close();  // 스트림을 명시적으로 닫음
+                        inputStream.close();
                     } catch (IOException e) {
-                        // 스트림을 닫는 중 발생한 오류는 무시하고 넘어감
                     }
                 }
             };
 
-            // 응답을 반환
             return ResponseEntity.ok()
                     .header("Content-Disposition", "attachment; filename=\"" + targetPath.getFileName().toString() + "\"")
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)

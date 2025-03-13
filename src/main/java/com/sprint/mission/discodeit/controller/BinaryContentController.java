@@ -21,7 +21,7 @@ public class BinaryContentController {
     private final BinaryContentService binaryContentService;
     private final BinaryContentStorage binaryContentStorage;
 
-    @GetMapping(value = "{binaryContentId}/download")
+    @GetMapping(value = "{binaryContentId}/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<StreamingResponseBody> download(@PathVariable UUID binaryContentId) {
         BinaryContentDTO binaryContentDTO = binaryContentService.find(binaryContentId);
         return (ResponseEntity<StreamingResponseBody>) binaryContentStorage.download(binaryContentDTO);

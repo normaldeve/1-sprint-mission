@@ -4,11 +4,14 @@ import com.sprint.mission.discodeit.dto.message.MessageDTO;
 import com.sprint.mission.discodeit.dto.binarycontent.CreateBinaryContentRequest;
 import com.sprint.mission.discodeit.dto.message.CreateMessageRequest;
 import com.sprint.mission.discodeit.dto.message.UpdateMessageRequest;
+import com.sprint.mission.discodeit.dto.response.PageResponse;
 import com.sprint.mission.discodeit.service.MessageService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +26,7 @@ public class MessageController {
 
   private final MessageService messageService;
 
-  @PostMapping
+  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<MessageDTO> create(
       @RequestPart("createMessageRequest") CreateMessageRequest createMessageRequest,
       @RequestPart("file")
@@ -50,13 +53,14 @@ public class MessageController {
   }
 
   @GetMapping
-  public ResponseEntity<List<MessageDTO>> getAllByChannelId(
-      @RequestParam("channelId") UUID channelId) {
-    List<MessageDTO> messages = messageService.findAllByChannelId(channelId);
+  public ResponseEntity<PageResponse<MessageDTO>> getAllByChannelId(
+      @RequestParam("channelId") UUID channelId,
+      @RequestParam(value = "page", defaultValue = "0") int page) {
+    PageResponse<MessageDTO> messages = messageService.findAllByChannelId(channelId, page);
     return ResponseEntity.ok(messages);
   }
 
-  @PatchMapping("/{messageId}")
+  @PatchMapping(value = "/{messageId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<MessageDTO> update(@PathVariable("messageId") UUID messageId,
       @RequestPart("messageRequest") UpdateMessageRequest messageRequest) {
     MessageDTO message = messageService.update(messageId, messageRequest);
@@ -67,7 +71,7 @@ public class MessageController {
   public ResponseEntity<String> delete(@PathVariable("messageId") UUID messageId) {
     messageService.delete(messageId);
       return ResponseEntity.ok(
-              "메시지 ID: 삭제가 완료되었습니다."
+              "메시지 삭제가 완료되었습니다."
       );
   }
 }
