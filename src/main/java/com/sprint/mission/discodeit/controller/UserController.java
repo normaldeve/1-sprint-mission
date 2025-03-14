@@ -5,7 +5,6 @@ import com.sprint.mission.discodeit.dto.binarycontent.CreateBinaryContentRequest
 import com.sprint.mission.discodeit.dto.user.CreateUserRequest;
 import com.sprint.mission.discodeit.dto.user.UpdateUserRequest;
 import com.sprint.mission.discodeit.dto.user.UserDTO;
-import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,17 +34,17 @@ public class UserController {
   @Operation(summary = "Upload POST", description = "POST 방식으로 회원을 등록합니다")
   @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<UserDTO> createUser(
-          @Valid @RequestPart("userCreateRequest") CreateUserRequest userCreateRequest,
-          @RequestPart(value = "profile", required = false) MultipartFile profile) {
+      @Valid @RequestPart("userCreateRequest") CreateUserRequest userCreateRequest,
+      @RequestPart(value = "profile", required = false) MultipartFile profile) {
 
     Optional<CreateBinaryContentRequest> profileRequest = Optional.empty();
     if (profile != null && !profile.isEmpty()) {
       try {
         profileRequest = Optional.of(new CreateBinaryContentRequest(
-                profile.getOriginalFilename(),
-                profile.getContentType(),
-                profile.getBytes(),
-                profile.getSize()
+            profile.getOriginalFilename(),
+            profile.getContentType(),
+            profile.getBytes(),
+            profile.getSize()
         ));
       } catch (IOException e) {
         throw new RuntimeException(e);
@@ -55,8 +54,8 @@ public class UserController {
     UserDTO createdUser = userService.create(userCreateRequest, profileRequest);
 
     return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(createdUser);
+        .status(HttpStatus.CREATED)
+        .body(createdUser);
   }
 
   @Operation(summary = "GET Users", description = "GET을 통해 전체 회원을 조회합니다")
@@ -75,10 +74,10 @@ public class UserController {
     if (profile != null && !profile.isEmpty()) {
       try {
         profileRequest = Optional.of(new CreateBinaryContentRequest(
-                profile.getOriginalFilename(),
-                profile.getContentType(),
-                profile.getBytes(),
-                profile.getSize()
+            profile.getOriginalFilename(),
+            profile.getContentType(),
+            profile.getBytes(),
+            profile.getSize()
         ));
       } catch (IOException e) {
         throw new RuntimeException(e);
@@ -90,18 +89,19 @@ public class UserController {
   }
 
   @PatchMapping(path = "{userId}/userStatus")
-  public ResponseEntity<UserStatusDTO> updateUserStatusByUserId(@PathVariable("userId") UUID userId) {
+  public ResponseEntity<UserStatusDTO> updateUserStatusByUserId(
+      @PathVariable("userId") UUID userId) {
     UserStatusDTO updatedUserStatus = userStatusService.updateByUserId(userId);
     return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(updatedUserStatus);
+        .status(HttpStatus.OK)
+        .body(updatedUserStatus);
   }
 
   @DeleteMapping
   public ResponseEntity<String> deleteUser(@RequestParam("id") UUID id) {
     userService.delete(id);
     return ResponseEntity
-            .status(HttpStatus.NO_CONTENT)
-            .build();
+        .status(HttpStatus.NO_CONTENT)
+        .build();
   }
 }

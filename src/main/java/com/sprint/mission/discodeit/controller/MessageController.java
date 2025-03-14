@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,22 +30,22 @@ public class MessageController {
       @RequestPart("createMessageRequest") CreateMessageRequest createMessageRequest,
       @RequestPart("file")
       List<MultipartFile> attachments) {
-      List<CreateBinaryContentRequest> attachmentRequests = Optional.ofNullable(attachments)
-              .map(files -> files.stream()
-                      .map(file -> {
-                          try {
-                              return new CreateBinaryContentRequest(
-                                      file.getOriginalFilename(),
-                                      file.getContentType(),
-                                      file.getBytes(),
-                                      file.getSize()
-                              );
-                          } catch (IOException e) {
-                              throw new RuntimeException(e);
-                          }
-                      })
-                      .toList())
-              .orElse(new ArrayList<>());
+    List<CreateBinaryContentRequest> attachmentRequests = Optional.ofNullable(attachments)
+        .map(files -> files.stream()
+            .map(file -> {
+              try {
+                return new CreateBinaryContentRequest(
+                    file.getOriginalFilename(),
+                    file.getContentType(),
+                    file.getBytes(),
+                    file.getSize()
+                );
+              } catch (IOException e) {
+                throw new RuntimeException(e);
+              }
+            })
+            .toList())
+        .orElse(new ArrayList<>());
 
     MessageDTO message = messageService.create(createMessageRequest, attachmentRequests);
     return ResponseEntity.ok(message);
@@ -70,8 +69,8 @@ public class MessageController {
   @DeleteMapping("/{messageId}")
   public ResponseEntity<String> delete(@PathVariable("messageId") UUID messageId) {
     messageService.delete(messageId);
-      return ResponseEntity.ok(
-              "메시지 삭제가 완료되었습니다."
-      );
+    return ResponseEntity.ok(
+        "메시지 삭제가 완료되었습니다."
+    );
   }
 }
