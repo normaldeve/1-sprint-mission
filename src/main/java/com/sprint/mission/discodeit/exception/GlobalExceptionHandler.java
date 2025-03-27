@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+  @ExceptionHandler(DiscodeitException.class)
+  public ResponseEntity<ErrorResponse> handleServiceException(DiscodeitException exception) {
+    ErrorResponse response = new ErrorResponse(exception.getStatus(), exception.getMessage());
+    return new ResponseEntity<>(response, exception.getStatus());
+  }
+
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<String> handleException(IllegalArgumentException e) {
     e.printStackTrace();
