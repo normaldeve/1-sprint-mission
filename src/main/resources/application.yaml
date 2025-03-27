@@ -1,3 +1,19 @@
 spring:
   profiles:
-    active: dev
+    active: prod
+  application:
+    name: discodeit
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 30MB
+
+logging:
+  level:
+    org.hibernate.SQL: info
+
+discodeit:
+  storage:
+    type: local
+    local:
+      root-path: .discodeit/storage

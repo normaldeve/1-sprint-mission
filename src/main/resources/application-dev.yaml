@@ -1,10 +1,4 @@
 spring:
-  application:
-    name: discodeit
-  servlet:
-    multipart:
-      maxFileSize: 10MB
-      maxRequestSize: 30MB
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
@@ -19,7 +13,10 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        format_sql: true
+        format_sql: true # SQL 줄바꿈 및 들여쓰기
+        use_sql_comments: true # 쿼리 앞에 주석 출력
+        highlight_sql: true # 컬러로 SQL 표현
+        generate_statistics: false #실행 통계 출력
     open-in-view: false
 
 logging:
@@ -29,9 +26,3 @@ logging:
 
 server:
   port: 8081
-
-discodeit:
-  storage:
-    type: local
-    local:
-      root-path: .discodeit/storage

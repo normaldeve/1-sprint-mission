@@ -1,10 +1,4 @@
 spring:
-  application:
-    name: discodeit
-  servlet:
-    multipart:
-      maxFileSize: 10MB
-      maxRequestSize: 30MB
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/discodeit
@@ -21,15 +15,5 @@ spring:
         generate_statistics: false
     open-in-view: false
 
-logging:
-  level:
-    org.hibernate.SQL: info
-
 server:
   port: 80
-
-discodeit:
-  storage:
-    type: local
-    local:
-      root-path: .discodeit/storage
