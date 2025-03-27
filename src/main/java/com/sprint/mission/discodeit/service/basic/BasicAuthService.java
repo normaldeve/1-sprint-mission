@@ -1,34 +1,37 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.dto.data.UserDto;
+import com.sprint.mission.discodeit.dto.request.LoginRequest;
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.dto.login.LoginRequest;
-import com.sprint.mission.discodeit.dto.user.UserDTO;
-import com.sprint.mission.discodeit.exception.ErrorCode;
-import com.sprint.mission.discodeit.exception.ServiceException;
+import com.sprint.mission.discodeit.mapper.UserMapper;
 import com.sprint.mission.discodeit.repository.UserRepository;
-import com.sprint.mission.discodeit.service.UserStatusService;
+import com.sprint.mission.discodeit.service.AuthService;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @RequiredArgsConstructor
-public class BasicAuthService {
+@Service
+public class BasicAuthService implements AuthService {
 
   private final UserRepository userRepository;
-  private final ModelMapper modelMapper;
-  private final UserStatusService userStatusService;
+  private final UserMapper userMapper;
 
-  public UserDTO login(LoginRequest request) { // 요청으로 name과 password가 들어온 상황
-    User findUser = userRepository.findByUsername(request.username())
-        .orElseThrow(() -> new ServiceException(ErrorCode.USERNAME_MISMATCH));
+  @Transactional(readOnly = true)
+  @Override
+  public UserDto login(LoginRequest loginRequest) {
+    String username = loginRequest.username();
+    String password = loginRequest.password();
 
-    if (!findUser.getPassword().equals(request.password())) { // 비밀번호가 일치하지 않으면 에러 발생
-      throw new ServiceException(ErrorCode.PASSWORD_MISMATCH);
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(
+            () -> new NoSuchElementException("User with username " + username + " not found"));
+
+    if (!user.getPassword().equals(password)) {
+      throw new IllegalArgumentException("Wrong password");
     }
 
-    userStatusService.updateByUserId(findUser.getId());
-
-    return modelMapper.map(findUser, UserDTO.class); // 비밀번호를 보여주지 않기 위해서 DTO 사용
+    return userMapper.toDto(user);
   }
 }
