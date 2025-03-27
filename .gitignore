@@ -13,6 +13,11 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+# .gitignore
+.env
+.env.*
+
+
 ### Eclipse ###
 .apt_generated
 .classpath
