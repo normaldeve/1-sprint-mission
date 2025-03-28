@@ -1,23 +1,32 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/discodeit
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
-        format_sql: false
-        use_sql_comments: false
-        highlight_sql: false
-        generate_statistics: false
+        format_sql: true # SQL 줄바꿈 및 들여쓰기
+        use_sql_comments: true # 쿼리 앞에 주석 출력
+        highlight_sql: false # 컬러로 SQL 표현
+        generate_statistics: false #실행 통계 출력
     open-in-view: false
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
 
 info:
   app:
-    name: Discodeit
+    name: ${spring.application.name}
     description: 디스코드 클론 프로젝트
     version: 1.7.0
     author: junwo
@@ -48,5 +57,6 @@ management:
     env:
       enabled: true
 
+
 server:
-  port: 80
+  port: 8081

@@ -142,7 +142,7 @@ public class BasicMessageService implements MessageService {
   public void delete(UUID messageId) {
     if (!messageRepository.existsById(messageId)) {
       log.warn("[메시지 업데이트 실패] 해당 메시지를 찾을 수 없습니다. id: {}", messageId);
-      new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
+      throw new ServiceException(ErrorCode.CANNOT_FOUND_MESSAGE);
     }
 
     messageRepository.deleteById(messageId);
