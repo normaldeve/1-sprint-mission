@@ -31,7 +31,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.mockito.BDDMockito.*;
 
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 @ExtendWith(MockitoExtension.class)
 public class BasicChannelServiceTest {
 

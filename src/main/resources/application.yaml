@@ -2,11 +2,16 @@ spring:
   application:
     name: discodeit
   profiles:
-    active: test
+    active: dev
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 30MB
+  boot:
+    admin:
+      client:
+        instance:
+          name: discodeit
 
 logging:
   level:

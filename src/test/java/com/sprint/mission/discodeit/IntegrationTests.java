@@ -50,10 +50,10 @@ public class IntegrationTests {
     byte[] jsonBytes = objectMapper.writeValueAsBytes(request);
 
     MockMultipartFile userCreateRequest = new MockMultipartFile(
-        "userCreateRequest",         // name (must match @RequestPart)
-        "userCreateRequest.json",    // filename (optional)
-        "application/json",          // content type
-        jsonBytes                    // content
+        "userCreateRequest",
+        "userCreateRequest.json",
+        "application/json",
+        jsonBytes
     );
 
     // when

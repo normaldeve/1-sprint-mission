@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-  <!-- 공통 패턴 -->
-  <property name="LOG_PATTERN" value="%d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %-36logger - %msg%n"/>
+  <!-- 로그 패턴 설정 -->
+  <property name="LOG_PATTERN" value="%d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %-36logger [%X{requestId} | %X{method} | %X{requestURL}] - %msg%n"/>
   <property name="LOG_DIR" value=".logs"/>
 
   <!-- 콘솔 로그 -->
@@ -18,13 +18,8 @@
     <file>${LOG_DIR}/latest.log</file>
 
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!-- 파일명 패턴 (일자별 롤링) -->
       <fileNamePattern>${LOG_DIR}/logfile-%d{yyyy-MM-dd}.log</fileNamePattern>
-
-      <!-- 30일 보관 -->
       <maxHistory>30</maxHistory>
-
-      <!-- 로그 총 용량 제한 (선택사항) -->
       <totalSizeCap>1GB</totalSizeCap>
     </rollingPolicy>
 
@@ -44,4 +39,3 @@
   <logger name="org.hibernate.SQL" level="INFO"/>
   <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
 </configuration>
-
