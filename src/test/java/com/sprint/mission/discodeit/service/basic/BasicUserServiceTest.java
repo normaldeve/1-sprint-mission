@@ -5,7 +5,8 @@ import com.sprint.mission.discodeit.dto.request.UserCreateRequest;
 import com.sprint.mission.discodeit.dto.request.UserUpdateRequest;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.exception.ErrorCode;
-import com.sprint.mission.discodeit.exception.ServiceException;
+import com.sprint.mission.discodeit.exception.user.UserAlreadyExistException;
+import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
 import com.sprint.mission.discodeit.mapper.UserMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
@@ -68,7 +69,7 @@ public class BasicUserServiceTest {
     given(userRepository.existsByEmail(request.email())).willReturn(true);
 
     assertThatThrownBy(() -> userService.create(request, Optional.empty()))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(UserAlreadyExistException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.DUPLICATE_EMAIL);
   }
 
@@ -90,7 +91,7 @@ public class BasicUserServiceTest {
     given(userRepository.existsById(userId)).willReturn(false);
 
     assertThatThrownBy(() -> userService.delete(userId))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(UserNotFoundException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_USER);
   }
 
@@ -125,7 +126,7 @@ public class BasicUserServiceTest {
     given(userRepository.existsByUsername(request.newUsername())).willReturn(true);
 
     assertThatThrownBy(() -> userService.update(userId, request, Optional.empty()))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(UserAlreadyExistException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.DUPLICATE_NAME);
   }
 }

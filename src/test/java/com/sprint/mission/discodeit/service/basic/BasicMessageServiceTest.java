@@ -11,7 +11,8 @@ import com.sprint.mission.discodeit.entity.ChannelType;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.exception.ErrorCode;
-import com.sprint.mission.discodeit.exception.ServiceException;
+import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
+import com.sprint.mission.discodeit.exception.message.MessageNotFoundException;
 import com.sprint.mission.discodeit.mapper.MessageMapper;
 import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
@@ -19,7 +20,6 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -104,7 +104,7 @@ public class BasicMessageServiceTest {
     given(channelRepository.findById(channelId)).willReturn(Optional.empty());
 
     assertThatThrownBy(() -> messageService.create(request, List.of()))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(ChannelNotFoundException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_CHANNEL);
   }
 
@@ -135,7 +135,7 @@ public class BasicMessageServiceTest {
     given(messageRepository.findById(messageId)).willReturn(Optional.empty());
 
     assertThatThrownBy(() -> messageService.update(messageId, request))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(MessageNotFoundException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_MESSAGE);
   }
 
@@ -157,7 +157,7 @@ public class BasicMessageServiceTest {
     given(messageRepository.existsById(messageId)).willReturn(false);
 
     assertThatThrownBy(() -> messageService.delete(messageId))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(MessageNotFoundException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_MESSAGE);
   }
 

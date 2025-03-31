@@ -15,7 +15,9 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(DiscodeitException.class)
   public ResponseEntity<ErrorResponse> handleServiceException(DiscodeitException exception) {
-    ErrorResponse response = new ErrorResponse(exception.getStatus(), exception.getMessage());
+    ErrorResponse response = new ErrorResponse(exception.getTimestamp(),
+        exception.getErrorCode().toString(), exception.getMessage(), exception.getDetails(),
+        exception.getClass().getSimpleName(), exception.getErrorCode().getStatus().value());
     return new ResponseEntity<>(response, exception.getStatus());
   }
 
@@ -54,10 +56,21 @@ public class GlobalExceptionHandler {
         .orElse("입력값이 유효하지 않습니다.");
 
     ErrorResponse errorResponse = new ErrorResponse(
-        HttpStatus.BAD_REQUEST,
-        firstErrorMessage
+        Instant.now(),
+        "BAD_REQUEST",
+        firstErrorMessage,
+        Map.of("errors", ex.getBindingResult()
+            .getFieldErrors()
+            .stream()
+            .map(error -> Map.of(
+                "field", error.getField(),
+                "rejectedValue", error.getRejectedValue(),
+                "message", error.getDefaultMessage()
+            ))
+            .toList()),
+        ex.getClass().getSimpleName(),
+        HttpStatus.BAD_REQUEST.value()
     );
-
     return ResponseEntity.badRequest().body(errorResponse);
   }
 }

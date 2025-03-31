@@ -8,7 +8,8 @@ import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.ChannelType;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.exception.ErrorCode;
-import com.sprint.mission.discodeit.exception.ServiceException;
+import com.sprint.mission.discodeit.exception.channel.ChannelException;
+import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
 import com.sprint.mission.discodeit.mapper.ChannelMapper;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
@@ -26,7 +27,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.mockito.BDDMockito.*;
@@ -93,7 +93,7 @@ public class BasicChannelServiceTest {
     given(channelRepository.findById(channelId)).willReturn(Optional.empty());
 
     assertThatThrownBy(() -> channelService.find(channelId))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(ChannelNotFoundException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_CHANNEL);
   }
 
@@ -107,7 +107,7 @@ public class BasicChannelServiceTest {
     given(channelRepository.findById(channelId)).willReturn(Optional.of(channel));
 
     assertThatThrownBy(() -> channelService.update(channelId, request))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(ChannelException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_MODIFY_PRIVATE_CHANNEL);
   }
 
@@ -131,7 +131,7 @@ public class BasicChannelServiceTest {
     given(channelRepository.existsById(channelId)).willReturn(false);
 
     assertThatThrownBy(() -> channelService.delete(channelId))
-        .isInstanceOf(ServiceException.class)
+        .isInstanceOf(ChannelNotFoundException.class)
         .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_CHANNEL);
   }
 }
