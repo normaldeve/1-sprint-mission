@@ -19,4 +19,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
       + "LEFT JOIN FETCH u.profile "
       + "JOIN FETCH u.status")
   List<User> findAllWithProfileAndStatus();
+
 }

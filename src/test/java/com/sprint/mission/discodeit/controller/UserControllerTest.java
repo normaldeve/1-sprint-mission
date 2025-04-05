@@ -1,106 +1,152 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sprint.mission.discodeit.dto.data.UserDto;
-import com.sprint.mission.discodeit.dto.request.UserCreateRequest;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-@ActiveProfiles("dev")
-@WebMvcTest(controllers = UserController.class)
-class UserControllerTest {
+@WebMvcTest(UserController.class)
+public class UserControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
-  @Autowired
-  private ObjectMapper objectMapper;
-
   @MockitoBean
   private UserService userService;
 
-  @MockitoBean
-  private UserStatusService userStatusService;
-
   @Test
-  @DisplayName("성공 - 전체 유저 조회")
-  void findAll_success() throws Exception {
-    UserDto user = new UserDto(UUID.randomUUID(), "rex", "rex@naver.com", null, true);
-    BDDMockito.given(userService.findAll()).willReturn(List.of(user));
-
-    mockMvc.perform(get("/api/users"))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].username").value("rex"));
-  }
-
-  @Test
-  @DisplayName("성공 - 유저 삭제")
-  void deleteUser_success() throws Exception {
+  @DisplayName("사용자 생성 요청 성공 - 프로필 포함 + JSON 응답 검증")
+  void createUser_withProfile_success() throws Exception {
     UUID userId = UUID.randomUUID();
+    UserDto userDto = new UserDto(userId, "junwo", "junwo@email.com", null, null);
 
-    mockMvc.perform(delete("/api/users/" + userId))
-        .andExpect(status().isNoContent());
-  }
-
-  @Test
-  @DisplayName("실패 - 유효하지 않은 입력으로 유저 생성")
-  void createUser_fail_invalidInput() throws Exception {
-    UserCreateRequest invalidRequest = new UserCreateRequest("", "invalid", "123");
-
-    MockMultipartFile requestPart = new MockMultipartFile(
+    MockMultipartFile userCreateRequest = new MockMultipartFile(
         "userCreateRequest",
-        "userCreateRequest",
-        MediaType.APPLICATION_JSON_VALUE,
-        objectMapper.writeValueAsBytes(invalidRequest)
+        "",
+        "application/json",
+        """
+        {
+          "username": "junwo",
+          "email": "junwo@email.com",
+          "password": "Password123!"
+        }
+        """.getBytes(StandardCharsets.UTF_8)
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.multipart("/api/users")
-            .file(requestPart)
-            .contentType(MediaType.MULTIPART_FORM_DATA))
+    MockMultipartFile profileFile = new MockMultipartFile(
+        "profile",
+        "profile.png",
+        "image/png",
+        "fake-image-bytes".getBytes(StandardCharsets.UTF_8)
+    );
+
+    when(userService.create(any(), any())).thenReturn(userDto);
+
+    mockMvc.perform(
+            multipart("/api/users")
+                .file(userCreateRequest)
+                .file(profileFile)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+        )
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").value(userId.toString()))
+        .andExpect(jsonPath("$.username").value("junwo"))
+        .andExpect(jsonPath("$.email").value("junwo@email.com"))
+        .andExpect(jsonPath("$.profile").doesNotExist())
+        .andExpect(jsonPath("$.status").doesNotExist());
+  }
+
+  @Test
+  @DisplayName("사용자 생성 실패 - 잘못된 이메일 형식")
+  void createUser_invalidEmailFormat_fail() throws Exception {
+    MockMultipartFile invalidEmailRequest = new MockMultipartFile(
+        "userCreateRequest",
+        "",
+        "application/json",
+        """
+        {
+          "username": "junwo",
+          "email": "invalid-email-format",
+          "password": "Password123!"
+        }
+        """.getBytes(StandardCharsets.UTF_8)
+    );
+
+    mockMvc.perform(
+            multipart("/api/users")
+                .file(invalidEmailRequest)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+        )
         .andExpect(status().isBadRequest());
   }
 
   @Test
-  @DisplayName("성공 - 유저 생성")
-  void createUser_success() throws Exception {
-    UserCreateRequest request = new UserCreateRequest("rex", "rex@naver.com", "Password1!");
-    UserDto userDto = new UserDto(UUID.randomUUID(), "rex", "rex@naver.com", null, true);
-
-    BDDMockito.given(userService.create(any(), any())).willReturn(userDto);
-
-    MockMultipartFile requestPart = new MockMultipartFile(
+  @DisplayName("사용자 생성 실패 - 잘못된 비밀번호 형식")
+  void createUser_invalidPasswordFormat_fail() throws Exception {
+    MockMultipartFile invalidPasswordRequest = new MockMultipartFile(
         "userCreateRequest",
-        "userCreateRequest",
-        MediaType.APPLICATION_JSON_VALUE,
-        objectMapper.writeValueAsBytes(request)
+        "",
+        "application/json",
+        """
+        {
+          "username": "junwo",
+          "email": "junwo@email.com",
+          "password": "123"
+        }
+        """.getBytes(StandardCharsets.UTF_8)
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.multipart("/api/users")
-            .file(requestPart)
-            .contentType(MediaType.MULTIPART_FORM_DATA))
-        .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.username").value("rex"));
+    mockMvc.perform(
+            multipart("/api/users")
+                .file(invalidPasswordRequest)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+        )
+        .andExpect(status().isBadRequest());
   }
 
-}
+  @Test
+  @DisplayName("사용자 전체 조회 - JSON 응답 검증")
+  void findAllUsers_success() throws Exception {
+    UUID userId = UUID.randomUUID();
+    when(userService.findAll()).thenReturn(List.of(
+        new UserDto(userId, "junwo", "junwo@email.com", null, null)
+    ));
 
+    mockMvc.perform(get("/api/users"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].id").value(userId.toString()))
+        .andExpect(jsonPath("$[0].username").value("junwo"))
+        .andExpect(jsonPath("$[0].email").value("junwo@email.com"))
+        .andExpect(jsonPath("$[0].profile").doesNotExist())
+        .andExpect(jsonPath("$[0].status").doesNotExist());
+  }
+
+  @Test
+  @DisplayName("사용자 삭제")
+  void deleteUser_success() throws Exception {
+    UUID userId = UUID.randomUUID();
+
+    mockMvc.perform(delete("/api/users/{userId}", userId))
+        .andExpect(status().isNoContent());
+
+    verify(userService).delete(userId);
+  }
+}

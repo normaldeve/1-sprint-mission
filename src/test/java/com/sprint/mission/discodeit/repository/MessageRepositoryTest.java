@@ -1,11 +1,16 @@
 package com.sprint.mission.discodeit.repository;
 
 import com.sprint.mission.discodeit.entity.*;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 import java.time.Instant;
@@ -13,9 +18,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
+@Sql(scripts = "/sql/message-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @DataJpaTest
 @EnableJpaAuditing
 @ActiveProfiles("dev")
@@ -24,78 +32,50 @@ class MessageRepositoryTest {
   @Autowired
   private MessageRepository messageRepository;
 
-  @Autowired
-  private UserRepository userRepository;
-
-  @Autowired
-  private ChannelRepository channelRepository;
-
-  @Autowired
-  private UserStatusRepository userStatusRepository;
-
   @Test
   @DisplayName("채널 ID로 메시지 목록을 페이징 조회한다.")
-  void findAllByChannelIdWithAuthor() {
-    // given
-    Channel channel = channelRepository.save(new Channel(ChannelType.PUBLIC, "test", "설명"));
-    User user = userRepository.save(new User("junwo", "junwo@email.com", "pass", null));
-    userStatusRepository.save(new UserStatus(user, Instant.now()));
+  void findAllByChannelIdWithAuthor_success() {
+    UUID channelId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    Instant cursor = Instant.now().minus(15, ChronoUnit.MINUTES);
+    Pageable pageable = PageRequest.of(0, 5, Sort.by("createdAt").descending());
 
-    messageRepository.saveAll(List.of(
-        new Message("Hello 1", channel, user, List.of()),
-        new Message("Hello 2", channel, user, List.of())
-    ));
+    Slice<Message> result = messageRepository.findAllByChannelIdWithAuthor(channelId, cursor, pageable);
 
-    // when
-    Slice<Message> messages = messageRepository.findAllByChannelIdWithAuthor(
-        channel.getId(),
-        Instant.now(),
-        PageRequest.of(0, 10)
-    );
+    assertThat(result).isNotEmpty();
+    assertThat(result.hasNext()).isTrue();
 
-    // then
-    assertThat(messages).isNotNull();
-    assertThat(messages.getContent()).hasSize(2);
-    assertThat(messages.getContent().get(0).getAuthor()).isNotNull();
-    assertThat(messages.getContent().get(0).getAuthor().getStatus()).isNotNull();
+    Message sample = result.getContent().get(0);
+    assertThat(result.getContent()).hasSize(5);
+    assertThat(sample.getAuthor()).isNotNull();
+    assertThat(sample.getCreatedAt()).isBefore(cursor);
+
+    List<Instant> createdAts = result.getContent().stream()
+        .map(Message::getCreatedAt)
+        .toList();
+    List<Instant> sorted = new ArrayList<>(createdAts);
+    sorted.sort(Comparator.reverseOrder());
+    assertThat(createdAts).isEqualTo(sorted);
   }
 
   @Test
   @DisplayName("채널 ID로 가장 마지막 메시지 시간을 조회한다.")
   void findLastMessageAtByChannelId() {
-    // given
-    Channel channel = channelRepository.save(new Channel(ChannelType.PUBLIC, "test", "설명"));
-    User user = userRepository.save(new User("junwo", "junwo@email.com", "pass", null));
-    userStatusRepository.save(new UserStatus(user, Instant.now()));
+    UUID channelId = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
-    Instant now = Instant.now();
-    messageRepository.save(new Message("Hi!", channel, user, List.of()));
-    messageRepository.save(new Message("Latest", channel, user, List.of()));
+    Optional<Message> message = messageRepository.findById(UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020"));
+    Optional<Instant> result = messageRepository.findLastMessageAtByChannelId(channelId);
 
-    // when
-    Optional<Instant> lastMessageAt = messageRepository.findLastMessageAtByChannelId(channel.getId());
-
-    // then
-    assertThat(lastMessageAt).isPresent();
+    assertThat(result).isPresent();
+    assertThat(message.get().getCreatedAt()).isEqualTo(result.get());
   }
 
   @Test
   @DisplayName("채널 ID로 모든 메시지를 삭제한다.")
   void deleteAllByChannelId() {
-    // given
-    Channel channel = channelRepository.save(new Channel(ChannelType.PUBLIC, "test", "설명"));
-    User user = userRepository.save(new User("junwo", "junwo@email.com", "pass", null));
-    userStatusRepository.save(new UserStatus(user, Instant.now()));
+    UUID channelId = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
-    messageRepository.saveAll(List.of(
-        new Message("Msg1", channel, user, List.of()),
-        new Message("Msg2", channel, user, List.of())
-    ));
+    messageRepository.deleteAllByChannelId(channelId);
 
-    // when
-    messageRepository.deleteAllByChannelId(channel.getId());
-
-    // then
     assertThat(messageRepository.findAll()).isEmpty();
   }
 }

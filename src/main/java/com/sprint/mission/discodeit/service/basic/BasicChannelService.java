@@ -10,7 +10,6 @@ import com.sprint.mission.discodeit.entity.ReadStatus;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.channel.ChannelException;
 import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
-import com.sprint.mission.discodeit.ip.RequestIPContext;
 import com.sprint.mission.discodeit.mapper.ChannelMapper;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
@@ -35,7 +34,6 @@ public class BasicChannelService implements ChannelService {
   private final MessageRepository messageRepository;
   private final UserRepository userRepository;
   private final ChannelMapper channelMapper;
-  private final RequestIPContext requestIPContext;
 
   @Transactional
   @Override
@@ -78,7 +76,7 @@ public class BasicChannelService implements ChannelService {
         .orElseThrow(
             () -> {
               log.warn("[채널 조회 실패] 해당 채널을 찾을 수 없습니다 id: {}", channelId);
-              return new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL, Map.of("channelId", channelId , "requestIp", requestIPContext.getClientIp()));});
+              return new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL, Map.of("channelId", channelId));});
   }
 
   @Transactional(readOnly = true)
@@ -106,10 +104,10 @@ public class BasicChannelService implements ChannelService {
             () -> {
               log.warn("[채널 업데이트 실패] 해당 채널을 찾을 수 없습니다 id: {}", channelId);
               return new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL,
-                  Map.of("channelId", channelId , "requestIp", requestIPContext.getClientIp()));});
+                  Map.of("channelId", channelId));});
     if (channel.getType().equals(ChannelType.PRIVATE)) {
       log.warn("[채널 업데이트 실패] 개인 채널은 업데이트 할 수 없습니다 type: {}", channel.getType());
-      throw new ChannelException(ErrorCode.CANNOT_MODIFY_PRIVATE_CHANNEL, Map.of("channelId", channelId, "requestIp", requestIPContext.getClientIp()));
+      throw new ChannelException(ErrorCode.CANNOT_MODIFY_PRIVATE_CHANNEL, Map.of("channelId", channelId));
     }
     channel.update(newName, newDescription);
     log.info("[채널 업데이트 성공] id: {}", channel.getId());
@@ -121,7 +119,7 @@ public class BasicChannelService implements ChannelService {
   public void delete(UUID channelId) {
     if (!channelRepository.existsById(channelId)) {
       log.warn("[채널 삭제 실패] 해당 채널을 찾을 수 없습니다 id: {}", channelId);
-      throw new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL, Map.of("channelId", channelId, "requestIp", requestIPContext.getClientIp()));
+      throw new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL, Map.of("channelId", channelId));
     }
 
     messageRepository.deleteAllByChannelId(channelId);

@@ -13,7 +13,6 @@ import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
 import com.sprint.mission.discodeit.exception.message.MessageNotFoundException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
-import com.sprint.mission.discodeit.ip.RequestIPContext;
 import com.sprint.mission.discodeit.mapper.MessageMapper;
 import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
@@ -46,7 +45,6 @@ public class BasicMessageService implements MessageService {
   private final BinaryContentStorage binaryContentStorage;
   private final BinaryContentRepository binaryContentRepository;
   private final PageResponseMapper pageResponseMapper;
-  private final RequestIPContext requestIPContext;
 
   @Transactional
   @Override
@@ -59,14 +57,14 @@ public class BasicMessageService implements MessageService {
         .orElseThrow(
             () -> {
               log.warn("[메시지 생성 오류] 채널을 찾을 수 없습니다");
-              return new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL, Map.of("channelId", channelId, "requestIp", requestIPContext.getClientIp()));
+              return new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL, Map.of("channelId", channelId));
             });
 
     User author = userRepository.findById(authorId)
         .orElseThrow(
             () -> {
               log.warn("[메시지 생성 오류] 작성자를 찾을 수 없습니다");
-              return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("authorId", authorId, "requestIp", requestIPContext.getClientIp()));
+              return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("authorId", authorId));
             });
 
     List<BinaryContent> attachments = binaryContentCreateRequests.stream()
@@ -104,7 +102,7 @@ public class BasicMessageService implements MessageService {
         .orElseThrow(
             () -> {
               log.warn("[메시지 조회 실패] 해당 메시지를 찾을 수 없습니다. id: {}", messageId);
-              return new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId, "requestIp", requestIPContext.getClientIp()));
+              return new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId));
             });
   }
 
@@ -134,7 +132,7 @@ public class BasicMessageService implements MessageService {
         .orElseThrow(
             () -> {
               log.warn("[메시지 업데이트 실패] 해당 메시지를 찾을 수 없습니다. id: {}", messageId);
-              return new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId, "requestIp", requestIPContext.getClientIp()));
+              return new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId));
             });
     message.update(newContent);
     log.info("[메시지 업데이트 성공]");
@@ -146,7 +144,7 @@ public class BasicMessageService implements MessageService {
   public void delete(UUID messageId) {
     if (!messageRepository.existsById(messageId)) {
       log.warn("[메시지 업데이트 실패] 해당 메시지를 찾을 수 없습니다. id: {}", messageId);
-      throw new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId, "requestIp", requestIPContext.getClientIp()));
+      throw new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId));
     }
 
     messageRepository.deleteById(messageId);

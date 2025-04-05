@@ -9,7 +9,6 @@ import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
 import com.sprint.mission.discodeit.exception.userstatus.UserStatusException;
 import com.sprint.mission.discodeit.exception.userstatus.UserStatusNotFoundException;
-import com.sprint.mission.discodeit.ip.RequestIPContext;
 import com.sprint.mission.discodeit.mapper.UserStatusMapper;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
@@ -32,7 +31,6 @@ public class BasicUserStatusService implements UserStatusService {
   private final UserStatusRepository userStatusRepository;
   private final UserRepository userRepository;
   private final UserStatusMapper userStatusMapper;
-  private final RequestIPContext requestIPContext;
 
   @Transactional
   @Override
@@ -43,12 +41,12 @@ public class BasicUserStatusService implements UserStatusService {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> {
           log.warn("[유저 상태 생성 실패] 존재하지 않는 사용자: {}", userId);
-          return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId, "requestIp", requestIPContext.getClientIp()));
+          return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId));
         });
 
     Optional.ofNullable(user.getStatus()).ifPresent(status -> {
       log.warn("[유저 상태 생성 실패] 이미 상태가 존재하는 사용자: {}", userId);
-      throw new UserStatusException(ErrorCode.ALREADY_EXIST_USERSTAUTS, Map.of("userId", userId, "requestIp", requestIPContext.getClientIp()));
+      throw new UserStatusException(ErrorCode.ALREADY_EXIST_USERSTAUTS, Map.of("userId", userId));
     });
 
     Instant lastActiveAt = request.lastActiveAt();
@@ -66,7 +64,7 @@ public class BasicUserStatusService implements UserStatusService {
         .map(userStatusMapper::toDto)
         .orElseThrow(() -> {
           log.warn("[유저 상태 조회 실패] 존재하지 않는 상태 ID: {}", userStatusId);
-          return new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userStatusId", userStatusId, "requestIp", requestIPContext.getClientIp()));
+          return new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userStatusId", userStatusId));
         });
   }
 
@@ -86,7 +84,7 @@ public class BasicUserStatusService implements UserStatusService {
     UserStatus userStatus = userStatusRepository.findById(userStatusId)
         .orElseThrow(() -> {
           log.warn("[유저 상태 수정 실패] 존재하지 않는 상태 ID: {}", userStatusId);
-          return new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userStatusId", userStatusId, "requestIp", requestIPContext.getClientIp()));
+          return new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userStatusId", userStatusId));
         });
 
     Instant newLastActiveAt = request.newLastActiveAt();
@@ -104,7 +102,7 @@ public class BasicUserStatusService implements UserStatusService {
     UserStatus userStatus = userStatusRepository.findByUserId(userId)
         .orElseThrow(() -> {
           log.warn("[유저 상태 수정 실패] 상태가 존재하지 않는 사용자: {}", userId);
-          return new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userId", userId, "userStatusId", userId, "requestIp", requestIPContext.getClientIp()));
+          return new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userId", userId, "userStatusId", userId));
         });
 
     Instant newLastActiveAt = request.newLastActiveAt();
@@ -121,7 +119,7 @@ public class BasicUserStatusService implements UserStatusService {
 
     if (!userStatusRepository.existsById(userStatusId)) {
       log.warn("[유저 상태 삭제 실패] 존재하지 않는 상태 ID: {}", userStatusId);
-      throw new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userStatusId", userStatusId, "requestIp", requestIPContext.getClientIp()));
+      throw new UserStatusNotFoundException(ErrorCode.CANNOT_FOUND_USERSTATUS, Map.of("userStatusId", userStatusId));
     }
 
     userStatusRepository.deleteById(userStatusId);

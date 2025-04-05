@@ -10,7 +10,6 @@ import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.user.UserAlreadyExistException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
-import com.sprint.mission.discodeit.ip.RequestIPContext;
 import com.sprint.mission.discodeit.mapper.UserMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
@@ -35,7 +34,6 @@ public class BasicUserService implements UserService {
   private final UserMapper userMapper;
   private final BinaryContentRepository binaryContentRepository;
   private final BinaryContentStorage binaryContentStorage;
-  private final RequestIPContext requestIPContext;
 
   @Transactional
   @Override
@@ -48,11 +46,11 @@ public class BasicUserService implements UserService {
 
     if (userRepository.existsByEmail(email)) {
       log.warn("[회원 생성 실패] 중복된 이메일: {}", email);
-      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_EMAIL, Map.of("email", email , "requestIp", requestIPContext.getClientIp()));
+      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_EMAIL, Map.of("email", email ));
     }
     if (userRepository.existsByUsername(username)) {
       log.warn("[회원 생성 실패] 중복된 사용자 이름: {}", username);
-      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_NAME, Map.of("username", username , "requestIp", requestIPContext.getClientIp()));
+      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_NAME, Map.of("username", username));
     }
 
     BinaryContent nullableProfile = optionalProfileCreateRequest
@@ -88,7 +86,7 @@ public class BasicUserService implements UserService {
         .map(userMapper::toDto)
         .orElseThrow(() -> {
           log.warn("[회원 조회 실패] 존재하지 않는 사용자: {}", userId);
-          return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId , "requestIp", requestIPContext.getClientIp()));
+          return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId ));
         });
   }
 
@@ -110,7 +108,7 @@ public class BasicUserService implements UserService {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> {
           log.warn("[회원 수정 실패] 존재하지 않는 사용자: {}", userId);
-          return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId, "requestIp", requestIPContext.getClientIp()));
+          return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId));
         });
 
     String newUsername = userUpdateRequest.newUsername();
@@ -118,11 +116,11 @@ public class BasicUserService implements UserService {
 
     if (userRepository.existsByEmail(newEmail)) {
       log.warn("[회원 수정 실패] 중복된 이메일: {}", newEmail);
-      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_EMAIL, Map.of("email", newEmail , "requestIp", requestIPContext.getClientIp()));
+      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_EMAIL, Map.of("email", newEmail));
     }
     if (userRepository.existsByUsername(newUsername)) {
       log.warn("[회원 수정 실패] 중복된 사용자 이름: {}", newUsername);
-      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_NAME, Map.of("username", newUsername , "requestIp", requestIPContext.getClientIp()));
+      throw new UserAlreadyExistException(ErrorCode.DUPLICATE_NAME, Map.of("username", newUsername));
     }
 
     BinaryContent nullableProfile = optionalProfileCreateRequest
@@ -154,7 +152,7 @@ public class BasicUserService implements UserService {
 
     if (!userRepository.existsById(userId)) {
       log.warn("[회원 삭제 실패] 존재하지 않는 사용자: {}", userId);
-      throw new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId , "requestIp", requestIPContext.getClientIp()));
+      throw new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("userId", userId));
     }
 
     userRepository.deleteById(userId);

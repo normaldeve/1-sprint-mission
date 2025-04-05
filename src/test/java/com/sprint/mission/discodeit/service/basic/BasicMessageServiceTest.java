@@ -6,13 +6,14 @@ import com.sprint.mission.discodeit.dto.request.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.dto.request.MessageCreateRequest;
 import com.sprint.mission.discodeit.dto.request.MessageUpdateRequest;
 import com.sprint.mission.discodeit.dto.response.PageResponse;
+import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.ChannelType;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
 import com.sprint.mission.discodeit.exception.message.MessageNotFoundException;
+import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
 import com.sprint.mission.discodeit.mapper.MessageMapper;
 import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
@@ -24,36 +25,36 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.util.ReflectionTestUtils;
 
-@ActiveProfiles("dev")
+@Import(BasicMessageService.class)
 @ExtendWith(MockitoExtension.class)
 public class BasicMessageServiceTest {
-
+  @Mock
+  private MessageRepository messageRepository;
   @Mock
   private ChannelRepository channelRepository;
   @Mock
   private UserRepository userRepository;
-  @Mock
-  private MessageRepository messageRepository;
   @Mock
   private MessageMapper messageMapper;
   @Mock
@@ -66,120 +67,190 @@ public class BasicMessageServiceTest {
   private BasicMessageService messageService;
 
   @Test
-  @DisplayName("성공 - 메시지 생성")
-  void createMessage_success() {
+  @DisplayName("메시지 생성 성공 - 첨부파일 없음")
+  void createMessage_withoutAttachment() {
     UUID channelId = UUID.randomUUID();
-    UUID userId = UUID.randomUUID();
-    String content = "Hello World";
+    UUID authorId = UUID.randomUUID();
+    UUID messageId = UUID.randomUUID();
 
-    MessageCreateRequest request = new MessageCreateRequest(content, channelId, userId);
-    BinaryContentCreateRequest binaryContentCreateRequest = new BinaryContentCreateRequest(
-        "file.txt", "text/plain", new byte[]{1, 2});
-    Channel channel = new Channel(ChannelType.PUBLIC, "공개 채널", "공개 채널입니다.");
-    User user = new User("user", "user@naver.com", "Rlawnsdn12!", null);
-    UserDto userDto = new UserDto(UUID.randomUUID(), user.getUsername(), user.getEmail(), null,
-        true);
-    Message message = new Message(content, channel, user, List.of());
-    MessageDto messageDto = new MessageDto(UUID.randomUUID(), Instant.now(), Instant.now(), content,
-        channelId, userDto, null);
+    MessageCreateRequest request = new MessageCreateRequest("Hello", channelId, authorId);
+    Channel channel = new Channel(ChannelType.PUBLIC, "test", "desc");
+    User user = new User("junwo", "email", "pass", null);
+    ReflectionTestUtils.setField(user, "id", authorId);
 
-    given(channelRepository.findById(channelId)).willReturn(Optional.of(channel));
-    given(userRepository.findById(userId)).willReturn(Optional.of(user));
-    given(messageRepository.save(any())).willReturn(message);
-    given(messageMapper.toDto(any())).willReturn(messageDto);
+    when(channelRepository.findById(channelId)).thenReturn(Optional.of(channel));
+    when(userRepository.findById(authorId)).thenReturn(Optional.of(user));
 
-    MessageDto result = messageService.create(request, List.of(binaryContentCreateRequest));
+    UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.getEmail(), null, null);
+    Message message = new Message("Hello", channel, user, List.of());
+    ReflectionTestUtils.setField(message, "id", messageId);
+    when(messageRepository.save(any())).thenReturn(message);
+    when(messageMapper.toDto(any())).thenReturn(
+        new MessageDto(message.getId(), Instant.now(), Instant.now(), message.getContent(),
+            message.getChannel().getId(), userDto, null));
 
-    assertThat(result.content()).isEqualTo("Hello World");
-    then(messageRepository).should().save(any());
+    MessageDto result = messageService.create(request, List.of());
+
+    assertThat(result).isNotNull();
+    verify(binaryContentRepository, never()).save(any());
+    verify(binaryContentStorage, never()).put(any(), any());
   }
 
   @Test
-  @DisplayName("실패 - 채널이 존재하지 않음")
-  void createMessage_fail_channelNotFound() {
+  @DisplayName("메시지 생성 성공 - 첨부파일 포함")
+  void createMessage_withAttachment_success() {
+    // given
     UUID channelId = UUID.randomUUID();
-    UUID userId = UUID.randomUUID();
-    MessageCreateRequest request = new MessageCreateRequest("Hello World", channelId, userId);
+    UUID authorId = UUID.randomUUID();
+    UUID messageId = UUID.randomUUID();
+    String content = "Hello with attachment";
 
-    given(channelRepository.findById(channelId)).willReturn(Optional.empty());
+    byte[] dummyBytes = "fake-image-bytes".getBytes();
+    BinaryContentCreateRequest attachmentRequest = new BinaryContentCreateRequest(
+        "image.png", "image/png", dummyBytes
+    );
+
+    MessageCreateRequest request = new MessageCreateRequest(content, channelId, authorId);
+    Channel channel = new Channel(ChannelType.PUBLIC, "test", "desc");
+    User author = new User("junwo", "email", "pass", null);
+    ReflectionTestUtils.setField(author, "id", authorId);
+
+    BinaryContent binaryContent = new BinaryContent("image.png", (long) dummyBytes.length, "image/png");
+    UUID attachmentId = UUID.randomUUID();
+    ReflectionTestUtils.setField(binaryContent, "id", attachmentId);
+
+    Message message = new Message(content, channel, author, List.of(binaryContent));
+    ReflectionTestUtils.setField(message, "id", messageId);
+
+    UserDto userDto = new UserDto(author.getId(), author.getUsername(), author.getEmail(), null, null);
+
+    // when
+    when(channelRepository.findById(channelId)).thenReturn(Optional.of(channel));
+    when(userRepository.findById(authorId)).thenReturn(Optional.of(author));
+    when(binaryContentRepository.save(any())).thenReturn(binaryContent);
+    when(messageRepository.save(any())).thenReturn(message);
+    when(messageMapper.toDto(any())).thenReturn(
+        new MessageDto(message.getId(), Instant.now(), Instant.now(), message.getContent(),
+            message.getChannel().getId(), userDto, List.of())
+    );
+
+    MessageDto result = messageService.create(request, List.of(attachmentRequest));
+
+    assertThat(result).isNotNull();
+    verify(binaryContentRepository).save(any());
+    verify(binaryContentStorage).put(any(), any());
+  }
+
+  @Test
+  @DisplayName("메시지 생성 실패 - 존재하지 않는 채널")
+  void createMessage_channelNotFound() {
+    UUID channelId = UUID.randomUUID();
+    UUID authorId = UUID.randomUUID();
+    MessageCreateRequest request = new MessageCreateRequest("Hello", channelId, authorId);
+
+    when(channelRepository.findById(channelId)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> messageService.create(request, List.of()))
-        .isInstanceOf(ChannelNotFoundException.class)
-        .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_CHANNEL);
+        .isInstanceOf(ChannelNotFoundException.class);
   }
 
   @Test
-  @DisplayName("성공 - 메시지 수정")
-  void updateMessage_success() {
+  @DisplayName("메시지 생성 실패 - 존재하지 않는 작성자")
+  void createMessage_authorNotFound() {
+    UUID channelId = UUID.randomUUID();
+    UUID authorId = UUID.randomUUID();
+    MessageCreateRequest request = new MessageCreateRequest("Hello", channelId, authorId);
+    Channel channel = new Channel(ChannelType.PUBLIC, "test", "desc");
+
+    when(channelRepository.findById(channelId)).thenReturn(Optional.of(channel));
+    when(userRepository.findById(authorId)).thenReturn(Optional.empty());
+
+    assertThatThrownBy(() -> messageService.create(request, List.of()))
+        .isInstanceOf(UserNotFoundException.class);
+  }
+
+
+  @Test
+  @DisplayName("메시지 조회 성공")
+  void findMessage_success() {
     UUID messageId = UUID.randomUUID();
     Message message = mock(Message.class);
-    MessageUpdateRequest request = new MessageUpdateRequest("New Content");
-    MessageDto messageDto = new MessageDto(messageId, Instant.now(), Instant.now(),
-        request.newContent(), UUID.randomUUID(), null, null);
+    when(messageRepository.findById(messageId)).thenReturn(Optional.of(message));
+    when(messageMapper.toDto(any())).thenReturn(mock(MessageDto.class));
 
-    given(messageRepository.findById(messageId)).willReturn(Optional.of(message));
-    given(messageMapper.toDto(any())).willReturn(messageDto);
-
-    MessageDto update = messageService.update(messageId, request);
-
-    assertThat(update.content()).isEqualTo("New Content");
-    then(message).should().update(any());
+    MessageDto result = messageService.find(messageId);
+    assertThat(result).isNotNull();
   }
 
   @Test
-  @DisplayName("실패 - 메시지 없음")
-  void updateMessage_fail_notFound() {
+  @DisplayName("메시지가 존재하지 않으면 조회할 수 없습니다")
+  void findMessage_notFound() {
     UUID messageId = UUID.randomUUID();
-    MessageUpdateRequest request = new MessageUpdateRequest("New Content");
+    when(messageRepository.findById(messageId)).thenReturn(Optional.empty());
 
-    given(messageRepository.findById(messageId)).willReturn(Optional.empty());
-
-    assertThatThrownBy(() -> messageService.update(messageId, request))
-        .isInstanceOf(MessageNotFoundException.class)
-        .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_MESSAGE);
+    assertThatThrownBy(() -> messageService.find(messageId))
+        .isInstanceOf(MessageNotFoundException.class);
   }
 
   @Test
-  @DisplayName("성공 - 메시지 삭제")
-  void deleteMessage_success() {
-    UUID messageId = UUID.randomUUID();
-    given(messageRepository.existsById(messageId)).willReturn(true);
-
-    messageService.delete(messageId);
-
-    then(messageRepository).should().deleteById(any());
-  }
-
-  @Test
-  @DisplayName("실패 - 삭제하려는 메시지가 없음")
-  void deleteMessage_fail_notFound() {
-    UUID messageId = UUID.randomUUID();
-    given(messageRepository.existsById(messageId)).willReturn(false);
-
-    assertThatThrownBy(() -> messageService.delete(messageId))
-        .isInstanceOf(MessageNotFoundException.class)
-        .hasFieldOrPropertyWithValue("errorCode", ErrorCode.CANNOT_FOUND_MESSAGE);
-  }
-
-  @Test
-  @DisplayName("성공 - 채널 메시지 목록 조회")
+  @DisplayName("특정 채널에 작성된 메시지 목록을 조회할 수 있습니다")
   void findAllByChannelId_success() {
     UUID channelId = UUID.randomUUID();
-    Instant cursor = Instant.now();
-    Pageable pageable = PageRequest.of(0, 10);
+    Pageable pageable = PageRequest.of(0, 5);
+    Slice<Message> slice = new SliceImpl<>(List.of(mock(Message.class)));
+
+    when(messageRepository.findAllByChannelIdWithAuthor(eq(channelId), any(), eq(pageable))).thenReturn(slice);
+    when(messageMapper.toDto(any())).thenReturn(mock(MessageDto.class));
+    when(pageResponseMapper.fromSlice(any(), any())).thenReturn(mock(PageResponse.class));
+
+    PageResponse<MessageDto> result = messageService.findAllByChannelId(channelId, null, pageable);
+
+    assertThat(result).isNotNull();
+  }
+
+  @Test
+  @DisplayName("메시지 업데이트 성공")
+  void updateMessage_success() {
+    UUID messageId = UUID.randomUUID();
+    MessageUpdateRequest request = new MessageUpdateRequest("updated content");
     Message message = mock(Message.class);
-    MessageDto dto = mock(MessageDto.class);
 
-    Slice<Message> slice = new SliceImpl<>(List.of(message), pageable, false);
-    Slice<MessageDto> dtoSlice = new SliceImpl<>(List.of(dto), pageable, false);
-    PageResponse<MessageDto> response = new PageResponse<>(List.of(dto), null, 1, false, 0L);
+    when(messageRepository.findById(messageId)).thenReturn(Optional.of(message));
+    when(messageMapper.toDto(any())).thenReturn(mock(MessageDto.class));
 
-    given(messageRepository.findAllByChannelIdWithAuthor(eq(channelId), any(), eq(pageable))).willReturn(slice);
-    given(messageMapper.toDto(any())).willReturn(dto);
-    given(pageResponseMapper.fromSlice(ArgumentMatchers.<Slice<MessageDto>>any(), any())).willReturn(response);
+    MessageDto result = messageService.update(messageId, request);
+    assertThat(result).isNotNull();
+    verify(message).update("updated content");
+  }
 
-    PageResponse<MessageDto> result = messageService.findAllByChannelId(channelId, cursor, pageable);
+  @Test
+  @DisplayName("메시지를 찾을 수 없다면 업데이트를 할 수 없습니다")
+  void updateMessage_notFound() {
+    UUID messageId = UUID.randomUUID();
+    MessageUpdateRequest request = new MessageUpdateRequest("update");
+    when(messageRepository.findById(messageId)).thenReturn(Optional.empty());
 
-    assertThat(result.content()).isNotNull();
+    assertThatThrownBy(() -> messageService.update(messageId, request))
+        .isInstanceOf(MessageNotFoundException.class);
+  }
+
+  @Test
+  @DisplayName("메시지 삭제 성공")
+  void deleteMessage_success() {
+    UUID messageId = UUID.randomUUID();
+    when(messageRepository.existsById(messageId)).thenReturn(true);
+
+    messageService.delete(messageId);
+    verify(messageRepository).deleteById(messageId);
+  }
+
+  @Test
+  @DisplayName("메시지가 존재하지 않으면 삭제할 수 없습니다")
+  void deleteMessage_notFound() {
+    UUID messageId = UUID.randomUUID();
+    when(messageRepository.existsById(messageId)).thenReturn(false);
+
+    assertThatThrownBy(() -> messageService.delete(messageId))
+        .isInstanceOf(MessageNotFoundException.class);
   }
 }

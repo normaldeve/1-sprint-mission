@@ -5,7 +5,6 @@ import com.sprint.mission.discodeit.dto.request.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.binarycontent.BinaryContentNotFoundException;
-import com.sprint.mission.discodeit.ip.RequestIPContext;
 import com.sprint.mission.discodeit.mapper.BinaryContentMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
@@ -26,7 +25,7 @@ public class BasicBinaryContentService implements BinaryContentService {
   private final BinaryContentRepository binaryContentRepository;
   private final BinaryContentMapper binaryContentMapper;
   private final BinaryContentStorage binaryContentStorage;
-  private final RequestIPContext requestIPContext;
+
 
   @Transactional
   @Override
@@ -56,7 +55,7 @@ public class BasicBinaryContentService implements BinaryContentService {
         .map(binaryContentMapper::toDto)
         .orElseThrow(() -> {
           log.warn("[파일 조회 실패] 해당 파일을 찾을 수 없습니다 id: {}", binaryContentId);
-          return new BinaryContentNotFoundException(ErrorCode.CANNOT_FOUND_PROFILE, Map.of("binaryContentId", binaryContentId , "requestIp", requestIPContext.getClientIp()));});
+          return new BinaryContentNotFoundException(ErrorCode.CANNOT_FOUND_PROFILE, Map.of("binaryContentId", binaryContentId));});
   }
 
   @Override
@@ -73,7 +72,7 @@ public class BasicBinaryContentService implements BinaryContentService {
   public void delete(UUID binaryContentId) {
     if (!binaryContentRepository.existsById(binaryContentId)) {
       log.warn("[파일 삭제 실패] 해당 파일을 찾을 수 없습니다 id: {}", binaryContentId);
-      throw new BinaryContentNotFoundException(ErrorCode.CANNOT_FOUND_PROFILE, Map.of("binaryContentId", binaryContentId , "requestIp", requestIPContext.getClientIp()));
+      throw new BinaryContentNotFoundException(ErrorCode.CANNOT_FOUND_PROFILE, Map.of("binaryContentId", binaryContentId));
     }
     binaryContentRepository.deleteById(binaryContentId);
     log.info("[파일 삭제 완료] id: {}", binaryContentId);
