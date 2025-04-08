@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MessageRepository extends JpaRepository<Message, UUID> {
+
   @Query("SELECT m FROM Message m "
       + "LEFT JOIN FETCH m.author a "
       + "JOIN FETCH a.status "
