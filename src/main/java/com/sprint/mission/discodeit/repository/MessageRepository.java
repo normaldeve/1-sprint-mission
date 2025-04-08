@@ -22,6 +22,7 @@ public interface MessageRepository extends JpaRepository<Message, UUID> {
       Pageable pageable);
 
 
+
   @Query("SELECT m.createdAt "
       + "FROM Message m "
       + "WHERE m.channel.id = :channelId "
