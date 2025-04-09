@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: discodeit
+  boot:
+    admin:
+      client:
+        url: http://localhost:9090
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/discodeit
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        highlight_sql: false
+        generate_statistics: false
+    open-in-view: false
+
+info:
+  app:
+    name: Discodeit
+    description: 디스코드 클론 프로젝트
+    version: 1.7.0
+    author: junwo
+    java-version: ${java.version}
+    spring-boot-version: 3.4.0
+  datasource:
+    url: ${spring.datasource.url}
+    driver-class-name: ${spring.datasource.driver-class-name}
+  jpa:
+    ddl-auto: ${spring.jpa.hibernate.ddl-auto}
+  storage:
+    type: ${discodeit.storage.type}
+    path: ${discodeit.storage.local.root-path}
+  multipart:
+    max-file-size: ${spring.servlet.multipart.max-file-size}
+    max-request-size: ${spring.servlet.multipart.max-request-size}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - loggers
+  info:
+    env:
+      enabled: true
+
+server:
+  port: 80

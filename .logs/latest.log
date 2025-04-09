@@ -1,0 +1,24 @@
+25-04-06 00:05:45.044 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-06 00:05:45.450 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - Starting MessageControllerTest using Java 17.0.14 with PID 25324 (started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-06 00:05:45.455 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - The following 1 profile is active: "dev"
+25-04-06 00:05:54.054 [Test worker] INFO  org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [ |  | ] - Adding welcome page: class path resource [static/index.html]
+25-04-06 00:05:55.942 [Test worker] INFO  org.springframework.boot.test.mock.web.SpringBootMockServletContext [ |  | ] - Initializing Spring TestDispatcherServlet ''
+25-04-06 00:05:55.945 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Initializing Servlet ''
+25-04-06 00:05:55.950 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Completed initialization in 4 ms
+25-04-06 00:05:56.082 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - Started MessageControllerTest in 14.304 seconds (process running for 18.155)
+25-04-06 00:08:30.356 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-06 00:08:30.762 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - Starting MessageControllerTest using Java 17.0.14 with PID 7016 (started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-06 00:08:30.766 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - The following 1 profile is active: "dev"
+25-04-06 00:08:39.592 [Test worker] INFO  org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [ |  | ] - Adding welcome page: class path resource [static/index.html]
+25-04-06 00:08:41.221 [Test worker] INFO  org.springframework.boot.test.mock.web.SpringBootMockServletContext [ |  | ] - Initializing Spring TestDispatcherServlet ''
+25-04-06 00:08:41.222 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Initializing Servlet ''
+25-04-06 00:08:41.226 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Completed initialization in 4 ms
+25-04-06 00:08:41.358 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - Started MessageControllerTest in 14.393 seconds (process running for 18.743)
+25-04-06 00:09:04.230 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-06 00:09:04.445 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - Starting MessageControllerTest using Java 17.0.14 with PID 6012 (started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-06 00:09:04.447 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - The following 1 profile is active: "dev"
+25-04-06 00:09:11.484 [Test worker] INFO  org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [ |  | ] - Adding welcome page: class path resource [static/index.html]
+25-04-06 00:09:13.211 [Test worker] INFO  org.springframework.boot.test.mock.web.SpringBootMockServletContext [ |  | ] - Initializing Spring TestDispatcherServlet ''
+25-04-06 00:09:13.213 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Initializing Servlet ''
+25-04-06 00:09:13.219 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Completed initialization in 6 ms
+25-04-06 00:09:13.397 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - Started MessageControllerTest in 11.994 seconds (process running for 16.197)
