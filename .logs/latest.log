@@ -22,3 +22,911 @@
 25-04-06 00:09:13.213 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Initializing Servlet ''
 25-04-06 00:09:13.219 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Completed initialization in 6 ms
 25-04-06 00:09:13.397 [Test worker] INFO  com.sprint.mission.discodeit.controller.MessageControllerTest [ |  | ] - Started MessageControllerTest in 11.994 seconds (process running for 16.197)
+25-04-10 17:33:47.569 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-10 17:33:47.693 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Starting DiscodeitApplication using Java 17.0.14 with PID 28480 (C:\Users\junwo\IdeaProjects\1-sprint-mission\build\classes\java\main started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-10 17:33:47.694 [main] DEBUG com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Running with Spring Boot v3.4.0, Spring v6.2.0
+25-04-10 17:33:47.695 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - The following 1 profile is active: "dev"
+25-04-10 17:33:49.711 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-04-10 17:33:49.862 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Finished Spring Data repository scanning in 135 ms. Found 6 JPA repository interfaces.
+25-04-10 17:33:51.168 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer [ |  | ] - Tomcat initialized with port 8080 (http)
+25-04-10 17:33:51.196 [main] INFO  org.apache.coyote.http11.Http11NioProtocol [ |  | ] - Initializing ProtocolHandler ["http-nio-8080"]
+25-04-10 17:33:51.200 [main] INFO  org.apache.catalina.core.StandardService [ |  | ] - Starting service [Tomcat]
+25-04-10 17:33:51.200 [main] INFO  org.apache.catalina.core.StandardEngine [ |  | ] - Starting Servlet engine: [Apache Tomcat/10.1.33]
+25-04-10 17:33:51.378 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [ |  | ] - Initializing Spring embedded WebApplicationContext
+25-04-10 17:33:51.379 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [ |  | ] - Root WebApplicationContext: initialization completed in 3603 ms
+25-04-10 17:33:51.931 [main] INFO  org.hibernate.jpa.internal.util.LogHelper [ |  | ] - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-04-10 17:33:52.083 [main] INFO  org.hibernate.Version                [ |  | ] - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-04-10 17:33:52.165 [main] INFO  org.hibernate.cache.internal.RegionFactoryInitiator [ |  | ] - HHH000026: Second-level cache disabled
+25-04-10 17:33:52.789 [main] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [ |  | ] - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-04-10 17:33:52.854 [main] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Starting...
+25-04-10 17:33:53.238 [main] INFO  com.zaxxer.hikari.pool.HikariPool    [ |  | ] - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@eddc9bb
+25-04-10 17:33:53.240 [main] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Start completed.
+25-04-10 17:33:53.401 [main] INFO  org.hibernate.orm.connections.pooling [ |  | ] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-04-10 17:33:53.416 [main] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(2003, org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@795131d6) replaced previous registration(org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@7d7a8d23)
+25-04-10 17:33:53.417 [main] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(6, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@3acc65f0) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@59ec5a0b)
+25-04-10 17:33:55.340 [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [ |  | ] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-04-10 17:33:55.468 [main] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-04-10 17:33:55.959 [main] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory [ |  | ] - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-04-10 17:33:57.126 [main] INFO  org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [ |  | ] - Adding welcome page: class path resource [static/index.html]
+25-04-10 17:33:58.315 [main] INFO  org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [ |  | ] - Exposing 4 endpoints beneath base path '/actuator'
+25-04-10 17:33:58.412 [main] INFO  org.apache.coyote.http11.Http11NioProtocol [ |  | ] - Starting ProtocolHandler ["http-nio-8080"]
+25-04-10 17:33:58.441 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer [ |  | ] - Tomcat started on port 8080 (http) with context path '/'
+25-04-10 17:33:58.459 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Started DiscodeitApplication in 11.948 seconds (process running for 13.229)
+25-04-10 17:33:58.815 [RMI TCP Connection(2)-192.168.50.73] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [ |  | ] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+25-04-10 17:33:58.816 [RMI TCP Connection(2)-192.168.50.73] INFO  org.springframework.web.servlet.DispatcherServlet [ |  | ] - Initializing Servlet 'dispatcherServlet'
+25-04-10 17:33:58.818 [RMI TCP Connection(2)-192.168.50.73] INFO  org.springframework.web.servlet.DispatcherServlet [ |  | ] - Completed initialization in 2 ms
+25-04-10 17:34:34.116 [http-nio-8080-exec-5] INFO  com.sprint.mission.discodeit.service.basic.BasicUserService [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - [회원 생성 요청] username: rex, email: rex@naver.com
+25-04-10 17:34:34.325 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    fetch
+        first ? rows only
+25-04-10 17:34:34.329 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (1:VARCHAR) <- [rex@naver.com]
+25-04-10 17:34:34.330 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (2:INTEGER) <- [1]
+25-04-10 17:34:34.404 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+    fetch
+        first ? rows only
+25-04-10 17:34:34.405 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (1:VARCHAR) <- [rex]
+25-04-10 17:34:34.405 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (2:INTEGER) <- [1]
+25-04-10 17:34:34.407 [http-nio-8080-exec-5] INFO  com.sprint.mission.discodeit.service.basic.BasicUserService [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - [프로필 이미지 업로드] 파일명: rex.png, 타입: image/png, 크기: 64605 bytes
+25-04-10 17:34:34.569 [http-nio-8080-exec-5] INFO  com.sprint.mission.discodeit.service.basic.BasicUserService [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - [회원 생성 완료] username: rex, id: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:34:34.621 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - 
+    insert 
+    into
+        binary_contents
+        (content_type, created_at, file_name, size, id) 
+    values
+        (?, ?, ?, ?, ?)
+25-04-10 17:34:34.629 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (1:VARCHAR) <- [image/png]
+25-04-10 17:34:34.630 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.469636Z]
+25-04-10 17:34:34.632 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (3:VARCHAR) <- [rex.png]
+25-04-10 17:34:34.632 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (4:BIGINT) <- [64605]
+25-04-10 17:34:34.632 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (5:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:34.643 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - 
+    insert 
+    into
+        users
+        (created_at, email, password, profile_id, updated_at, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+25-04-10 17:34:34.644 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.548941700Z]
+25-04-10 17:34:34.644 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (2:VARCHAR) <- [rex@naver.com]
+25-04-10 17:34:34.645 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (3:VARCHAR) <- [Rlawnsdn12!]
+25-04-10 17:34:34.645 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (4:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:34.645 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (5:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.548941700Z]
+25-04-10 17:34:34.645 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (6:VARCHAR) <- [rex]
+25-04-10 17:34:34.645 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (7:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:34.656 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - 
+    insert 
+    into
+        user_statuses
+        (created_at, last_active_at, updated_at, user_id, id) 
+    values
+        (?, ?, ?, ?, ?)
+25-04-10 17:34:34.657 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.561781Z]
+25-04-10 17:34:34.658 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.543998500Z]
+25-04-10 17:34:34.658 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (3:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.561781Z]
+25-04-10 17:34:34.658 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (4:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:34.659 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [9c1d4a74-281f-494b-a0a1-2ebca5e37c1a | POST | /api/users] - binding parameter (5:UUID) <- [c0d3ce23-b1f8-4b10-a940-8da50f81c27d]
+25-04-10 17:34:34.768 [http-nio-8080-exec-7] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 요청 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:34:34.769 [http-nio-8080-exec-6] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 요청 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:34:34.785 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL                    [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    select
+        us1_0.id,
+        us1_0.created_at,
+        us1_0.last_active_at,
+        us1_0.updated_at,
+        us1_0.user_id 
+    from
+        user_statuses us1_0 
+    where
+        us1_0.user_id=?
+25-04-10 17:34:34.786 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:34.786 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL                    [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    select
+        us1_0.id,
+        us1_0.created_at,
+        us1_0.last_active_at,
+        us1_0.updated_at,
+        us1_0.user_id 
+    from
+        user_statuses us1_0 
+    where
+        us1_0.user_id=?
+25-04-10 17:34:34.786 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:34.840 [http-nio-8080-exec-7] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 완료 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351, newLastActiveAt: 2025-04-10T08:34:34.731Z
+25-04-10 17:34:34.840 [http-nio-8080-exec-6] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 완료 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351, newLastActiveAt: 2025-04-10T08:34:34.730Z
+25-04-10 17:34:34.855 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL                    [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    update
+        user_statuses 
+    set
+        last_active_at=?,
+        updated_at=?,
+        user_id=? 
+    where
+        id=?
+25-04-10 17:34:34.855 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL                    [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    update
+        user_statuses 
+    set
+        last_active_at=?,
+        updated_at=?,
+        user_id=? 
+    where
+        id=?
+25-04-10 17:34:34.855 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.731Z]
+25-04-10 17:34:34.855 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.730Z]
+25-04-10 17:34:34.856 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.842253600Z]
+25-04-10 17:34:34.856 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-10T08:34:34.842253600Z]
+25-04-10 17:34:34.856 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (3:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:34.856 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (3:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:34.856 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [14d962d5-9307-435e-ab93-91272e9ce4d0 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (4:UUID) <- [c0d3ce23-b1f8-4b10-a940-8da50f81c27d]
+25-04-10 17:34:34.856 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [2048c9aa-1a21-43fe-bffa-a1de999272e3 | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (4:UUID) <- [c0d3ce23-b1f8-4b10-a940-8da50f81c27d]
+25-04-10 17:34:34.879 [http-nio-8080-exec-8] DEBUG com.sprint.mission.discodeit.service.basic.BasicUserService [8055eb87-814c-4c2d-bfd7-83f687182985 | GET | /api/users] - [전체 회원 목록 조회]
+25-04-10 17:34:34.950 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL                    [8055eb87-814c-4c2d-bfd7-83f687182985 | GET | /api/users] - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=u1_0.profile_id 
+    join
+        user_statuses s1_0 
+            on u1_0.id=s1_0.user_id
+25-04-10 17:34:34.992 [http-nio-8080-exec-9] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [dd59e400-79aa-437e-8f26-06a706f577d9 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:34:34.993 [http-nio-8080-exec-3] DEBUG com.sprint.mission.discodeit.service.basic.BasicUserService [2dbc0b24-dbbc-4af4-9a82-077cda7c869b | GET | /api/users] - [전체 회원 목록 조회]
+25-04-10 17:34:34.996 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL                    [2dbc0b24-dbbc-4af4-9a82-077cda7c869b | GET | /api/users] - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=u1_0.profile_id 
+    join
+        user_statuses s1_0 
+            on u1_0.id=s1_0.user_id
+25-04-10 17:34:34.996 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL                    [e96d5aa0-e26f-438c-b982-f34cac3bf934 | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:34:34.997 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL                    [7049239a-58e1-423f-bc29-f61759a05cf6 | GET | /api/channels] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:34:34.997 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind          [7049239a-58e1-423f-bc29-f61759a05cf6 | GET | /api/channels] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:34.997 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind          [e96d5aa0-e26f-438c-b982-f34cac3bf934 | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:35.005 [http-nio-8080-exec-10] INFO  com.sprint.mission.discodeit.service.basic.BasicChannelService [7049239a-58e1-423f-bc29-f61759a05cf6 | GET | /api/channels] - [채널 조회 성공] id: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:34:35.013 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL                    [dd59e400-79aa-437e-8f26-06a706f577d9 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:34:35.014 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind          [dd59e400-79aa-437e-8f26-06a706f577d9 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:35.016 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL                    [7049239a-58e1-423f-bc29-f61759a05cf6 | GET | /api/channels] - 
+    select
+        c1_0.id,
+        c1_0.created_at,
+        c1_0.description,
+        c1_0.name,
+        c1_0.type,
+        c1_0.updated_at 
+    from
+        channels c1_0 
+    where
+        c1_0.type=? 
+        or c1_0.id in (?)
+25-04-10 17:34:35.016 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind          [7049239a-58e1-423f-bc29-f61759a05cf6 | GET | /api/channels] - binding parameter (1:VARCHAR) <- [PUBLIC]
+25-04-10 17:34:35.017 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind          [7049239a-58e1-423f-bc29-f61759a05cf6 | GET | /api/channels] - binding parameter (2:UUID) <- [null]
+25-04-10 17:34:35.030 [http-nio-8080-exec-2] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [432cc11c-fa94-47a4-944b-f90efed243f2 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:34:35.032 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL                    [432cc11c-fa94-47a4-944b-f90efed243f2 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:34:35.032 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind          [432cc11c-fa94-47a4-944b-f90efed243f2 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:35.039 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL                    [bb6f93fd-b6cd-4647-bdd3-e7bb4b5c166b | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:34:35.040 [http-nio-8080-exec-4] TRACE org.hibernate.orm.jdbc.bind          [bb6f93fd-b6cd-4647-bdd3-e7bb4b5c166b | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:35.041 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [d86cc67f-1dd8-42ec-9c48-1f3fe3da2f4e | GET | /api/channels] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:34:35.041 [http-nio-8080-exec-6] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [846080dc-aabc-49ec-9704-910be6015521 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:34:35.041 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [d86cc67f-1dd8-42ec-9c48-1f3fe3da2f4e | GET | /api/channels] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:35.042 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL                    [846080dc-aabc-49ec-9704-910be6015521 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:34:35.042 [http-nio-8080-exec-7] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [3e40bdc3-e928-4053-a15a-7da8758a0d3a | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6/download] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:34:35.043 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [846080dc-aabc-49ec-9704-910be6015521 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:35.044 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL                    [3e40bdc3-e928-4053-a15a-7da8758a0d3a | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6/download] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:34:35.044 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [3e40bdc3-e928-4053-a15a-7da8758a0d3a | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6/download] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:35.046 [http-nio-8080-exec-5] INFO  com.sprint.mission.discodeit.service.basic.BasicChannelService [d86cc67f-1dd8-42ec-9c48-1f3fe3da2f4e | GET | /api/channels] - [채널 조회 성공] id: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:34:35.049 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL                    [4ac7052e-8c7e-49c1-a56a-6d4fd91042d1 | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:34:35.049 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [d86cc67f-1dd8-42ec-9c48-1f3fe3da2f4e | GET | /api/channels] - 
+    select
+        c1_0.id,
+        c1_0.created_at,
+        c1_0.description,
+        c1_0.name,
+        c1_0.type,
+        c1_0.updated_at 
+    from
+        channels c1_0 
+    where
+        c1_0.type=? 
+        or c1_0.id in (?)
+25-04-10 17:34:35.049 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind          [4ac7052e-8c7e-49c1-a56a-6d4fd91042d1 | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:35.050 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [d86cc67f-1dd8-42ec-9c48-1f3fe3da2f4e | GET | /api/channels] - binding parameter (1:VARCHAR) <- [PUBLIC]
+25-04-10 17:34:35.050 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [d86cc67f-1dd8-42ec-9c48-1f3fe3da2f4e | GET | /api/channels] - binding parameter (2:UUID) <- [null]
+25-04-10 17:34:35.051 [http-nio-8080-exec-1] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [c043b465-1404-469f-90f9-c5d896b292bf | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:34:35.052 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL                    [c043b465-1404-469f-90f9-c5d896b292bf | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:34:35.053 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind          [c043b465-1404-469f-90f9-c5d896b292bf | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:35.063 [http-nio-8080-exec-3] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [c18e7737-252c-4088-92c3-d5478cb43cf9 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:34:35.064 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL                    [c18e7737-252c-4088-92c3-d5478cb43cf9 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:34:35.064 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind          [c18e7737-252c-4088-92c3-d5478cb43cf9 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:34:35.065 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL                    [858a611b-c13c-4c6f-9cbc-1abc2ffd7c4c | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:34:35.065 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind          [858a611b-c13c-4c6f-9cbc-1abc2ffd7c4c | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:34:58.258 [SpringApplicationShutdownHook] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown [ |  | ] - Commencing graceful shutdown. Waiting for active requests to complete
+25-04-10 17:34:58.906 [tomcat-shutdown] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown [ |  | ] - Graceful shutdown complete
+25-04-10 17:34:58.916 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-04-10 17:34:58.918 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Shutdown initiated...
+25-04-10 17:34:58.929 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Shutdown completed.
+25-04-10 17:35:44.255 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-10 17:35:44.346 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Starting DiscodeitApplication using Java 17.0.14 with PID 28936 (C:\Users\junwo\IdeaProjects\1-sprint-mission\build\classes\java\main started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-10 17:35:44.347 [main] DEBUG com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Running with Spring Boot v3.4.0, Spring v6.2.0
+25-04-10 17:35:44.349 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - The following 1 profile is active: "dev"
+25-04-10 17:35:46.191 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-04-10 17:35:46.343 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Finished Spring Data repository scanning in 139 ms. Found 6 JPA repository interfaces.
+25-04-10 17:35:47.498 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer [ |  | ] - Tomcat initialized with port 8080 (http)
+25-04-10 17:35:47.521 [main] INFO  org.apache.coyote.http11.Http11NioProtocol [ |  | ] - Initializing ProtocolHandler ["http-nio-8080"]
+25-04-10 17:35:47.524 [main] INFO  org.apache.catalina.core.StandardService [ |  | ] - Starting service [Tomcat]
+25-04-10 17:35:47.524 [main] INFO  org.apache.catalina.core.StandardEngine [ |  | ] - Starting Servlet engine: [Apache Tomcat/10.1.33]
+25-04-10 17:35:47.653 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [ |  | ] - Initializing Spring embedded WebApplicationContext
+25-04-10 17:35:47.654 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [ |  | ] - Root WebApplicationContext: initialization completed in 3242 ms
+25-04-10 17:35:48.186 [main] INFO  org.hibernate.jpa.internal.util.LogHelper [ |  | ] - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-04-10 17:35:48.285 [main] INFO  org.hibernate.Version                [ |  | ] - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-04-10 17:35:48.348 [main] INFO  org.hibernate.cache.internal.RegionFactoryInitiator [ |  | ] - HHH000026: Second-level cache disabled
+25-04-10 17:35:48.833 [main] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [ |  | ] - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-04-10 17:35:48.888 [main] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Starting...
+25-04-10 17:35:49.206 [main] INFO  com.zaxxer.hikari.pool.HikariPool    [ |  | ] - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7d43f1c9
+25-04-10 17:35:49.209 [main] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Start completed.
+25-04-10 17:35:49.331 [main] INFO  org.hibernate.orm.connections.pooling [ |  | ] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-04-10 17:35:49.345 [main] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(2003, org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@a5d23c9) replaced previous registration(org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@795131d6)
+25-04-10 17:35:49.346 [main] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(6, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@7d7a8d23) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3acc65f0)
+25-04-10 17:35:51.188 [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [ |  | ] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-04-10 17:35:51.263 [main] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-04-10 17:35:51.787 [main] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory [ |  | ] - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-04-10 17:35:52.862 [main] INFO  org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [ |  | ] - Adding welcome page: class path resource [static/index.html]
+25-04-10 17:35:54.224 [main] INFO  org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [ |  | ] - Exposing 4 endpoints beneath base path '/actuator'
+25-04-10 17:35:54.350 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer [ |  | ] - Tomcat started on port 8080 (http) with context path '/'
+25-04-10 17:35:54.368 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Started DiscodeitApplication in 11.089 seconds (process running for 12.128)
+25-04-10 17:35:54.372 [SpringApplicationShutdownHook] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown [ |  | ] - Commencing graceful shutdown. Waiting for active requests to complete
+25-04-10 17:35:55.097 [tomcat-shutdown] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown [ |  | ] - Graceful shutdown complete
+25-04-10 17:35:55.107 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-04-10 17:35:55.110 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Shutdown initiated...
+25-04-10 17:35:55.120 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Shutdown completed.
+25-04-10 17:35:58.969 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-10 17:35:59.064 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Starting DiscodeitApplication using Java 17.0.14 with PID 13364 (C:\Users\junwo\IdeaProjects\1-sprint-mission\build\classes\java\main started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-10 17:35:59.064 [main] DEBUG com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Running with Spring Boot v3.4.0, Spring v6.2.0
+25-04-10 17:35:59.066 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - The following 1 profile is active: "dev"
+25-04-10 17:36:00.941 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-04-10 17:36:01.086 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Finished Spring Data repository scanning in 132 ms. Found 6 JPA repository interfaces.
+25-04-10 17:36:02.247 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer [ |  | ] - Tomcat initialized with port 8080 (http)
+25-04-10 17:36:02.267 [main] INFO  org.apache.coyote.http11.Http11NioProtocol [ |  | ] - Initializing ProtocolHandler ["http-nio-8080"]
+25-04-10 17:36:02.270 [main] INFO  org.apache.catalina.core.StandardService [ |  | ] - Starting service [Tomcat]
+25-04-10 17:36:02.271 [main] INFO  org.apache.catalina.core.StandardEngine [ |  | ] - Starting Servlet engine: [Apache Tomcat/10.1.33]
+25-04-10 17:36:02.405 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [ |  | ] - Initializing Spring embedded WebApplicationContext
+25-04-10 17:36:02.406 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [ |  | ] - Root WebApplicationContext: initialization completed in 3271 ms
+25-04-10 17:36:02.859 [main] INFO  org.hibernate.jpa.internal.util.LogHelper [ |  | ] - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-04-10 17:36:02.989 [main] INFO  org.hibernate.Version                [ |  | ] - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-04-10 17:36:03.120 [main] INFO  org.hibernate.cache.internal.RegionFactoryInitiator [ |  | ] - HHH000026: Second-level cache disabled
+25-04-10 17:36:03.762 [main] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [ |  | ] - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-04-10 17:36:03.871 [main] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Starting...
+25-04-10 17:36:04.335 [main] INFO  com.zaxxer.hikari.pool.HikariPool    [ |  | ] - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@39840986
+25-04-10 17:36:04.340 [main] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Start completed.
+25-04-10 17:36:04.488 [main] INFO  org.hibernate.orm.connections.pooling [ |  | ] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-04-10 17:36:04.500 [main] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(2003, org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@38197e82) replaced previous registration(org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@5516ee5)
+25-04-10 17:36:04.501 [main] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(6, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@6765b6a2) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@75c589f2)
+25-04-10 17:36:06.358 [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [ |  | ] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-04-10 17:36:06.434 [main] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-04-10 17:36:06.899 [main] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory [ |  | ] - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-04-10 17:36:07.969 [main] INFO  org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping [ |  | ] - Adding welcome page: class path resource [static/index.html]
+25-04-10 17:36:10.540 [main] INFO  org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [ |  | ] - Exposing 4 endpoints beneath base path '/actuator'
+25-04-10 17:36:10.767 [main] INFO  org.apache.coyote.http11.Http11NioProtocol [ |  | ] - Starting ProtocolHandler ["http-nio-8080"]
+25-04-10 17:36:10.833 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer [ |  | ] - Tomcat started on port 8080 (http) with context path '/'
+25-04-10 17:36:10.870 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication [ |  | ] - Started DiscodeitApplication in 12.749 seconds (process running for 13.654)
+25-04-10 17:36:11.015 [http-nio-8080-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [ |  | ] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+25-04-10 17:36:11.015 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet [ |  | ] - Initializing Servlet 'dispatcherServlet'
+25-04-10 17:36:11.018 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet [ |  | ] - Completed initialization in 3 ms
+25-04-10 17:36:15.995 [http-nio-8080-exec-4] INFO  com.sprint.mission.discodeit.service.basic.BasicAuthService [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - [로그인 시도] username: rex
+25-04-10 17:36:16.204 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL                    [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        u1_0.profile_id,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+25-04-10 17:36:16.209 [http-nio-8080-exec-4] TRACE org.hibernate.orm.jdbc.bind          [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - binding parameter (1:VARCHAR) <- [rex]
+25-04-10 17:36:16.328 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL                    [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - 
+    select
+        us1_0.id,
+        us1_0.created_at,
+        us1_0.last_active_at,
+        us1_0.updated_at,
+        us1_0.user_id 
+    from
+        user_statuses us1_0 
+    where
+        us1_0.user_id=?
+25-04-10 17:36:16.329 [http-nio-8080-exec-4] TRACE org.hibernate.orm.jdbc.bind          [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.363 [http-nio-8080-exec-4] INFO  com.sprint.mission.discodeit.service.basic.BasicAuthService [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - [로그인 성공] username: rex
+25-04-10 17:36:16.371 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL                    [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:36:16.373 [http-nio-8080-exec-4] TRACE org.hibernate.orm.jdbc.bind          [bfb08d3f-167a-4a08-aad5-f665c2626aa3 | POST | /api/auth/login] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:36:16.461 [http-nio-8080-exec-5] DEBUG com.sprint.mission.discodeit.service.basic.BasicUserService [f5b0dfba-0206-4dfc-b418-2d2c1088a92a | GET | /api/users] - [전체 회원 목록 조회]
+25-04-10 17:36:16.529 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [f5b0dfba-0206-4dfc-b418-2d2c1088a92a | GET | /api/users] - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=u1_0.profile_id 
+    join
+        user_statuses s1_0 
+            on u1_0.id=s1_0.user_id
+25-04-10 17:36:16.563 [http-nio-8080-exec-9] DEBUG com.sprint.mission.discodeit.service.basic.BasicUserService [6e9614b9-bcf4-49e3-89d9-fec57b6ddf6c | GET | /api/users] - [전체 회원 목록 조회]
+25-04-10 17:36:16.564 [http-nio-8080-exec-6] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [3eece4fd-49e0-4586-ab3c-2d5633ce5736 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:36:16.571 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL                    [6e9614b9-bcf4-49e3-89d9-fec57b6ddf6c | GET | /api/users] - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=u1_0.profile_id 
+    join
+        user_statuses s1_0 
+            on u1_0.id=s1_0.user_id
+25-04-10 17:36:16.577 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL                    [cfc1d186-30a8-47ef-aca6-e98cb407dad4 | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.589 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL                    [e48dc6af-ab9a-4a32-af8a-78ae47e013a0 | GET | /api/channels] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.590 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind          [e48dc6af-ab9a-4a32-af8a-78ae47e013a0 | GET | /api/channels] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.591 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind          [cfc1d186-30a8-47ef-aca6-e98cb407dad4 | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.591 [http-nio-8080-exec-7] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 요청 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:36:16.593 [http-nio-8080-exec-1] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 요청 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:36:16.595 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL                    [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    select
+        us1_0.id,
+        us1_0.created_at,
+        us1_0.last_active_at,
+        us1_0.updated_at,
+        us1_0.user_id 
+    from
+        user_statuses us1_0 
+    where
+        us1_0.user_id=?
+25-04-10 17:36:16.596 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL                    [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    select
+        us1_0.id,
+        us1_0.created_at,
+        us1_0.last_active_at,
+        us1_0.updated_at,
+        us1_0.user_id 
+    from
+        user_statuses us1_0 
+    where
+        us1_0.user_id=?
+25-04-10 17:36:16.596 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.596 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind          [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.597 [http-nio-8080-exec-10] INFO  com.sprint.mission.discodeit.service.basic.BasicChannelService [e48dc6af-ab9a-4a32-af8a-78ae47e013a0 | GET | /api/channels] - [채널 조회 성공] id: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:36:16.604 [http-nio-8080-exec-7] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 완료 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351, newLastActiveAt: 2025-04-10T08:36:16.556Z
+25-04-10 17:36:16.607 [http-nio-8080-exec-1] INFO  com.sprint.mission.discodeit.service.basic.BasicUserStatusService [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - [유저 상태 수정 완료 - userId 기준] userId: 2f088f89-be48-4b30-b9b6-df039827a351, newLastActiveAt: 2025-04-10T08:36:16.558Z
+25-04-10 17:36:16.608 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL                    [3eece4fd-49e0-4586-ab3c-2d5633ce5736 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:36:16.610 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [3eece4fd-49e0-4586-ab3c-2d5633ce5736 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:36:16.620 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL                    [231d0ad6-191a-4a8c-9162-4a9ea2960526 | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.621 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind          [231d0ad6-191a-4a8c-9162-4a9ea2960526 | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.623 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL                    [e48dc6af-ab9a-4a32-af8a-78ae47e013a0 | GET | /api/channels] - 
+    select
+        c1_0.id,
+        c1_0.created_at,
+        c1_0.description,
+        c1_0.name,
+        c1_0.type,
+        c1_0.updated_at 
+    from
+        channels c1_0 
+    where
+        c1_0.type=? 
+        or c1_0.id in (?)
+25-04-10 17:36:16.624 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind          [e48dc6af-ab9a-4a32-af8a-78ae47e013a0 | GET | /api/channels] - binding parameter (1:VARCHAR) <- [PUBLIC]
+25-04-10 17:36:16.624 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind          [e48dc6af-ab9a-4a32-af8a-78ae47e013a0 | GET | /api/channels] - binding parameter (2:UUID) <- [null]
+25-04-10 17:36:16.627 [http-nio-8080-exec-3] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [cc965252-5ff3-4a01-a77a-85d113c369e5 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:36:16.629 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL                    [cc965252-5ff3-4a01-a77a-85d113c369e5 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:36:16.631 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind          [cc965252-5ff3-4a01-a77a-85d113c369e5 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:36:16.633 [http-nio-8080-exec-4] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [8e9ed3fa-2c3d-4ec5-83d3-0eaada839717 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6/download] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:36:16.635 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL                    [8e9ed3fa-2c3d-4ec5-83d3-0eaada839717 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6/download] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:36:16.636 [http-nio-8080-exec-4] TRACE org.hibernate.orm.jdbc.bind          [8e9ed3fa-2c3d-4ec5-83d3-0eaada839717 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6/download] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:36:16.640 [http-nio-8080-exec-9] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [5190d401-b4d4-4248-9be0-3e6069cb8fb2 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:36:16.642 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL                    [5190d401-b4d4-4248-9be0-3e6069cb8fb2 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:36:16.642 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind          [5190d401-b4d4-4248-9be0-3e6069cb8fb2 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:36:16.644 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [3214cc22-0a38-4ef6-9940-b9e43c375617 | GET | /api/channels] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.645 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [3214cc22-0a38-4ef6-9940-b9e43c375617 | GET | /api/channels] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.647 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL                    [1b6b39f3-3605-460f-be13-27a25a9eca5f | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.647 [http-nio-8080-exec-5] INFO  com.sprint.mission.discodeit.service.basic.BasicChannelService [3214cc22-0a38-4ef6-9940-b9e43c375617 | GET | /api/channels] - [채널 조회 성공] id: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:36:16.648 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind          [1b6b39f3-3605-460f-be13-27a25a9eca5f | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.650 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL                    [3214cc22-0a38-4ef6-9940-b9e43c375617 | GET | /api/channels] - 
+    select
+        c1_0.id,
+        c1_0.created_at,
+        c1_0.description,
+        c1_0.name,
+        c1_0.type,
+        c1_0.updated_at 
+    from
+        channels c1_0 
+    where
+        c1_0.type=? 
+        or c1_0.id in (?)
+25-04-10 17:36:16.651 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [3214cc22-0a38-4ef6-9940-b9e43c375617 | GET | /api/channels] - binding parameter (1:VARCHAR) <- [PUBLIC]
+25-04-10 17:36:16.651 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind          [3214cc22-0a38-4ef6-9940-b9e43c375617 | GET | /api/channels] - binding parameter (2:UUID) <- [null]
+25-04-10 17:36:16.655 [http-nio-8080-exec-6] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [cd3c60a9-08fb-4e79-bf35-3f78d055a297 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:36:16.657 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL                    [cd3c60a9-08fb-4e79-bf35-3f78d055a297 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:36:16.657 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind          [cd3c60a9-08fb-4e79-bf35-3f78d055a297 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:36:16.669 [http-nio-8080-exec-3] INFO  com.sprint.mission.discodeit.service.basic.BasicBinaryContentService [a2787e0e-db24-4ff5-85e3-0793d2ed67b3 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - [파일 조회] id: 387bae37-c295-4ba0-ac59-40a69f7326d6
+25-04-10 17:36:16.671 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL                    [a2787e0e-db24-4ff5-85e3-0793d2ed67b3 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - 
+    select
+        bc1_0.id,
+        bc1_0.content_type,
+        bc1_0.created_at,
+        bc1_0.file_name,
+        bc1_0.size 
+    from
+        binary_contents bc1_0 
+    where
+        bc1_0.id=?
+25-04-10 17:36:16.671 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind          [a2787e0e-db24-4ff5-85e3-0793d2ed67b3 | GET | /api/binaryContents/387bae37-c295-4ba0-ac59-40a69f7326d6] - binding parameter (1:UUID) <- [387bae37-c295-4ba0-ac59-40a69f7326d6]
+25-04-10 17:36:16.672 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL                    [bb279628-11c0-4180-bdb8-19e79b5d5113 | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.673 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind          [bb279628-11c0-4180-bdb8-19e79b5d5113 | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.745 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL                    [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    update
+        user_statuses 
+    set
+        last_active_at=?,
+        updated_at=?,
+        user_id=? 
+    where
+        id=?
+25-04-10 17:36:16.745 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL                    [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - 
+    update
+        user_statuses 
+    set
+        last_active_at=?,
+        updated_at=?,
+        user_id=? 
+    where
+        id=?
+25-04-10 17:36:16.750 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-10T08:36:16.556Z]
+25-04-10 17:36:16.750 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind          [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-10T08:36:16.558Z]
+25-04-10 17:36:16.751 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind          [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-10T08:36:16.681576100Z]
+25-04-10 17:36:16.751 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-10T08:36:16.681576100Z]
+25-04-10 17:36:16.752 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind          [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (3:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.752 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (3:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.752 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind          [8d43d3ab-a1fb-490d-8b0d-cd15850b74ba | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (4:UUID) <- [c0d3ce23-b1f8-4b10-a940-8da50f81c27d]
+25-04-10 17:36:16.752 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind          [bd9a4c82-6fa8-43ae-86c7-40024266669b | PATCH | /api/users/2f088f89-be48-4b30-b9b6-df039827a351/userStatus] - binding parameter (4:UUID) <- [c0d3ce23-b1f8-4b10-a940-8da50f81c27d]
+25-04-10 17:36:16.776 [http-nio-8080-exec-10] DEBUG com.sprint.mission.discodeit.service.basic.BasicUserService [97398ab8-054b-40fd-b703-d6521cf4c73c | GET | /api/users] - [전체 회원 목록 조회]
+25-04-10 17:36:16.777 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL                    [97398ab8-054b-40fd-b703-d6521cf4c73c | GET | /api/users] - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=u1_0.profile_id 
+    join
+        user_statuses s1_0 
+            on u1_0.id=s1_0.user_id
+25-04-10 17:36:16.798 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL                    [35730807-d2e7-4ac1-a688-163b38fb3241 | GET | /api/channels] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.798 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL                    [07bef709-3f89-47d1-ac8c-987a3d9dd3bb | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.799 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind          [35730807-d2e7-4ac1-a688-163b38fb3241 | GET | /api/channels] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.799 [http-nio-8080-exec-4] TRACE org.hibernate.orm.jdbc.bind          [07bef709-3f89-47d1-ac8c-987a3d9dd3bb | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:16.801 [http-nio-8080-exec-9] INFO  com.sprint.mission.discodeit.service.basic.BasicChannelService [35730807-d2e7-4ac1-a688-163b38fb3241 | GET | /api/channels] - [채널 조회 성공] id: 2f088f89-be48-4b30-b9b6-df039827a351
+25-04-10 17:36:16.804 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL                    [35730807-d2e7-4ac1-a688-163b38fb3241 | GET | /api/channels] - 
+    select
+        c1_0.id,
+        c1_0.created_at,
+        c1_0.description,
+        c1_0.name,
+        c1_0.type,
+        c1_0.updated_at 
+    from
+        channels c1_0 
+    where
+        c1_0.type=? 
+        or c1_0.id in (?)
+25-04-10 17:36:16.805 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind          [35730807-d2e7-4ac1-a688-163b38fb3241 | GET | /api/channels] - binding parameter (1:VARCHAR) <- [PUBLIC]
+25-04-10 17:36:16.805 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind          [35730807-d2e7-4ac1-a688-163b38fb3241 | GET | /api/channels] - binding parameter (2:UUID) <- [null]
+25-04-10 17:36:16.820 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL                    [29258c45-fb1a-4e55-8b3c-d17b66623064 | GET | /api/readStatuses] - 
+    select
+        rs1_0.id,
+        rs1_0.channel_id,
+        rs1_0.created_at,
+        rs1_0.last_read_at,
+        rs1_0.updated_at,
+        rs1_0.user_id 
+    from
+        read_statuses rs1_0 
+    where
+        rs1_0.user_id=?
+25-04-10 17:36:16.820 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind          [29258c45-fb1a-4e55-8b3c-d17b66623064 | GET | /api/readStatuses] - binding parameter (1:UUID) <- [2f088f89-be48-4b30-b9b6-df039827a351]
+25-04-10 17:36:27.047 [SpringApplicationShutdownHook] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown [ |  | ] - Commencing graceful shutdown. Waiting for active requests to complete
+25-04-10 17:36:28.664 [tomcat-shutdown] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown [ |  | ] - Graceful shutdown complete
+25-04-10 17:36:28.679 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-04-10 17:36:28.684 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Shutdown initiated...
+25-04-10 17:36:28.695 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   [ |  | ] - HikariPool-1 - Shutdown completed.
