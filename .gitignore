@@ -15,7 +15,7 @@ out/
 
 # .gitignore
 .env
-.env.*
+discodeit.env
 
 
 ### Eclipse ###

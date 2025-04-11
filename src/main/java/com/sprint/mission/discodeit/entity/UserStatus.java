@@ -43,8 +43,10 @@ public class UserStatus extends BaseUpdatableEntity {
     return lastActiveAt.isAfter(instantFiveMinutesAgo);
   }
 
-  protected void setUser(User user) {
+  public void setUser(User user) {
     this.user = user;
-    user.setStatus(this);
+    if (user.getStatus() != this) {
+      user.setStatus(this); // 무한 루프 방지
+    }
   }
 }

@@ -37,7 +37,7 @@ public class S3AWSTest {
   @BeforeAll
   static void setUp() throws IOException {
     Properties properties = new Properties();
-    try (InputStream input = new FileInputStream(".env.aws")) {
+    try (InputStream input = new FileInputStream("discodeit.env")) {
       properties.load(input);
     }
 
