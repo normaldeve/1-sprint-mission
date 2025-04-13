@@ -1,0 +1,64 @@
+name: Update ECS Service
+
+on:
+  workflow_dispatch:  # 수동 실행용
+
+jobs:
+  update-ecs:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      CLUSTER_NAME: ${{ vars.ECS_CLUSTER }}
+      SERVICE_NAME: ${{ vars.ECS_SERVICE }}
+      CONTAINER_NAME: discodeit-app
+      ECR_IMAGE_URI: ${{ vars.ECR_REPOSITORY_URI }}:${{ github.sha }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Fetch current task definition
+        id: fetch-task
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition ${{ vars.ECS_TASK_DEFINITION }} \
+            --query taskDefinition > task-definition.json
+
+      - name: Create new task definition with updated image
+        id: register-task
+        run: |
+          NEW_IMAGE="${{ env.ECR_IMAGE_URI }}"
+          cat task-definition.json \
+            | jq --arg IMAGE "$NEW_IMAGE" \
+                '.containerDefinitions[0].image = $IMAGE | 
+                 del(.status, .revision, .taskDefinitionArn, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' \
+            > new-task-def.json
+
+          TASK_DEF_ARN=$(aws ecs register-task-definition \
+            --cli-input-json file://new-task-def.json \
+            --query 'taskDefinition.taskDefinitionArn' --output text)
+
+          echo "TASK_DEF_ARN=$TASK_DEF_ARN" >> $GITHUB_ENV
+
+      - name: Stop current ECS service (프리티어 리소스 절약)
+        run: |
+          aws ecs update-service \
+            --cluster $CLUSTER_NAME \
+            --service $SERVICE_NAME \
+            --desired-count 0
+
+      - name: Update ECS service with new task definition
+        run: |
+          aws ecs update-service \
+            --cluster $CLUSTER_NAME \
+            --service $SERVICE_NAME \
+            --task-definition $TASK_DEF_ARN \
+            --desired-count 1
