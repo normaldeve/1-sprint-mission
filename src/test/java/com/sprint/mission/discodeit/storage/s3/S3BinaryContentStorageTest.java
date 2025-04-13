@@ -7,10 +7,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.http.ResponseEntity;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,17 +25,12 @@ class S3BinaryContentStorageTest {
   private static final String testFileName = "test-s3-jw.txt";
 
   @BeforeAll
-  static void setup() throws Exception {
-    Properties props = new Properties();
-    try (InputStream is = new FileInputStream("discodeit.env")) {
-      props.load(is);
-    }
-
-    String accessKey = props.getProperty("AWS_S3_ACCESS_KEY");
-    String secretKey = props.getProperty("AWS_S3_SECRET_KEY");
-    String region = props.getProperty("AWS_S3_REGION");
-    bucket = props.getProperty("AWS_S3_BUCKET");
-    long expiration = Long.parseLong(props.getProperty("AWS_S3_PRESIGNED_URL_EXPIRATION", "600"));
+  static void setup() {
+    String accessKey = System.getenv("AWS_S3_ACCESS_KEY");
+    String secretKey = System.getenv("AWS_S3_SECRET_KEY");
+    String region = System.getenv("AWS_S3_REGION");
+    bucket = System.getenv("AWS_S3_BUCKET");
+    long expiration = Long.parseLong(System.getenv().getOrDefault("AWS_S3_PRESIGNED_URL_EXPIRATION", "600"));
 
     storage = new S3BinaryContentStorage(accessKey, secretKey, region, bucket, expiration);
   }
