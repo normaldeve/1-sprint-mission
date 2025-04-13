@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -35,11 +37,16 @@ public class S3AWSTest {
   private static String bucketName;
 
   @BeforeAll
-  static void setUp() {
-    String accessKey = System.getenv("AWS_ACCESS_KEY");
-    String secretKey = System.getenv("AWS_SECRET_KEY");
-    String region = System.getenv("AWS_REGION");
-    bucketName = System.getenv("AWS_BUCKET");
+  static void setUp() throws IOException {
+    Properties properties = new Properties();
+    try (InputStream input = new FileInputStream("discodeit.env")) {
+      properties.load(input);
+    }
+
+    String accessKey = properties.getProperty("AWS_S3_ACCESS_KEY");
+    String secretKey = properties.getProperty("AWS_S3_SECRET_KEY");
+    String region = properties.getProperty("AWS_S3_REGION");
+    bucketName = properties.getProperty("AWS_S3_BUCKET");
 
     BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
     s3Client = AmazonS3ClientBuilder.standard()
