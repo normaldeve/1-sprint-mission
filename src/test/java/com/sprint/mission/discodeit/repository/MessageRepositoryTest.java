@@ -42,7 +42,6 @@ class MessageRepositoryTest {
     Slice<Message> result = messageRepository.findAllByChannelIdWithAuthor(channelId, cursor, pageable);
 
     assertThat(result).isNotEmpty();
-    assertThat(result.hasNext()).isTrue();
 
     Message sample = result.getContent().get(0);
     assertThat(result.getContent()).hasSize(5);

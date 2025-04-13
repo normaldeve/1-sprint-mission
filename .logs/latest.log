@@ -968,3 +968,1754 @@ java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceed
 25-04-13 17:57:29.393 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Initializing Servlet ''
 25-04-13 17:57:29.396 [Test worker] INFO  org.springframework.test.web.servlet.TestDispatcherServlet [ |  | ] - Completed initialization in 3 ms
 25-04-13 17:57:29.495 [Test worker] INFO  com.sprint.mission.discodeit.controller.ChannelControllerTest [ |  | ] - Started ChannelControllerTest in 6.918 seconds (process running for 10.683)
+25-04-13 17:59:42.099 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-13 17:59:42.300 [Test worker] INFO  com.sprint.mission.discodeit.repository.ChannelRepositoryTest [ |  | ] - Starting ChannelRepositoryTest using Java 17.0.14 with PID 14724 (started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-13 17:59:42.301 [Test worker] DEBUG com.sprint.mission.discodeit.repository.ChannelRepositoryTest [ |  | ] - Running with Spring Boot v3.4.0, Spring v6.2.0
+25-04-13 17:59:42.303 [Test worker] INFO  com.sprint.mission.discodeit.repository.ChannelRepositoryTest [ |  | ] - The following 1 profile is active: "test"
+25-04-13 17:59:43.514 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-04-13 17:59:43.795 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Finished Spring Data repository scanning in 258 ms. Found 6 JPA repository interfaces.
+25-04-13 17:59:43.961 [Test worker] INFO  org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration$EmbeddedDataSourceBeanFactoryPostProcessor [ |  | ] - Replacing 'dataSource' DataSource bean with embedded version
+25-04-13 17:59:44.393 [Test worker] INFO  org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory [ |  | ] - Starting embedded database: url='jdbc:h2:mem:14cc2857-d6cd-4ddb-b165-2dd3965e8b0b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+25-04-13 17:59:45.163 [Test worker] INFO  org.hibernate.jpa.internal.util.LogHelper [ |  | ] - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-04-13 17:59:45.304 [Test worker] INFO  org.hibernate.Version                [ |  | ] - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-04-13 17:59:45.377 [Test worker] INFO  org.hibernate.cache.internal.RegionFactoryInitiator [ |  | ] - HHH000026: Second-level cache disabled
+25-04-13 17:59:46.042 [Test worker] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [ |  | ] - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-04-13 17:59:46.152 [Test worker] WARN  org.hibernate.dialect.Dialect        [ |  | ] - HHH000511: The 2.3.232 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
+25-04-13 17:59:46.154 [Test worker] WARN  org.hibernate.orm.deprecation        [ |  | ] - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+25-04-13 17:59:46.204 [Test worker] INFO  org.hibernate.orm.connections.pooling [ |  | ] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory$EmbeddedDataSourceProxy@7fe68a5']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-04-13 17:59:46.224 [Test worker] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(2003, org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@2fb800ca) replaced previous registration(org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@6d8c1584)
+25-04-13 17:59:46.224 [Test worker] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(6, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@2e826bd1) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@271f6597)
+25-04-13 17:59:48.439 [Test worker] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [ |  | ] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-04-13 17:59:48.489 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    set client_min_messages = WARNING
+25-04-13 17:59:48.500 [Test worker] WARN  org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl [ |  | ] - GenerationTarget encountered exception accepting command : Error executing DDL "
+    set client_min_messages = WARNING" via JDBC [Syntax error in SQL statement "\000d\000a    set [*]client_min_messages = WARNING"; expected "@, AUTOCOMMIT, EXCLUSIVE, IGNORECASE, PASSWORD, SALT, MODE, DATABASE, COLLATION, CLUSTER, DATABASE_EVENT_LISTENER, ALLOW_LITERALS, DEFAULT_TABLE_TYPE, SCHEMA, CATALOG, SCHEMA_SEARCH_PATH, JAVA_OBJECT_SERIALIZER, IGNORE_CATALOGS, SESSION, TRANSACTION, TIME, NON_KEYWORDS, DEFAULT_NULL_ORDERING";]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    set client_min_messages = WARNING" via JDBC [Syntax error in SQL statement "\000d\000a    set [*]client_min_messages = WARNING"; expected "@, AUTOCOMMIT, EXCLUSIVE, IGNORECASE, PASSWORD, SALT, MODE, DATABASE, COLLATION, CLUSTER, DATABASE_EVENT_LISTENER, ALLOW_LITERALS, DEFAULT_TABLE_TYPE, SCHEMA, CATALOG, SCHEMA_SEARCH_PATH, JAVA_OBJECT_SERIALIZER, IGNORE_CATALOGS, SESSION, TRANSACTION, TIME, NON_KEYWORDS, DEFAULT_NULL_ORDERING";]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:213)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:186)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:156)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:116)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:238)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1849)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:288)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:142)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:160)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$12(ClassBasedTestDescriptor.java:378)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$7(ClassBasedTestDescriptor.java:290)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:279)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$6(ClassBasedTestDescriptor.java:278)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$1(TestMethodTestDescriptor.java:105)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:104)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:128)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:128)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:121)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    set [*]client_min_messages = WARNING"; expected "@, AUTOCOMMIT, EXCLUSIVE, IGNORECASE, PASSWORD, SALT, MODE, DATABASE, COLLATION, CLUSTER, DATABASE_EVENT_LISTENER, ALLOW_LITERALS, DEFAULT_TABLE_TYPE, SCHEMA, CATALOG, SCHEMA_SEARCH_PATH, JAVA_OBJECT_SERIALIZER, IGNORE_CATALOGS, SESSION, TRANSACTION, TIME, NON_KEYWORDS, DEFAULT_NULL_ORDERING"; SQL statement:
+
+    set client_min_messages = WARNING [42001-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.getSyntaxError(DbException.java:261)
+	at org.h2.command.ParserBase.getSyntaxError(ParserBase.java:762)
+	at org.h2.command.Parser.parseSet(Parser.java:7592)
+	at org.h2.command.Parser.parsePrepared(Parser.java:614)
+	at org.h2.command.Parser.parse(Parser.java:581)
+	at org.h2.command.Parser.parse(Parser.java:561)
+	at org.h2.command.Parser.prepareCommand(Parser.java:484)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 130 common frames omitted
+25-04-13 17:59:48.517 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKsd1m8rb8jcpbcnb7rpdue7ctc
+25-04-13 17:59:48.526 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKj7twd218e2gqw9cmlhwvo1rth
+25-04-13 17:59:48.526 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FKowtlim26svclkatusptbgi7u1
+25-04-13 17:59:48.527 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FK3u3ckbhwq9se1cmopk2pq05b2
+25-04-13 17:59:48.528 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKa38ri44ml4gfdpklx4ahqr8gd
+25-04-13 17:59:48.530 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKml3k4wr9sj5yxrmj6d0aoib2e
+25-04-13 17:59:48.531 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       drop constraint if exists FK4lfl3ei2ubchgcxrrpo3pw4mm
+25-04-13 17:59:48.532 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       drop constraint if exists FKtbudycgrip49xdptogmhfqnso
+25-04-13 17:59:48.533 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade
+25-04-13 17:59:48.535 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade
+25-04-13 17:59:48.536 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade
+25-04-13 17:59:48.537 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade
+25-04-13 17:59:48.537 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade
+25-04-13 17:59:48.539 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade
+25-04-13 17:59:48.540 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade
+25-04-13 17:59:48.558 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table binary_contents (
+        created_at timestamp with time zone not null,
+        size bigint not null,
+        id uuid not null,
+        content_type varchar(100) not null,
+        file_name varchar(255) not null,
+        primary key (id)
+    )
+25-04-13 17:59:48.580 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table channels (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        name varchar(100),
+        description varchar(500),
+        type varchar(255) not null check (type in ('PUBLIC','PRIVATE')),
+        primary key (id)
+    )
+25-04-13 17:59:48.592 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table message_attachments (
+        attachment_id uuid not null unique,
+        message_id uuid not null
+    )
+25-04-13 17:59:48.597 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table messages (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        author_id uuid,
+        channel_id uuid not null,
+        id uuid not null,
+        content text not null,
+        primary key (id)
+    )
+25-04-13 17:59:48.601 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table read_statuses (
+        created_at timestamp with time zone not null,
+        last_read_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        channel_id uuid not null,
+        id uuid not null,
+        user_id uuid not null,
+        primary key (id),
+        unique (user_id, channel_id)
+    )
+25-04-13 17:59:48.605 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table user_statuses (
+        created_at timestamp with time zone not null,
+        last_active_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        user_id uuid not null unique,
+        primary key (id)
+    )
+25-04-13 17:59:48.610 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table users (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        profile_id uuid unique,
+        username varchar(50) not null unique,
+        password varchar(60) not null,
+        email varchar(100) not null unique,
+        primary key (id)
+    )
+25-04-13 17:59:48.619 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKsd1m8rb8jcpbcnb7rpdue7ctc 
+       foreign key (attachment_id) 
+       references binary_contents
+25-04-13 17:59:48.654 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKj7twd218e2gqw9cmlhwvo1rth 
+       foreign key (message_id) 
+       references messages
+25-04-13 17:59:48.656 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FKowtlim26svclkatusptbgi7u1 
+       foreign key (author_id) 
+       references users
+25-04-13 17:59:48.659 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FK3u3ckbhwq9se1cmopk2pq05b2 
+       foreign key (channel_id) 
+       references channels
+25-04-13 17:59:48.662 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKa38ri44ml4gfdpklx4ahqr8gd 
+       foreign key (channel_id) 
+       references channels
+25-04-13 17:59:48.664 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKml3k4wr9sj5yxrmj6d0aoib2e 
+       foreign key (user_id) 
+       references users
+25-04-13 17:59:48.666 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       add constraint FK4lfl3ei2ubchgcxrrpo3pw4mm 
+       foreign key (user_id) 
+       references users
+25-04-13 17:59:48.668 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       add constraint FKtbudycgrip49xdptogmhfqnso 
+       foreign key (profile_id) 
+       references binary_contents
+25-04-13 17:59:48.682 [Test worker] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 17:59:49.376 [Test worker] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory [ |  | ] - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-04-13 17:59:50.547 [Test worker] INFO  com.sprint.mission.discodeit.repository.ChannelRepositoryTest [ |  | ] - Started ChannelRepositoryTest in 9.976 seconds (process running for 14.281)
+25-04-13 17:59:51.706 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    insert 
+    into
+        channels
+        (created_at, description, name, type, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+25-04-13 17:59:51.714 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-13T08:59:51.489177900Z]
+25-04-13 17:59:51.716 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:VARCHAR) <- [전체 공지]
+25-04-13 17:59:51.717 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (3:VARCHAR) <- [공지사항]
+25-04-13 17:59:51.718 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (4:VARCHAR) <- [PUBLIC]
+25-04-13 17:59:51.718 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (5:TIMESTAMP_UTC) <- [2025-04-13T08:59:51.489177900Z]
+25-04-13 17:59:51.718 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (6:UUID) <- [94305038-9a10-43a0-bf6b-af1522941930]
+25-04-13 17:59:51.744 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    insert 
+    into
+        channels
+        (created_at, description, name, type, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+25-04-13 17:59:51.745 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-13T08:59:51.544107900Z]
+25-04-13 17:59:51.745 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:VARCHAR) <- [잡담방]
+25-04-13 17:59:51.745 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (3:VARCHAR) <- [자유채팅]
+25-04-13 17:59:51.745 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (4:VARCHAR) <- [PUBLIC]
+25-04-13 17:59:51.745 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (5:TIMESTAMP_UTC) <- [2025-04-13T08:59:51.544107900Z]
+25-04-13 17:59:51.745 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (6:UUID) <- [f6f9fdc0-eced-4565-90d8-194ed6350128]
+25-04-13 17:59:51.747 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    insert 
+    into
+        channels
+        (created_at, description, name, type, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+25-04-13 17:59:51.748 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:TIMESTAMP_UTC) <- [2025-04-13T08:59:51.544797800Z]
+25-04-13 17:59:51.748 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:VARCHAR) <- [null]
+25-04-13 17:59:51.748 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (3:VARCHAR) <- [null]
+25-04-13 17:59:51.748 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (4:VARCHAR) <- [PRIVATE]
+25-04-13 17:59:51.748 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (5:TIMESTAMP_UTC) <- [2025-04-13T08:59:51.544797800Z]
+25-04-13 17:59:51.748 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (6:UUID) <- [3d41855b-a8e3-4b2a-9505-8617de2b47c2]
+25-04-13 17:59:51.778 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        c1_0.id,
+        c1_0.created_at,
+        c1_0.description,
+        c1_0.name,
+        c1_0.type,
+        c1_0.updated_at 
+    from
+        channels c1_0 
+    where
+        c1_0.type=? 
+        or c1_0.id in (?)
+25-04-13 17:59:51.782 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:VARCHAR) <- [PUBLIC]
+25-04-13 17:59:51.782 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:UUID) <- [3d41855b-a8e3-4b2a-9505-8617de2b47c2]
+25-04-13 17:59:52.046 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 17:59:52.513 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    set client_min_messages = WARNING
+25-04-13 17:59:52.515 [SpringApplicationShutdownHook] ERROR org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [ |  | ] - HHH000478: Unsuccessful: 
+    set client_min_messages = WARNING
+25-04-13 17:59:52.515 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKsd1m8rb8jcpbcnb7rpdue7ctc
+25-04-13 17:59:52.517 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKj7twd218e2gqw9cmlhwvo1rth
+25-04-13 17:59:52.518 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FKowtlim26svclkatusptbgi7u1
+25-04-13 17:59:52.518 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FK3u3ckbhwq9se1cmopk2pq05b2
+25-04-13 17:59:52.520 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKa38ri44ml4gfdpklx4ahqr8gd
+25-04-13 17:59:52.520 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKml3k4wr9sj5yxrmj6d0aoib2e
+25-04-13 17:59:52.521 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       drop constraint if exists FK4lfl3ei2ubchgcxrrpo3pw4mm
+25-04-13 17:59:52.522 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       drop constraint if exists FKtbudycgrip49xdptogmhfqnso
+25-04-13 17:59:52.522 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade
+25-04-13 17:59:52.524 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade
+25-04-13 17:59:52.524 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade
+25-04-13 17:59:52.526 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade
+25-04-13 17:59:52.527 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade
+25-04-13 17:59:52.529 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade
+25-04-13 17:59:52.531 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade
+25-04-13 18:00:02.910 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-13 18:00:03.114 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Starting MessageRepositoryTest using Java 17.0.14 with PID 18868 (started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-13 18:00:03.116 [Test worker] DEBUG com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Running with Spring Boot v3.4.0, Spring v6.2.0
+25-04-13 18:00:03.118 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - The following 1 profile is active: "test"
+25-04-13 18:00:04.427 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-04-13 18:00:04.725 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Finished Spring Data repository scanning in 266 ms. Found 6 JPA repository interfaces.
+25-04-13 18:00:04.883 [Test worker] INFO  org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration$EmbeddedDataSourceBeanFactoryPostProcessor [ |  | ] - Replacing 'dataSource' DataSource bean with embedded version
+25-04-13 18:00:05.399 [Test worker] INFO  org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory [ |  | ] - Starting embedded database: url='jdbc:h2:mem:02e4e5c4-2a2b-4535-bcf7-b4a0c523d3af;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+25-04-13 18:00:06.191 [Test worker] INFO  org.hibernate.jpa.internal.util.LogHelper [ |  | ] - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-04-13 18:00:06.381 [Test worker] INFO  org.hibernate.Version                [ |  | ] - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-04-13 18:00:06.486 [Test worker] INFO  org.hibernate.cache.internal.RegionFactoryInitiator [ |  | ] - HHH000026: Second-level cache disabled
+25-04-13 18:00:07.382 [Test worker] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [ |  | ] - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-04-13 18:00:07.504 [Test worker] WARN  org.hibernate.dialect.Dialect        [ |  | ] - HHH000511: The 2.3.232 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
+25-04-13 18:00:07.518 [Test worker] WARN  org.hibernate.orm.deprecation        [ |  | ] - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+25-04-13 18:00:07.575 [Test worker] INFO  org.hibernate.orm.connections.pooling [ |  | ] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory$EmbeddedDataSourceProxy@2d05291f']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-04-13 18:00:07.597 [Test worker] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(2003, org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@7a86e414) replaced previous registration(org.hibernate.type.descriptor.sql.internal.ArrayDdlTypeImpl@3db2665d)
+25-04-13 18:00:07.603 [Test worker] DEBUG org.hibernate.type.descriptor.sql.spi.DdlTypeRegistry [ |  | ] - addDescriptor(6, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@59a8891e) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@f054e29)
+25-04-13 18:00:10.067 [Test worker] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [ |  | ] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-04-13 18:00:10.105 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    set client_min_messages = WARNING
+25-04-13 18:00:10.114 [Test worker] WARN  org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl [ |  | ] - GenerationTarget encountered exception accepting command : Error executing DDL "
+    set client_min_messages = WARNING" via JDBC [Syntax error in SQL statement "\000d\000a    set [*]client_min_messages = WARNING"; expected "@, AUTOCOMMIT, EXCLUSIVE, IGNORECASE, PASSWORD, SALT, MODE, DATABASE, COLLATION, CLUSTER, DATABASE_EVENT_LISTENER, ALLOW_LITERALS, DEFAULT_TABLE_TYPE, SCHEMA, CATALOG, SCHEMA_SEARCH_PATH, JAVA_OBJECT_SERIALIZER, IGNORE_CATALOGS, SESSION, TRANSACTION, TIME, NON_KEYWORDS, DEFAULT_NULL_ORDERING";]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    set client_min_messages = WARNING" via JDBC [Syntax error in SQL statement "\000d\000a    set [*]client_min_messages = WARNING"; expected "@, AUTOCOMMIT, EXCLUSIVE, IGNORECASE, PASSWORD, SALT, MODE, DATABASE, COLLATION, CLUSTER, DATABASE_EVENT_LISTENER, ALLOW_LITERALS, DEFAULT_TABLE_TYPE, SCHEMA, CATALOG, SCHEMA_SEARCH_PATH, JAVA_OBJECT_SERIALIZER, IGNORE_CATALOGS, SESSION, TRANSACTION, TIME, NON_KEYWORDS, DEFAULT_NULL_ORDERING";]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:213)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:186)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:156)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:116)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:238)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1849)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:288)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:142)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:160)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$12(ClassBasedTestDescriptor.java:378)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$7(ClassBasedTestDescriptor.java:290)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:279)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$6(ClassBasedTestDescriptor.java:278)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$1(TestMethodTestDescriptor.java:105)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:104)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:128)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:128)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:121)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    set [*]client_min_messages = WARNING"; expected "@, AUTOCOMMIT, EXCLUSIVE, IGNORECASE, PASSWORD, SALT, MODE, DATABASE, COLLATION, CLUSTER, DATABASE_EVENT_LISTENER, ALLOW_LITERALS, DEFAULT_TABLE_TYPE, SCHEMA, CATALOG, SCHEMA_SEARCH_PATH, JAVA_OBJECT_SERIALIZER, IGNORE_CATALOGS, SESSION, TRANSACTION, TIME, NON_KEYWORDS, DEFAULT_NULL_ORDERING"; SQL statement:
+
+    set client_min_messages = WARNING [42001-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.getSyntaxError(DbException.java:261)
+	at org.h2.command.ParserBase.getSyntaxError(ParserBase.java:762)
+	at org.h2.command.Parser.parseSet(Parser.java:7592)
+	at org.h2.command.Parser.parsePrepared(Parser.java:614)
+	at org.h2.command.Parser.parse(Parser.java:581)
+	at org.h2.command.Parser.parse(Parser.java:561)
+	at org.h2.command.Parser.prepareCommand(Parser.java:484)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 130 common frames omitted
+25-04-13 18:00:10.125 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKsd1m8rb8jcpbcnb7rpdue7ctc
+25-04-13 18:00:10.131 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKj7twd218e2gqw9cmlhwvo1rth
+25-04-13 18:00:10.133 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FKowtlim26svclkatusptbgi7u1
+25-04-13 18:00:10.135 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FK3u3ckbhwq9se1cmopk2pq05b2
+25-04-13 18:00:10.136 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKa38ri44ml4gfdpklx4ahqr8gd
+25-04-13 18:00:10.138 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKml3k4wr9sj5yxrmj6d0aoib2e
+25-04-13 18:00:10.139 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       drop constraint if exists FK4lfl3ei2ubchgcxrrpo3pw4mm
+25-04-13 18:00:10.140 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       drop constraint if exists FKtbudycgrip49xdptogmhfqnso
+25-04-13 18:00:10.141 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade
+25-04-13 18:00:10.144 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade
+25-04-13 18:00:10.145 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade
+25-04-13 18:00:10.146 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade
+25-04-13 18:00:10.147 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade
+25-04-13 18:00:10.147 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade
+25-04-13 18:00:10.149 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade
+25-04-13 18:00:10.162 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table binary_contents (
+        created_at timestamp with time zone not null,
+        size bigint not null,
+        id uuid not null,
+        content_type varchar(100) not null,
+        file_name varchar(255) not null,
+        primary key (id)
+    )
+25-04-13 18:00:10.182 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table channels (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        name varchar(100),
+        description varchar(500),
+        type varchar(255) not null check (type in ('PUBLIC','PRIVATE')),
+        primary key (id)
+    )
+25-04-13 18:00:10.194 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table message_attachments (
+        attachment_id uuid not null unique,
+        message_id uuid not null
+    )
+25-04-13 18:00:10.199 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table messages (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        author_id uuid,
+        channel_id uuid not null,
+        id uuid not null,
+        content text not null,
+        primary key (id)
+    )
+25-04-13 18:00:10.203 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table read_statuses (
+        created_at timestamp with time zone not null,
+        last_read_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        channel_id uuid not null,
+        id uuid not null,
+        user_id uuid not null,
+        primary key (id),
+        unique (user_id, channel_id)
+    )
+25-04-13 18:00:10.207 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table user_statuses (
+        created_at timestamp with time zone not null,
+        last_active_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        user_id uuid not null unique,
+        primary key (id)
+    )
+25-04-13 18:00:10.211 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table users (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        profile_id uuid unique,
+        username varchar(50) not null unique,
+        password varchar(60) not null,
+        email varchar(100) not null unique,
+        primary key (id)
+    )
+25-04-13 18:00:10.220 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKsd1m8rb8jcpbcnb7rpdue7ctc 
+       foreign key (attachment_id) 
+       references binary_contents
+25-04-13 18:00:10.253 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKj7twd218e2gqw9cmlhwvo1rth 
+       foreign key (message_id) 
+       references messages
+25-04-13 18:00:10.255 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FKowtlim26svclkatusptbgi7u1 
+       foreign key (author_id) 
+       references users
+25-04-13 18:00:10.259 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FK3u3ckbhwq9se1cmopk2pq05b2 
+       foreign key (channel_id) 
+       references channels
+25-04-13 18:00:10.261 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKa38ri44ml4gfdpklx4ahqr8gd 
+       foreign key (channel_id) 
+       references channels
+25-04-13 18:00:10.264 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKml3k4wr9sj5yxrmj6d0aoib2e 
+       foreign key (user_id) 
+       references users
+25-04-13 18:00:10.266 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       add constraint FK4lfl3ei2ubchgcxrrpo3pw4mm 
+       foreign key (user_id) 
+       references users
+25-04-13 18:00:10.268 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       add constraint FKtbudycgrip49xdptogmhfqnso 
+       foreign key (profile_id) 
+       references binary_contents
+25-04-13 18:00:10.284 [Test worker] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 18:00:11.189 [Test worker] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory [ |  | ] - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-04-13 18:00:12.225 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Started MessageRepositoryTest in 10.872 seconds (process running for 14.33)
+25-04-13 18:00:13.116 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        m1_0.author_id,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0 
+    where
+        m1_0.id=?
+25-04-13 18:00:13.126 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020]
+25-04-13 18:00:13.396 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.created_at 
+    from
+        messages m1_0 
+    where
+        m1_0.channel_id=? 
+    order by
+        m1_0.created_at desc 
+    fetch
+        first 1 rows only
+25-04-13 18:00:13.398 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [11111111-1111-1111-1111-111111111111]
+25-04-13 18:00:13.609 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.email,
+        a1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        a1_0.updated_at,
+        a1_0.username,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0 
+    left join
+        users a1_0 
+            on a1_0.id=m1_0.author_id 
+    join
+        user_statuses s1_0 
+            on a1_0.id=s1_0.user_id 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=a1_0.profile_id 
+    where
+        m1_0.channel_id=? 
+        and m1_0.created_at<? 
+    order by
+        m1_0.created_at desc 
+    fetch
+        first ? rows only
+25-04-13 18:00:13.612 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [11111111-1111-1111-1111-111111111111]
+25-04-13 18:00:13.612 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-13T08:45:13.575817200Z]
+25-04-13 18:00:13.613 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (3:INTEGER) <- [6]
+25-04-13 18:00:13.709 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        m1_0.author_id,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0 
+    where
+        m1_0.channel_id=?
+25-04-13 18:00:13.711 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [11111111-1111-1111-1111-111111111111]
+25-04-13 18:00:13.729 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        a1_0.message_id,
+        a1_1.id,
+        a1_1.content_type,
+        a1_1.created_at,
+        a1_1.file_name,
+        a1_1.size 
+    from
+        message_attachments a1_0 
+    join
+        binary_contents a1_1 
+            on a1_1.id=a1_0.attachment_id 
+    where
+        a1_0.message_id = any (?)
+25-04-13 18:00:13.734 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:ARRAY) <- [[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019, aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020]]
+25-04-13 18:00:13.779 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.780 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001]
+25-04-13 18:00:13.784 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.785 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002]
+25-04-13 18:00:13.785 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.785 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003]
+25-04-13 18:00:13.787 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.787 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004]
+25-04-13 18:00:13.788 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.789 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005]
+25-04-13 18:00:13.789 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.790 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006]
+25-04-13 18:00:13.791 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.791 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007]
+25-04-13 18:00:13.792 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.792 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008]
+25-04-13 18:00:13.794 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.794 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009]
+25-04-13 18:00:13.795 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.795 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010]
+25-04-13 18:00:13.796 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.796 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011]
+25-04-13 18:00:13.797 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.797 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012]
+25-04-13 18:00:13.797 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.797 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013]
+25-04-13 18:00:13.798 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.798 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014]
+25-04-13 18:00:13.799 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.799 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015]
+25-04-13 18:00:13.800 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.800 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016]
+25-04-13 18:00:13.801 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.801 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017]
+25-04-13 18:00:13.802 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.803 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018]
+25-04-13 18:00:13.805 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.806 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019]
+25-04-13 18:00:13.807 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:00:13.807 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020]
+25-04-13 18:00:13.809 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        m1_0.author_id,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0
+25-04-13 18:00:13.838 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 18:00:14.340 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    set client_min_messages = WARNING
+25-04-13 18:00:14.342 [SpringApplicationShutdownHook] ERROR org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [ |  | ] - HHH000478: Unsuccessful: 
+    set client_min_messages = WARNING
+25-04-13 18:00:14.342 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKsd1m8rb8jcpbcnb7rpdue7ctc
+25-04-13 18:00:14.344 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       drop constraint if exists FKj7twd218e2gqw9cmlhwvo1rth
+25-04-13 18:00:14.345 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FKowtlim26svclkatusptbgi7u1
+25-04-13 18:00:14.345 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       drop constraint if exists FK3u3ckbhwq9se1cmopk2pq05b2
+25-04-13 18:00:14.346 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKa38ri44ml4gfdpklx4ahqr8gd
+25-04-13 18:00:14.346 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       drop constraint if exists FKml3k4wr9sj5yxrmj6d0aoib2e
+25-04-13 18:00:14.347 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       drop constraint if exists FK4lfl3ei2ubchgcxrrpo3pw4mm
+25-04-13 18:00:14.347 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       drop constraint if exists FKtbudycgrip49xdptogmhfqnso
+25-04-13 18:00:14.347 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade
+25-04-13 18:00:14.348 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade
+25-04-13 18:00:14.348 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade
+25-04-13 18:00:14.349 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade
+25-04-13 18:00:14.349 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade
+25-04-13 18:00:14.350 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade
+25-04-13 18:00:14.351 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade
+25-04-13 18:03:00.241 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-13 18:03:00.411 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Starting MessageRepositoryTest using Java 17.0.14 with PID 8148 (started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-13 18:03:00.413 [Test worker] DEBUG com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Running with Spring Boot v3.4.0, Spring v6.2.0
+25-04-13 18:03:00.415 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - The following 1 profile is active: "test"
+25-04-13 18:03:01.554 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-04-13 18:03:01.837 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Finished Spring Data repository scanning in 260 ms. Found 6 JPA repository interfaces.
+25-04-13 18:03:01.980 [Test worker] INFO  org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration$EmbeddedDataSourceBeanFactoryPostProcessor [ |  | ] - Replacing 'dataSource' DataSource bean with embedded version
+25-04-13 18:03:02.425 [Test worker] INFO  org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory [ |  | ] - Starting embedded database: url='jdbc:h2:mem:1b9e3e45-e04c-4450-ba7b-422cc7038a3a;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+25-04-13 18:03:03.207 [Test worker] INFO  org.hibernate.jpa.internal.util.LogHelper [ |  | ] - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-04-13 18:03:03.379 [Test worker] INFO  org.hibernate.Version                [ |  | ] - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-04-13 18:03:03.490 [Test worker] INFO  org.hibernate.cache.internal.RegionFactoryInitiator [ |  | ] - HHH000026: Second-level cache disabled
+25-04-13 18:03:04.142 [Test worker] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [ |  | ] - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-04-13 18:03:04.274 [Test worker] WARN  org.hibernate.orm.deprecation        [ |  | ] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+25-04-13 18:03:04.321 [Test worker] INFO  org.hibernate.orm.connections.pooling [ |  | ] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory$EmbeddedDataSourceProxy@406fec86']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-04-13 18:03:06.469 [Test worker] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [ |  | ] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-04-13 18:03:06.501 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade 
+25-04-13 18:03:06.507 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade 
+25-04-13 18:03:06.508 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade 
+25-04-13 18:03:06.509 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade 
+25-04-13 18:03:06.509 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade 
+25-04-13 18:03:06.510 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade 
+25-04-13 18:03:06.510 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade 
+25-04-13 18:03:06.522 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table binary_contents (
+        created_at timestamp with time zone not null,
+        size bigint not null,
+        id uuid not null,
+        content_type varchar(100) not null,
+        file_name varchar(255) not null,
+        primary key (id)
+    )
+25-04-13 18:03:06.537 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table channels (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        name varchar(100),
+        description varchar(500),
+        type enum ('PRIVATE','PUBLIC') not null,
+        primary key (id)
+    )
+25-04-13 18:03:06.541 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table message_attachments (
+        attachment_id uuid not null unique,
+        message_id uuid not null
+    )
+25-04-13 18:03:06.545 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table messages (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        author_id uuid,
+        channel_id uuid not null,
+        id uuid not null,
+        content text not null,
+        primary key (id)
+    )
+25-04-13 18:03:06.547 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table read_statuses (
+        created_at timestamp with time zone not null,
+        last_read_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        channel_id uuid not null,
+        id uuid not null,
+        user_id uuid not null,
+        primary key (id),
+        unique (user_id, channel_id)
+    )
+25-04-13 18:03:06.552 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table user_statuses (
+        created_at timestamp with time zone not null,
+        last_active_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        user_id uuid not null unique,
+        primary key (id)
+    )
+25-04-13 18:03:06.554 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table users (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        profile_id uuid unique,
+        username varchar(50) not null unique,
+        password varchar(60) not null,
+        email varchar(100) not null unique,
+        primary key (id)
+    )
+25-04-13 18:03:06.562 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKsd1m8rb8jcpbcnb7rpdue7ctc 
+       foreign key (attachment_id) 
+       references binary_contents
+25-04-13 18:03:06.585 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKj7twd218e2gqw9cmlhwvo1rth 
+       foreign key (message_id) 
+       references messages
+25-04-13 18:03:06.588 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FKowtlim26svclkatusptbgi7u1 
+       foreign key (author_id) 
+       references users
+25-04-13 18:03:06.592 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FK3u3ckbhwq9se1cmopk2pq05b2 
+       foreign key (channel_id) 
+       references channels
+25-04-13 18:03:06.596 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKa38ri44ml4gfdpklx4ahqr8gd 
+       foreign key (channel_id) 
+       references channels
+25-04-13 18:03:06.598 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKml3k4wr9sj5yxrmj6d0aoib2e 
+       foreign key (user_id) 
+       references users
+25-04-13 18:03:06.602 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       add constraint FK4lfl3ei2ubchgcxrrpo3pw4mm 
+       foreign key (user_id) 
+       references users
+25-04-13 18:03:06.604 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       add constraint FKtbudycgrip49xdptogmhfqnso 
+       foreign key (profile_id) 
+       references binary_contents
+25-04-13 18:03:06.613 [Test worker] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 18:03:07.302 [Test worker] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory [ |  | ] - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-04-13 18:03:08.415 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Started MessageRepositoryTest in 9.484 seconds (process running for 12.958)
+25-04-13 18:03:09.414 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        m1_0.author_id,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0 
+    where
+        m1_0.id=?
+25-04-13 18:03:09.423 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020]
+25-04-13 18:03:09.650 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.created_at 
+    from
+        messages m1_0 
+    where
+        m1_0.channel_id=? 
+    order by
+        m1_0.created_at desc 
+    fetch
+        first 1 rows only
+25-04-13 18:03:09.651 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [11111111-1111-1111-1111-111111111111]
+25-04-13 18:03:09.831 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.email,
+        a1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        a1_0.updated_at,
+        a1_0.username,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0 
+    left join
+        users a1_0 
+            on a1_0.id=m1_0.author_id 
+    join
+        user_statuses s1_0 
+            on a1_0.id=s1_0.user_id 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=a1_0.profile_id 
+    where
+        m1_0.channel_id=? 
+        and m1_0.created_at<? 
+    order by
+        m1_0.created_at desc 
+    fetch
+        first ? rows only
+25-04-13 18:03:09.838 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [11111111-1111-1111-1111-111111111111]
+25-04-13 18:03:09.839 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-13T08:48:09.792019700Z]
+25-04-13 18:03:09.840 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (3:INTEGER) <- [6]
+25-04-13 18:03:09.977 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        m1_0.author_id,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0 
+    where
+        m1_0.channel_id=?
+25-04-13 18:03:09.983 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [11111111-1111-1111-1111-111111111111]
+25-04-13 18:03:10.017 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        a1_0.message_id,
+        a1_1.id,
+        a1_1.content_type,
+        a1_1.created_at,
+        a1_1.file_name,
+        a1_1.size 
+    from
+        message_attachments a1_0 
+    join
+        binary_contents a1_1 
+            on a1_1.id=a1_0.attachment_id 
+    where
+        a1_0.message_id in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+25-04-13 18:03:10.023 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001]
+25-04-13 18:03:10.023 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (3:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (4:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (5:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (6:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (7:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (8:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (9:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (10:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010]
+25-04-13 18:03:10.024 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (11:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011]
+25-04-13 18:03:10.025 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (12:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012]
+25-04-13 18:03:10.025 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (13:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013]
+25-04-13 18:03:10.025 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (14:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014]
+25-04-13 18:03:10.026 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (15:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015]
+25-04-13 18:03:10.026 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (16:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016]
+25-04-13 18:03:10.026 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (17:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017]
+25-04-13 18:03:10.026 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (18:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018]
+25-04-13 18:03:10.027 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (19:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019]
+25-04-13 18:03:10.027 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (20:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020]
+25-04-13 18:03:10.027 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (21:UUID) <- [null]
+25-04-13 18:03:10.027 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (22:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (23:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (24:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (25:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (26:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (27:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (28:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (29:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (30:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (31:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (32:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (33:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (34:UUID) <- [null]
+25-04-13 18:03:10.028 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (35:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (36:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (37:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (38:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (39:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (40:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (41:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (42:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (43:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (44:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (45:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (46:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (47:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (48:UUID) <- [null]
+25-04-13 18:03:10.029 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (49:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (50:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (51:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (52:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (53:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (54:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (55:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (56:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (57:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (58:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (59:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (60:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (61:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (62:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (63:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (64:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (65:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (66:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (67:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (68:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (69:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (70:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (71:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (72:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (73:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (74:UUID) <- [null]
+25-04-13 18:03:10.031 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (75:UUID) <- [null]
+25-04-13 18:03:10.038 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (76:UUID) <- [null]
+25-04-13 18:03:10.038 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (77:UUID) <- [null]
+25-04-13 18:03:10.038 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (78:UUID) <- [null]
+25-04-13 18:03:10.038 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (79:UUID) <- [null]
+25-04-13 18:03:10.039 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (80:UUID) <- [null]
+25-04-13 18:03:10.039 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (81:UUID) <- [null]
+25-04-13 18:03:10.039 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (82:UUID) <- [null]
+25-04-13 18:03:10.039 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (83:UUID) <- [null]
+25-04-13 18:03:10.039 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (84:UUID) <- [null]
+25-04-13 18:03:10.040 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (85:UUID) <- [null]
+25-04-13 18:03:10.040 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (86:UUID) <- [null]
+25-04-13 18:03:10.040 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (87:UUID) <- [null]
+25-04-13 18:03:10.040 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (88:UUID) <- [null]
+25-04-13 18:03:10.040 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (89:UUID) <- [null]
+25-04-13 18:03:10.041 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (90:UUID) <- [null]
+25-04-13 18:03:10.041 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (91:UUID) <- [null]
+25-04-13 18:03:10.042 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (92:UUID) <- [null]
+25-04-13 18:03:10.042 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (93:UUID) <- [null]
+25-04-13 18:03:10.042 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (94:UUID) <- [null]
+25-04-13 18:03:10.042 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (95:UUID) <- [null]
+25-04-13 18:03:10.042 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (96:UUID) <- [null]
+25-04-13 18:03:10.043 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (97:UUID) <- [null]
+25-04-13 18:03:10.043 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (98:UUID) <- [null]
+25-04-13 18:03:10.043 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (99:UUID) <- [null]
+25-04-13 18:03:10.043 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (100:UUID) <- [null]
+25-04-13 18:03:10.090 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.090 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001]
+25-04-13 18:03:10.096 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.096 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002]
+25-04-13 18:03:10.096 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.096 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003]
+25-04-13 18:03:10.101 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.102 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004]
+25-04-13 18:03:10.104 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.104 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005]
+25-04-13 18:03:10.106 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.106 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006]
+25-04-13 18:03:10.108 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.108 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007]
+25-04-13 18:03:10.110 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.110 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008]
+25-04-13 18:03:10.112 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.113 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009]
+25-04-13 18:03:10.114 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.115 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010]
+25-04-13 18:03:10.115 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.116 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011]
+25-04-13 18:03:10.118 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.118 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012]
+25-04-13 18:03:10.120 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.120 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013]
+25-04-13 18:03:10.120 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.120 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014]
+25-04-13 18:03:10.123 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.124 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015]
+25-04-13 18:03:10.125 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.125 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016]
+25-04-13 18:03:10.126 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.127 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017]
+25-04-13 18:03:10.128 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.129 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018]
+25-04-13 18:03:10.130 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.131 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019]
+25-04-13 18:03:10.132 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    delete 
+    from
+        messages 
+    where
+        id=?
+25-04-13 18:03:10.133 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020]
+25-04-13 18:03:10.135 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        m1_0.author_id,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0
+25-04-13 18:03:10.171 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 18:03:10.653 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade 
+25-04-13 18:03:10.655 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade 
+25-04-13 18:03:10.656 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade 
+25-04-13 18:03:10.656 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade 
+25-04-13 18:03:10.656 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade 
+25-04-13 18:03:10.656 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade 
+25-04-13 18:03:10.656 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade 
+25-04-13 18:04:46.943 [background-preinit] INFO  org.hibernate.validator.internal.util.Version [ |  | ] - HV000001: Hibernate Validator 8.0.1.Final
+25-04-13 18:04:47.112 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Starting MessageRepositoryTest using Java 17.0.14 with PID 29200 (started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-04-13 18:04:47.112 [Test worker] DEBUG com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Running with Spring Boot v3.4.0, Spring v6.2.0
+25-04-13 18:04:47.117 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - The following 1 profile is active: "test"
+25-04-13 18:04:48.223 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-04-13 18:04:48.515 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate [ |  | ] - Finished Spring Data repository scanning in 261 ms. Found 6 JPA repository interfaces.
+25-04-13 18:04:48.663 [Test worker] INFO  org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration$EmbeddedDataSourceBeanFactoryPostProcessor [ |  | ] - Replacing 'dataSource' DataSource bean with embedded version
+25-04-13 18:04:49.084 [Test worker] INFO  org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory [ |  | ] - Starting embedded database: url='jdbc:h2:mem:a77e82f0-e25c-4261-b11a-f664cd5f9440;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+25-04-13 18:04:49.906 [Test worker] INFO  org.hibernate.jpa.internal.util.LogHelper [ |  | ] - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-04-13 18:04:50.075 [Test worker] INFO  org.hibernate.Version                [ |  | ] - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-04-13 18:04:50.158 [Test worker] INFO  org.hibernate.cache.internal.RegionFactoryInitiator [ |  | ] - HHH000026: Second-level cache disabled
+25-04-13 18:04:50.895 [Test worker] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [ |  | ] - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-04-13 18:04:51.011 [Test worker] WARN  org.hibernate.orm.deprecation        [ |  | ] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+25-04-13 18:04:51.055 [Test worker] INFO  org.hibernate.orm.connections.pooling [ |  | ] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory$EmbeddedDataSourceProxy@33d6bdb7']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-04-13 18:04:53.152 [Test worker] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [ |  | ] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-04-13 18:04:53.199 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade 
+25-04-13 18:04:53.207 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade 
+25-04-13 18:04:53.208 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade 
+25-04-13 18:04:53.208 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade 
+25-04-13 18:04:53.209 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade 
+25-04-13 18:04:53.209 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade 
+25-04-13 18:04:53.209 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade 
+25-04-13 18:04:53.219 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table binary_contents (
+        created_at timestamp with time zone not null,
+        size bigint not null,
+        id uuid not null,
+        content_type varchar(100) not null,
+        file_name varchar(255) not null,
+        primary key (id)
+    )
+25-04-13 18:04:53.237 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table channels (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        name varchar(100),
+        description varchar(500),
+        type enum ('PRIVATE','PUBLIC') not null,
+        primary key (id)
+    )
+25-04-13 18:04:53.239 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table message_attachments (
+        attachment_id uuid not null unique,
+        message_id uuid not null
+    )
+25-04-13 18:04:53.242 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table messages (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        author_id uuid,
+        channel_id uuid not null,
+        id uuid not null,
+        content text not null,
+        primary key (id)
+    )
+25-04-13 18:04:53.249 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table read_statuses (
+        created_at timestamp with time zone not null,
+        last_read_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        channel_id uuid not null,
+        id uuid not null,
+        user_id uuid not null,
+        primary key (id),
+        unique (user_id, channel_id)
+    )
+25-04-13 18:04:53.253 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table user_statuses (
+        created_at timestamp with time zone not null,
+        last_active_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        user_id uuid not null unique,
+        primary key (id)
+    )
+25-04-13 18:04:53.257 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    create table users (
+        created_at timestamp with time zone not null,
+        updated_at timestamp with time zone,
+        id uuid not null,
+        profile_id uuid unique,
+        username varchar(50) not null unique,
+        password varchar(60) not null,
+        email varchar(100) not null unique,
+        primary key (id)
+    )
+25-04-13 18:04:53.263 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKsd1m8rb8jcpbcnb7rpdue7ctc 
+       foreign key (attachment_id) 
+       references binary_contents
+25-04-13 18:04:53.303 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists message_attachments 
+       add constraint FKj7twd218e2gqw9cmlhwvo1rth 
+       foreign key (message_id) 
+       references messages
+25-04-13 18:04:53.303 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FKowtlim26svclkatusptbgi7u1 
+       foreign key (author_id) 
+       references users
+25-04-13 18:04:53.310 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists messages 
+       add constraint FK3u3ckbhwq9se1cmopk2pq05b2 
+       foreign key (channel_id) 
+       references channels
+25-04-13 18:04:53.313 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKa38ri44ml4gfdpklx4ahqr8gd 
+       foreign key (channel_id) 
+       references channels
+25-04-13 18:04:53.316 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists read_statuses 
+       add constraint FKml3k4wr9sj5yxrmj6d0aoib2e 
+       foreign key (user_id) 
+       references users
+25-04-13 18:04:53.316 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists user_statuses 
+       add constraint FK4lfl3ei2ubchgcxrrpo3pw4mm 
+       foreign key (user_id) 
+       references users
+25-04-13 18:04:53.321 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    alter table if exists users 
+       add constraint FKtbudycgrip49xdptogmhfqnso 
+       foreign key (profile_id) 
+       references binary_contents
+25-04-13 18:04:53.321 [Test worker] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 18:04:54.022 [Test worker] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory [ |  | ] - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-04-13 18:04:55.123 [Test worker] INFO  com.sprint.mission.discodeit.repository.MessageRepositoryTest [ |  | ] - Started MessageRepositoryTest in 9.42 seconds (process running for 12.767)
+25-04-13 18:04:56.075 [Test worker] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    select
+        m1_0.id,
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.email,
+        a1_0.password,
+        p1_0.id,
+        p1_0.content_type,
+        p1_0.created_at,
+        p1_0.file_name,
+        p1_0.size,
+        s1_0.id,
+        s1_0.created_at,
+        s1_0.last_active_at,
+        s1_0.updated_at,
+        s1_0.user_id,
+        a1_0.updated_at,
+        a1_0.username,
+        m1_0.channel_id,
+        m1_0.content,
+        m1_0.created_at,
+        m1_0.updated_at 
+    from
+        messages m1_0 
+    left join
+        users a1_0 
+            on a1_0.id=m1_0.author_id 
+    join
+        user_statuses s1_0 
+            on a1_0.id=s1_0.user_id 
+    left join
+        binary_contents p1_0 
+            on p1_0.id=a1_0.profile_id 
+    where
+        m1_0.channel_id=? 
+        and m1_0.created_at<? 
+    order by
+        m1_0.created_at desc 
+    fetch
+        first ? rows only
+25-04-13 18:04:56.090 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (1:UUID) <- [11111111-1111-1111-1111-111111111111]
+25-04-13 18:04:56.100 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (2:TIMESTAMP_UTC) <- [2025-04-13T08:49:55.939174500Z]
+25-04-13 18:04:56.102 [Test worker] TRACE org.hibernate.orm.jdbc.bind          [ |  | ] - binding parameter (3:INTEGER) <- [6]
+25-04-13 18:04:56.383 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [ |  | ] - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-04-13 18:04:56.839 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists binary_contents cascade 
+25-04-13 18:04:56.842 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists channels cascade 
+25-04-13 18:04:56.843 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists message_attachments cascade 
+25-04-13 18:04:56.844 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists messages cascade 
+25-04-13 18:04:56.845 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists read_statuses cascade 
+25-04-13 18:04:56.846 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists user_statuses cascade 
+25-04-13 18:04:56.847 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL                    [ |  | ] - 
+    drop table if exists users cascade 
