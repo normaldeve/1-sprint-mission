@@ -1,4 +1,4 @@
-name: Deploy to AWS ECS
+name: 🚀 Deploy to AWS ECS
 
 on:
   push:
@@ -7,14 +7,12 @@ on:
       - part3-김준우-dev
 
 jobs:
-  deploy:
-    name: Deploy to AWS
+  docker_build_and_push:
+    name: 🐳 Docker 이미지 빌드 및 푸시
     runs-on: ubuntu-latest
 
-    environment: production
-
     steps:
-      - name: Checkout source code
+      - name: Checkout source
         uses: actions/checkout@v3
 
       - name: Configure AWS credentials
@@ -25,23 +23,59 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to ECR
-        env:
-          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_URI }}
         run: |
-          IMAGE_TAG=release-${{ github.sha }}
-          docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REPOSITORY:$IMAGE_TAG
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          aws ecr-public get-login-password \
+            --region us-east-1 \
+            | docker login --username AWS --password-stdin public.ecr.aws
 
-      - name: Deploy to ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      - name: Build & Push Docker image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t ${{ vars.ECR_REPOSITORY_URI }}:$IMAGE_TAG .
+          docker push ${{ vars.ECR_REPOSITORY_URI }}:$IMAGE_TAG
+
+  ecs_deploy:
+    name: 🚀 Amazon ECS 배포
+    runs-on: ubuntu-latest
+    needs: docker_build_and_push
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          task-definition: ${{ vars.ECS_TASK_DEFINITION }}
-          service: ${{ vars.ECS_SERVICE }}
-          cluster: ${{ vars.ECS_CLUSTER }}
-          image: ${{ vars.ECR_REPOSITORY_URI }}:${{ env.IMAGE_TAG }}
-          wait-for-service-stability: true
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Update ECS service
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          echo "🔍 현재 태스크 정의를 불러옵니다..."
+          aws ecs describe-task-definition \
+            --task-definition ${{ vars.ECS_TASK_DEFINITION }} \
+            --query taskDefinition > task-definition.json
+
+          echo "🛠 새 이미지로 태스크 정의를 수정합니다..."
+          cat task-definition.json \
+            | jq --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:$IMAGE_TAG" \
+                '.containerDefinitions[0].image = $IMAGE |
+                 del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' \
+            > new-task-def.json
+
+          echo "📦 새로운 태스크 정의를 등록합니다..."
+          TASK_DEF_ARN=$(aws ecs register-task-definition \
+            --cli-input-json file://new-task-def.json \
+            --query 'taskDefinition.taskDefinitionArn' \
+            --output text)
+
+          echo "🔄 서비스에 새로운 태스크 정의를 반영합니다..."
+          aws ecs update-service \
+            --cluster ${{ vars.ECS_CLUSTER }} \
+            --service ${{ vars.ECS_SERVICE }} \
+            --task-definition $TASK_DEF_ARN \
+            --desired-count 1
