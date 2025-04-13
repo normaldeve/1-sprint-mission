@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @EnableJpaAuditing
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 class ChannelRepositoryTest {
 
   @Autowired

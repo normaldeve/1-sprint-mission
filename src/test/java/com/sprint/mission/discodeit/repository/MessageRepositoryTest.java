@@ -26,7 +26,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql(scripts = "/sql/message-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @DataJpaTest
 @EnableJpaAuditing
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 class MessageRepositoryTest {
 
   @Autowired
