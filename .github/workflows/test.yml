@@ -31,3 +31,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: normaldeve/1-sprint-mission
           files: build/reports/jacoco/test/jacocoTestReport.xml
+
+env:
+  RUN_S3_TEST: "false"

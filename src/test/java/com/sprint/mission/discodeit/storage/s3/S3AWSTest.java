@@ -26,8 +26,10 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 @Slf4j
+@EnabledIfEnvironmentVariable(named = "RUN_S3_TEST", matches = "true")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class S3AWSTest {
 

@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.dto.data.BinaryContentDto;
 import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.http.ResponseEntity;
 
 import java.io.FileInputStream;
@@ -15,6 +16,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
+@EnabledIfEnvironmentVariable(named = "RUN_S3_TEST", matches = "true")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class S3BinaryContentStorageTest {
 
