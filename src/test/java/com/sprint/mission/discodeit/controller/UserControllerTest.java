@@ -2,6 +2,7 @@ package com.sprint.mission.discodeit.controller;
 
 import com.sprint.mission.discodeit.dto.data.UserDto;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.service.UserStatusService;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +33,9 @@ public class UserControllerTest {
 
   @MockitoBean
   private UserService userService;
+
+  @MockitoBean
+  private UserStatusService userStatusService;
 
   @Test
   @DisplayName("사용자 생성 요청 성공 - 프로필 포함 + JSON 응답 검증")
