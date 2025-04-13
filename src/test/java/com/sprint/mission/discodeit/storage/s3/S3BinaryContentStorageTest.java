@@ -26,10 +26,10 @@ class S3BinaryContentStorageTest {
 
   @BeforeAll
   static void setup() {
-    String accessKey = System.getenv("AWS_S3_ACCESS_KEY");
-    String secretKey = System.getenv("AWS_S3_SECRET_KEY");
-    String region = System.getenv("AWS_S3_REGION");
-    bucket = System.getenv("AWS_S3_BUCKET");
+    String accessKey = System.getenv("AWS_ACCESS_KEY");
+    String secretKey = System.getenv("AWS_SECRET_KEY");
+    String region = System.getenv("AWS_REGION");
+    bucket = System.getenv("AWS_BUCKET");
     long expiration = Long.parseLong(System.getenv().getOrDefault("AWS_S3_PRESIGNED_URL_EXPIRATION", "600"));
 
     storage = new S3BinaryContentStorage(accessKey, secretKey, region, bucket, expiration);

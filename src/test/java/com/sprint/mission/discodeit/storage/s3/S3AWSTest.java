@@ -36,10 +36,10 @@ public class S3AWSTest {
 
   @BeforeAll
   static void setUp() {
-    String accessKey = System.getenv("AWS_S3_ACCESS_KEY");
-    String secretKey = System.getenv("AWS_S3_SECRET_KEY");
-    String region = System.getenv("AWS_S3_REGION");
-    bucketName = System.getenv("AWS_S3_BUCKET");
+    String accessKey = System.getenv("AWS_ACCESS_KEY");
+    String secretKey = System.getenv("AWS_SECRET_KEY");
+    String region = System.getenv("AWS_REGION");
+    bucketName = System.getenv("AWS_BUCKET");
 
     BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
     s3Client = AmazonS3ClientBuilder.standard()
