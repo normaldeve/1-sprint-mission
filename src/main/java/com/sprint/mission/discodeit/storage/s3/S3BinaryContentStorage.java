@@ -23,6 +23,7 @@ import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 @ConditionalOnProperty(name = "discodeit.storage.type", havingValue = "s3")
 @Component
@@ -101,7 +102,9 @@ public class S3BinaryContentStorage implements BinaryContentStorage {
         .getObjectRequest(getObjectRequest)
         .build();
 
-    return presignRequest.toString();
+    PresignedGetObjectRequest presignedGetObjectRequest = presigner.presignGetObject(presignRequest);
+
+    return presignedGetObjectRequest.url().toString();
   }
 
   private S3Client getS3Client() {

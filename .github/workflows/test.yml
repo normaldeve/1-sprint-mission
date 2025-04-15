@@ -2,6 +2,7 @@ name: 테스트 실행 및 커버리지 업로드
 
 on:
   pull_request:
+    types: [opened, reopened, synchronize]
     branches:
       - main
 
