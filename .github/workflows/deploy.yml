@@ -141,5 +141,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: master
           branch: release/${{ github.run_id }}
-          title: "Release: Merge release/${{ github.run_id }}
+          title: "Release: Merge release/${{ github.run_id }} → master"
           body: "자동 생성된 릴리즈 PR입니다. 변경 사항을 확인해주세요."
