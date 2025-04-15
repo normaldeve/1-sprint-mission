@@ -121,8 +121,10 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout
+      - name: dev 브랜치 최신 상태 Checkout
         uses: actions/checkout@v4
+        with:
+          ref: dev
 
       - name: Git config 설정
         run: |
