@@ -37,17 +37,17 @@ jobs:
               sudo chmod +x /usr/local/bin/docker-compose
             fi
 
-            # 프로젝트 준비
+              # 프로젝트 clone 또는 업데이트
             cd /home/ec2-user
             if [ ! -d "1-sprint-mission" ]; then
-              git clone https://github.com/normaldeve/1-sprint-mission.git
+            git clone https://github.com/normaldeve/1-sprint-mission.git
             fi
-
+          
             cd 1-sprint-mission
             git fetch origin
             git checkout develop
             git pull origin develop
-
-            # docker compose 배포
-            docker compose --env-file discodeit.env down || true
-            docker compose --env-file discodeit.env up -d --build
+          
+            # Compose V1 스타일 명령어로 수정
+            docker-compose --env-file discodeit.env down || true
+            docker-compose --env-file discodeit.env up -d --build
