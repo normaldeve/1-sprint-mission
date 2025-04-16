@@ -7,7 +7,7 @@ on:
       - release
 
 jobs:
-  테스트_실행:
+  test_job:
     name: ✅ 테스트 실행
     if: github.event.action == 'opened' || github.event.action == 'synchronize'
     runs-on: ubuntu-latest
@@ -25,14 +25,14 @@ jobs:
       - name: 테스트 실행
         run: ./gradlew test
 
-  이미지_빌드_및_푸시:
+  build_and_push_job:
     name: 도커 이미지 빌드 및 ECR 푸시
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    needs: 테스트_실행
+    needs: test_job
 
     steps:
-      - name:  코드 체크아웃
+      - name: 코드 체크아웃
         uses: actions/checkout@v4
 
       - name: AWS 자격 증명 설정
@@ -42,22 +42,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name:  ECR 로그인
+      - name: ECR 로그인
         run: |
           aws ecr-public get-login-password --region us-east-1 |
           docker login --username AWS --password-stdin public.ecr.aws
 
       - name: 도커 이미지 빌드 및 푸시
         run: |
-          IMAGE_TAG=${{ github.sha }}
+          IMAGE_TAG=local-latest
           docker build -t ${{ vars.ECR_REPOSITORY_URI }}:$IMAGE_TAG .
           docker push ${{ vars.ECR_REPOSITORY_URI }}:$IMAGE_TAG
 
-  ECS_배포:
+  ecs_deploy_job:
     name: ECS 서비스 배포
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    needs: 이미지_빌드_및_푸시
+    needs: build_and_push_job
 
     steps:
       - name: 코드 체크아웃
@@ -72,7 +72,7 @@ jobs:
 
       - name: 🛠 ECS 태스크 정의 업데이트 및 서비스 재시작
         run: |
-          echo " ECS에 배포를 시작합니다..."
+          echo "ECS에 배포를 시작합니다..."
           IMAGE_TAG=${{ github.sha }}
 
           aws ecs describe-task-definition \
