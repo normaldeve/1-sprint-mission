@@ -80,65 +80,26 @@ jobs:
           docker build -t ${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }} .
           docker push ${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }}
 
-  deploy:
-    if: needs.set-environment.outputs.environment != 'dev'
-    name: ECS 배포 (${{ needs.set-environment.outputs.environment }})
-    runs-on: ubuntu-latest
-    needs:
-      - set-environment
-      - image-build
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: AWS 확장 자격 설정
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
-
-      - name: ECS 배포
-        run: |
-          echo "🚀 배포 환경: ${{ needs.set-environment.outputs.environment }}"
-          aws ecs describe-task-definition --task-definition ${{ vars.ECS_TASK_DEFINITION }} \
-            --query taskDefinition > task-definition.json
-
-          cat task-definition.json | jq --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }}" \
-            '.containerDefinitions[0].image = $IMAGE |
-             del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' \
-            > new-task-def.json
-
-          TASK_DEF_ARN=$(aws ecs register-task-definition \
-            --cli-input-json file://new-task-def.json \
-            --query 'taskDefinition.taskDefinitionArn' \
-            --output text)
-
-          aws ecs update-service \
-            --cluster ${{ vars.ECS_CLUSTER }} \
-            --service ${{ vars.ECS_SERVICE }} \
-            --task-definition $TASK_DEF_ARN \
-            --desired-count 1
-
   create-pr:
-    if: needs.set-environment.outputs.environment == 'dev'
+    if: needs.set-environment.outputs.environment == 'prod' && github.ref_type == 'tag'
     name: Release 브랜치 PR 생성
     runs-on: ubuntu-latest
-    needs: [set-environment, deploy]
+    needs: [set-environment, image-build]
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - name: dev 브랜치 최신 상태 Checkout
+      - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: master
 
       - name: Git config 설정
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: dev 브랜치 기반 release 브랜치 생성 및 푸시
+      - name: release 브랜치 생성 및 푸시
         run: |
           git checkout -b release/${{ github.run_id }}
           git push origin release/${{ github.run_id }}
@@ -150,20 +111,20 @@ jobs:
           base: master
           branch: release/${{ github.run_id }}
           title: "Release: Merge release/${{ github.run_id }} → master"
-          body: "자동 생성된 리리즈 PR입니다. 변경 사항을 확인해주세요."
+          body: "🔄 태그 푸시(vX.X.X)에 따라 자동 생성된 릴리즈 PR입니다."
 
   approve:
-    if: needs.set-environment.outputs.environment == 'prod'
+    if: github.event.pull_request.merged == true && github.base_ref == 'master'
     name: 운영 승인
     runs-on: ubuntu-latest
     environment: approve-process
-    needs: [set-environment, deploy]
+    needs: [image-build]
     steps:
       - name: 승인 대기
-        run: echo "✅ 승인되었습니다. 운영 배포를 계속 진행합니다."
+        run: echo "✅ 운영 배포를 승인합니다."
 
   prod-deploy:
-    if: needs.set-environment.outputs.environment == 'prod'
+    if: github.event.pull_request.merged == true && github.base_ref == 'master'
     name: 운영 배포 실행
     runs-on: ubuntu-latest
     needs: [approve]
@@ -183,7 +144,7 @@ jobs:
           aws ecs describe-task-definition --task-definition ${{ vars.ECS_TASK_DEFINITION }} \
             --query taskDefinition > task-definition.json
 
-          cat task-definition.json | jq --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }}" \
+          cat task-definition.json | jq --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:${{ github.sha }}" \
             '.containerDefinitions[0].image = $IMAGE |
              del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' \
             > new-task-def.json
