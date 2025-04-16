@@ -1,4 +1,4 @@
-name: Deploy to EC2 on Develop Merge
+name: Deploy to EC2 on Develop PR Merge
 
 on:
   pull_request:
@@ -8,22 +8,46 @@ on:
 
 jobs:
   deploy:
+    name: Deploy to EC2 (on develop PR merge)
     if: github.event.pull_request.merged == true
-    name: Deploy to EC2 (develop)
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source (optional)
-        uses: actions/checkout@v4
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ${{ secrets.EC2_HOST }}         # 🔧 EC2 퍼블릭 IP
+          username: ${{ secrets.EC2_USER }}     # 🔧 ec2-user (Amazon Linux) 또는 ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}       # 🔧 .pem 키 파일 내용
+
           script: |
-            cd /home/ec2-user/your-project-directory
+            # 필수 패키지 설치
+            if ! command -v git &> /dev/null; then
+              sudo yum install -y git
+            fi
+
+            if ! command -v docker &> /dev/null; then
+              sudo yum install -y docker
+              sudo service docker start
+              sudo usermod -aG docker $USER
+            fi
+
+            if ! command -v docker-compose &> /dev/null; then
+              sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
+
+            # 프로젝트 준비
+            cd /home/ec2-user
+            if [ ! -d "1-sprint-mission" ]; then
+              git clone https://github.com/normaldeve/1-sprint-mission.git
+            fi
+
+            cd 1-sprint-mission
+            git fetch origin
+            git checkout develop
             git pull origin develop
-            docker compose down
+
+            # docker compose 배포
+            docker compose --env-file discodeit.env down || true
             docker compose --env-file discodeit.env up -d --build
