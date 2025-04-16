@@ -1,0 +1,200 @@
+name: Full CI/CD Workflow
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches:
+      - dev
+      - master
+
+jobs:
+  test:
+    name: 검사 실행
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' || github.event.action == 'synchronize'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: JDK 설정
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 테스트 실행
+        run: ./gradlew test
+
+  set-environment:
+    if: github.event.pull_request.merged == true || github.ref_type == 'tag'
+    name: 환경 변수 설정
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.set-tag.outputs.image_tag }}
+      environment: ${{ steps.set-env.outputs.environment }}
+    steps:
+      - name: Git SHA 키 설정
+        id: set-tag
+        run: echo "image_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: 브랜치/태그 기반 환경 설정
+        id: set-env
+        run: |
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            echo "environment=prod" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.base_ref }}" == "dev" ]]; then
+            echo "environment=dev" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.base_ref }}" == "master" ]]; then
+            echo "environment=prod" >> "$GITHUB_OUTPUT"
+          else
+            echo "Invalid reference: ${{ github.ref_type }} / ${{ github.base_ref }}"
+            exit 1
+          fi
+
+  image-build:
+    if: needs.set-environment.outputs.environment != 'dev'
+    name: 페이지 빌드 & ECR 푸시 (${{ needs.set-environment.outputs.environment }})
+    runs-on: ubuntu-latest
+    needs:
+      - set-environment
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: AWS 확장 자격 설정
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Amazon ECR 로그인
+        run: |
+          aws ecr-public get-login-password --region us-east-1 |
+          docker login --username AWS --password-stdin public.ecr.aws
+
+      - name: Docker 이미지 빌드 & 푸시
+        run: |
+          echo "🔧 현재 환경: ${{ needs.set-environment.outputs.environment }}"
+          docker build -t ${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }} .
+          docker push ${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }}
+
+  deploy:
+    if: needs.set-environment.outputs.environment != 'dev'
+    name: ECS 배포 (${{ needs.set-environment.outputs.environment }})
+    runs-on: ubuntu-latest
+    needs:
+      - set-environment
+      - image-build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: AWS 확장 자격 설정
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: ECS 배포
+        run: |
+          echo "🚀 배포 환경: ${{ needs.set-environment.outputs.environment }}"
+          aws ecs describe-task-definition --task-definition ${{ vars.ECS_TASK_DEFINITION }} \
+            --query taskDefinition > task-definition.json
+
+          cat task-definition.json | jq --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }}" \
+            '.containerDefinitions[0].image = $IMAGE |
+             del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' \
+            > new-task-def.json
+
+          TASK_DEF_ARN=$(aws ecs register-task-definition \
+            --cli-input-json file://new-task-def.json \
+            --query 'taskDefinition.taskDefinitionArn' \
+            --output text)
+
+          aws ecs update-service \
+            --cluster ${{ vars.ECS_CLUSTER }} \
+            --service ${{ vars.ECS_SERVICE }} \
+            --task-definition $TASK_DEF_ARN \
+            --desired-count 1
+
+  create-pr:
+    if: needs.set-environment.outputs.environment == 'dev'
+    name: Release 브랜치 PR 생성
+    runs-on: ubuntu-latest
+    needs: [set-environment, deploy]
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: dev 브랜치 최신 상태 Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Git config 설정
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: dev 브랜치 기반 release 브랜치 생성 및 푸시
+        run: |
+          git checkout -b release/${{ github.run_id }}
+          git push origin release/${{ github.run_id }}
+
+      - name: Pull Request 생성
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: master
+          branch: release/${{ github.run_id }}
+          title: "Release: Merge release/${{ github.run_id }} → master"
+          body: "자동 생성된 리리즈 PR입니다. 변경 사항을 확인해주세요."
+
+  approve:
+    if: needs.set-environment.outputs.environment == 'prod'
+    name: 운영 승인
+    runs-on: ubuntu-latest
+    environment: approve-process
+    needs: [set-environment, deploy]
+    steps:
+      - name: 승인 대기
+        run: echo "✅ 승인되었습니다. 운영 배포를 계속 진행합니다."
+
+  prod-deploy:
+    if: needs.set-environment.outputs.environment == 'prod'
+    name: 운영 배포 실행
+    runs-on: ubuntu-latest
+    needs: [approve]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: AWS 확장 자격 설정
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: ECS 배포 (운영)
+        run: |
+          echo "🚀 운영 배포를 시작합니다"
+          aws ecs describe-task-definition --task-definition ${{ vars.ECS_TASK_DEFINITION }} \
+            --query taskDefinition > task-definition.json
+
+          cat task-definition.json | jq --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:${{ needs.set-environment.outputs.image_tag }}" \
+            '.containerDefinitions[0].image = $IMAGE |
+             del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' \
+            > new-task-def.json
+
+          TASK_DEF_ARN=$(aws ecs register-task-definition \
+            --cli-input-json file://new-task-def.json \
+            --query 'taskDefinition.taskDefinitionArn' \
+            --output text)
+
+          aws ecs update-service \
+            --cluster ${{ vars.ECS_CLUSTER }} \
+            --service ${{ vars.ECS_SERVICE }} \
+            --task-definition $TASK_DEF_ARN \
+            --desired-count 1
