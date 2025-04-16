@@ -48,4 +48,5 @@ public class UserStatus extends BaseUpdatableEntity {
     if (user.getStatus() != this) {
       user.setStatus(this); // 무한 루프 방지
     }
+  }
 }
