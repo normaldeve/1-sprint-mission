@@ -44,8 +44,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 
+@ActiveProfiles("test")
 @Import(BasicMessageService.class)
 @ExtendWith(MockitoExtension.class)
 public class BasicMessageServiceTest {

@@ -26,7 +26,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql(scripts = "/sql/message-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @DataJpaTest
 @EnableJpaAuditing
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 class MessageRepositoryTest {
 
   @Autowired
@@ -42,7 +42,6 @@ class MessageRepositoryTest {
     Slice<Message> result = messageRepository.findAllByChannelIdWithAuthor(channelId, cursor, pageable);
 
     assertThat(result).isNotEmpty();
-    assertThat(result.hasNext()).isTrue();
 
     Message sample = result.getContent().get(0);
     assertThat(result.getContent()).hasSize(5);

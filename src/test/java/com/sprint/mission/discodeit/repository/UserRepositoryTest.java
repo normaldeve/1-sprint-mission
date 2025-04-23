@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 @EnableJpaAuditing
 public class UserRepositoryTest {
 

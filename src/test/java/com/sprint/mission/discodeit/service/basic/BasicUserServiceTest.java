@@ -28,8 +28,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 
+@ActiveProfiles("test")
 @Import(BasicUserService.class)
 @ExtendWith(MockitoExtension.class)
 public class BasicUserServiceTest {
