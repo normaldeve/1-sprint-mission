@@ -60,4 +60,5 @@ discodeit:
 
 logging:
   level:
+    org.springframework.security: trace
     root: info
