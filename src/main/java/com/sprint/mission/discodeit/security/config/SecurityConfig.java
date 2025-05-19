@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.security.config;
 
 import com.sprint.mission.discodeit.security.filter.CustomUsernamePasswordAuthenticationFilter;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Slf4j
 @Configuration
@@ -22,17 +27,20 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+
+    log.info("✅ SecurityFilterChain 구성 시작");
+
     CustomUsernamePasswordAuthenticationFilter loginFilter = new CustomUsernamePasswordAuthenticationFilter(
         authenticationManager);
 
     loginFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
 
     http
-        .logout(AbstractHttpConfigurer::disable) // logoutfilter는 사용하지 않습니다.
         .csrf(AbstractHttpConfigurer::disable)
+        .logout(AbstractHttpConfigurer::disable) // logoutfilter는 사용하지 않습니다.
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
-                "/api/auth/csrf-token", "/api/users",
+                "/api/auth/**", "/api/users",
                 "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
                 "/actuator/**", "/favicon.ico",
                 "/", "/assets/**", "/index.html"
@@ -40,6 +48,8 @@ public class SecurityConfig {
             .anyRequest().authenticated()
         )
         .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
+
+    log.info("✅ 로그인 필터 등록 완료");
 
     return http.build();
   }

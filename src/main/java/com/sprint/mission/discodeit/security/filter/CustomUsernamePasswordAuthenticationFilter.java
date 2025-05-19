@@ -5,11 +5,13 @@ import com.sprint.mission.discodeit.dto.request.LoginRequest;
 import com.sprint.mission.discodeit.dto.response.ErrorResponse;
 import com.sprint.mission.discodeit.dto.response.LoginResponse;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.security.user.UserPrincipal;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * UsernamePasswordAuthenticationFilter를 확장하여
  * /api/auth/login 엔드포인트에서 JSON 본문으로 전달된 사용자명과 비밀번호를 추출하여 인증을 시도합니다.
  */
+@Slf4j
 public class CustomUsernamePasswordAuthenticationFilter extends
     UsernamePasswordAuthenticationFilter {
 
@@ -49,10 +52,17 @@ public class CustomUsernamePasswordAuthenticationFilter extends
   public Authentication attemptAuthentication(HttpServletRequest request,
       HttpServletResponse response) throws AuthenticationException {
     try {
+      log.info("📥 로그인 요청 수신");
+
       LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(),
           LoginRequest.class);
+
+      log.info("🔐 로그인 요청 - username: {}, password: {}", loginRequest.username(), loginRequest.password());
+
       UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
           loginRequest.username(), loginRequest.password());
+
+      log.info("🔄 인증 매니저에 전달");
 
       return this.getAuthenticationManager().authenticate(authenticationToken);
     } catch (IOException e) {
@@ -67,7 +77,12 @@ public class CustomUsernamePasswordAuthenticationFilter extends
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
       FilterChain chain, Authentication authResult) throws IOException, ServletException {
-    User user = (User) authResult.getPrincipal();
+
+    log.info("✅ 인증 성공: principal = {}", authResult.getPrincipal());
+
+    UserPrincipal userPrincipal = (UserPrincipal) authResult.getPrincipal();
+    User user = userPrincipal.getUser();
+
     LoginResponse responseDto = new LoginResponse(user.getId(), user.getUsername(),
         user.getEmail());
     response.setContentType("application/json");
@@ -81,6 +96,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends
   protected void unsuccessfulAuthentication(HttpServletRequest request,
       HttpServletResponse response,
       AuthenticationException failed) throws IOException {
+    log.warn("❌ 인증 실패 - 사유: {}", failed.getMessage());
     ErrorResponse error = new ErrorResponse("Invalid username or password");
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     response.setContentType("application/json");
