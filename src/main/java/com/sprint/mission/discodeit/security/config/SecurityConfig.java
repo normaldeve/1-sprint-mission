@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.security.config;
 
+import com.sprint.mission.discodeit.security.filter.CustomLogoutFilter;
 import com.sprint.mission.discodeit.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,8 @@ public class SecurityConfig {
 
     loginFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
 
+    CustomLogoutFilter logoutFilter = new CustomLogoutFilter();
+
     http
         .csrf(AbstractHttpConfigurer::disable)
         .logout(AbstractHttpConfigurer::disable) // logoutfilter는 사용하지 않습니다.
@@ -47,7 +50,8 @@ public class SecurityConfig {
             ).permitAll()
             .anyRequest().authenticated()
         )
-        .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterAt(logoutFilter, UsernamePasswordAuthenticationFilter.class);
 
     log.info("✅ 로그인 필터 등록 완료");
 
