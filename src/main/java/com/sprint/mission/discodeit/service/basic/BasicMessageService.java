@@ -18,6 +18,7 @@ import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import com.sprint.mission.discodeit.security.role.PermissionValidator;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import java.time.Instant;
@@ -27,6 +28,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,7 @@ public class BasicMessageService implements MessageService {
   private final BinaryContentStorage binaryContentStorage;
   private final BinaryContentRepository binaryContentRepository;
   private final PageResponseMapper pageResponseMapper;
+  private final PermissionValidator permissionValidator;
 
   @Transactional
   @Override
@@ -112,10 +115,12 @@ public class BasicMessageService implements MessageService {
 
   @Transactional
   @Override
-  public MessageDto update(UUID messageId, MessageUpdateRequest request) {
+  public MessageDto update(UUID messageId, MessageUpdateRequest request, Authentication auth) {
     log.debug("메시지 수정 시작: id={}, request={}", messageId, request);
     Message message = messageRepository.findById(messageId)
         .orElseThrow(() -> MessageNotFoundException.withId(messageId));
+
+    permissionValidator.validateCanModifyMessage(messageId, auth);
 
     message.update(request.newContent());
     log.info("메시지 수정 완료: id={}, channelId={}", messageId, message.getChannel().getId());
@@ -124,11 +129,15 @@ public class BasicMessageService implements MessageService {
 
   @Transactional
   @Override
-  public void delete(UUID messageId) {
+  public void delete(UUID messageId, Authentication auth) {
     log.debug("메시지 삭제 시작: id={}", messageId);
-    if (!messageRepository.existsById(messageId)) {
-      throw MessageNotFoundException.withId(messageId);
-    }
+
+    Message message = messageRepository.findById(messageId)
+        .orElseThrow(() -> MessageNotFoundException.withId(messageId));
+
+    // 작성자 혹은 관리자만 삭제 가능
+    permissionValidator.validateCanDeleteMessage(message, auth);
+
     messageRepository.deleteById(messageId);
     log.info("메시지 삭제 완료: id={}", messageId);
   }

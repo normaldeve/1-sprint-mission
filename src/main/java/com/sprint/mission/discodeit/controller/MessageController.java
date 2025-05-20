@@ -21,6 +21,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -75,9 +76,11 @@ public class MessageController implements MessageApi {
   @PatchMapping(path = "{messageId}")
   public ResponseEntity<MessageDto> update(
       @PathVariable("messageId") UUID messageId,
-      @RequestBody @Valid MessageUpdateRequest request) {
+      @RequestBody @Valid MessageUpdateRequest request,
+      Authentication auth
+  ) {
     log.info("메시지 수정 요청: id={}, request={}", messageId, request);
-    MessageDto updatedMessage = messageService.update(messageId, request);
+    MessageDto updatedMessage = messageService.update(messageId, request, auth);
     log.debug("메시지 수정 응답: {}", updatedMessage);
     return ResponseEntity
         .status(HttpStatus.OK)
@@ -85,9 +88,9 @@ public class MessageController implements MessageApi {
   }
 
   @DeleteMapping(path = "{messageId}")
-  public ResponseEntity<Void> delete(@PathVariable("messageId") UUID messageId) {
+  public ResponseEntity<Void> delete(@PathVariable("messageId") UUID messageId, Authentication auth ) {
     log.info("메시지 삭제 요청: id={}", messageId);
-    messageService.delete(messageId);
+    messageService.delete(messageId, auth);
     log.debug("메시지 삭제 완료");
     return ResponseEntity
         .status(HttpStatus.NO_CONTENT)

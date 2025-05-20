@@ -12,6 +12,7 @@ import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
 import com.sprint.mission.discodeit.mapper.UserMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import com.sprint.mission.discodeit.security.role.PermissionValidator;
 import com.sprint.mission.discodeit.security.session.SessionRegistry;
 import com.sprint.mission.discodeit.security.role.Role;
 import com.sprint.mission.discodeit.service.UserService;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,7 @@ public class BasicUserService implements UserService {
   private final PasswordEncoder passwordEncoder;
   private final SessionRegistry sessionRegistry;
   private final PersistentTokenRepository tokenRepository;
+  private final PermissionValidator permissionValidator;
 
   @Transactional
   @Override
@@ -106,8 +109,11 @@ public class BasicUserService implements UserService {
   @Transactional
   @Override
   public UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
-      Optional<BinaryContentCreateRequest> optionalProfileCreateRequest) {
+      Optional<BinaryContentCreateRequest> optionalProfileCreateRequest, Authentication auth) {
+    log.info("사용자 자격 검증");
+    permissionValidator.validateCanModifyUser(userId, auth);
     log.debug("사용자 수정 시작: id={}, request={}", userId, userUpdateRequest);
+
 
     User user = userRepository.findById(userId)
         .orElseThrow(() -> {
@@ -166,7 +172,11 @@ public class BasicUserService implements UserService {
 
   @Transactional
   @Override
-  public void delete(UUID userId) {
+  public void delete(UUID userId, Authentication auth) {
+    log.info("사용자 삭제 시 자격 검증");
+
+    permissionValidator.validateCanModifyUser(userId, auth);
+
     log.debug("사용자 삭제 시작: id={}", userId);
 
     if (!userRepository.existsById(userId)) {

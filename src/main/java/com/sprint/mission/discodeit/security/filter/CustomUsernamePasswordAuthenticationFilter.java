@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 /**
@@ -35,6 +36,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends
   private ObjectMapper objectMapper = new ObjectMapper();
   private SessionRegistry sessionRegistry;
   private PersistentTokenBasedRememberMeServices rememberMeServices;
+  private PersistentTokenRepository tokenRepository;
 
   /**
    * 생성자에서 인증 매니저를 설정하고 처리할 로그인 URL를 지정합니다.
@@ -42,11 +44,13 @@ public class CustomUsernamePasswordAuthenticationFilter extends
    * @param authenticationManager
    */
   public CustomUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
-      SessionRegistry sessionRegistry, PersistentTokenBasedRememberMeServices rememberMeServices) {
+      SessionRegistry sessionRegistry, PersistentTokenBasedRememberMeServices rememberMeServices,
+      PersistentTokenRepository tokenRepository) {
 
     super.setAuthenticationManager(authenticationManager);
     this.sessionRegistry = sessionRegistry;
     this.rememberMeServices = rememberMeServices;
+    this.tokenRepository = tokenRepository;
     setFilterProcessesUrl("/api/auth/login");
   }
 
@@ -98,11 +102,18 @@ public class CustomUsernamePasswordAuthenticationFilter extends
 
     UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
     UUID userId = userDetails.getUser().getId();
+    String username = userDetails.getUsername();
     HttpSession session = request.getSession(true);
 
     log.info("🔑 로그인 성공 - 세션 ID: {}", session.getId());
 
     //동일 사용자로 등록된 기존에 세션을 삭제합니다.
+    sessionRegistry.invalidateSession(userId);
+
+    // 기존 remember-me 토큰을 삭제합니다. (중복 로그인 시 재인증 방지)
+    tokenRepository.removeUserTokens(username);
+
+    // 새 세션을 등록합니다.
     sessionRegistry.registerSession(userId, session);
 
     // SecurityContext 저장

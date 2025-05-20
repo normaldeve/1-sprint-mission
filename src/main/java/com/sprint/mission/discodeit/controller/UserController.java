@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -61,12 +63,13 @@ public class UserController implements UserApi {
   public ResponseEntity<UserDto> update(
       @PathVariable("userId") UUID userId,
       @RequestPart("userUpdateRequest") @Valid UserUpdateRequest userUpdateRequest,
-      @RequestPart(value = "profile", required = false) MultipartFile profile
+      @RequestPart(value = "profile", required = false) MultipartFile profile,
+      Authentication auth
   ) {
     log.info("사용자 수정 요청: id={}, request={}", userId, userUpdateRequest);
     Optional<BinaryContentCreateRequest> profileRequest = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileRequest);
-    UserDto updatedUser = userService.update(userId, userUpdateRequest, profileRequest);
+    UserDto updatedUser = userService.update(userId, userUpdateRequest, profileRequest, auth);
     log.debug("사용자 수정 응답: {}", updatedUser);
     return ResponseEntity
         .status(HttpStatus.OK)
@@ -75,8 +78,8 @@ public class UserController implements UserApi {
 
   @DeleteMapping(path = "{userId}")
   @Override
-  public ResponseEntity<Void> delete(@PathVariable("userId") UUID userId) {
-    userService.delete(userId);
+  public ResponseEntity<Void> delete(@PathVariable("userId") UUID userId, Authentication auth) {
+    userService.delete(userId, auth);
     return ResponseEntity
         .status(HttpStatus.NO_CONTENT)
         .build();

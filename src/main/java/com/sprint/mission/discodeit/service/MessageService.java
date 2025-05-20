@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 
 public interface MessageService {
 
@@ -19,7 +20,7 @@ public interface MessageService {
 
   PageResponse<MessageDto> findAllByChannelId(UUID channelId, Instant createdAt, Pageable pageable);
 
-  MessageDto update(UUID messageId, MessageUpdateRequest request);
+  MessageDto update(UUID messageId, MessageUpdateRequest request, Authentication auth);
 
-  void delete(UUID messageId);
+  void delete(UUID messageId, Authentication auth);
 }

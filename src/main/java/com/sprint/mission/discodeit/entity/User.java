@@ -9,8 +9,11 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +37,11 @@ public class User extends BaseUpdatableEntity {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private Role role;
+  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Message> messages;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ReadStatus> readStatuses;
+
 
   @Builder
   public User(String username, String email, String password, BinaryContent profile, Role role) {
