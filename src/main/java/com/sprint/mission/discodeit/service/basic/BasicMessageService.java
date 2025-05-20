@@ -120,7 +120,7 @@ public class BasicMessageService implements MessageService {
     Message message = messageRepository.findById(messageId)
         .orElseThrow(() -> MessageNotFoundException.withId(messageId));
 
-    permissionValidator.validateCanModifyMessage(messageId, auth);
+    permissionValidator.validateCanModifyMessage(message, auth);
 
     message.update(request.newContent());
     log.info("메시지 수정 완료: id={}, channelId={}", messageId, message.getChannel().getId());

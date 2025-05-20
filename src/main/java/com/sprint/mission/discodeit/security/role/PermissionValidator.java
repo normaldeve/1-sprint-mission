@@ -1,7 +1,6 @@
 package com.sprint.mission.discodeit.security.role;
 
 import com.sprint.mission.discodeit.entity.Message;
-import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.security.user.UserDetailsImpl;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class PermissionValidator {
-
-  private final MessageRepository messageRepository;
 
   public void validateCanModifyUser(UUID targetUserId, Authentication auth) {
     UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
@@ -42,9 +39,7 @@ public class PermissionValidator {
     }
   }
 
-  public void validateCanModifyMessage(UUID messageId, Authentication auth) {
-    Message message = messageRepository.findById(messageId)
-        .orElseThrow(() -> new IllegalArgumentException("메시지를 찾을 수 없습니다."));
+  public void validateCanModifyMessage(Message message, Authentication auth) {
 
     UUID currentUserId = ((UserDetailsImpl) auth.getPrincipal()).getUser().getId();
 
