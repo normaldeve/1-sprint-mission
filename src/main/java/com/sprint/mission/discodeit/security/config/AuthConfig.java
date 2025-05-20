@@ -30,7 +30,7 @@ public class AuthConfig {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
     provider.setUserDetailsService(userDetailsService);
     provider.setPasswordEncoder(passwordEncoder());
-    provider.setAuthoritiesMapper(new RoleHierarchyAuthoritiesMapper(roleHierarchy));
+//    provider.setAuthoritiesMapper(new RoleHierarchyAuthoritiesMapper(roleHierarchy));
     return provider;
   }
 
@@ -48,7 +48,8 @@ public class AuthConfig {
     return hierarchy;
   }
 
-  // DB에 토큰을 저장합니다
+  // 토큰을 저장할 수 있는 DB를 설정합니다.
+  // 따로 엔티티를 생성하지는 않고 setCreateTableOnStartup을 통해 초기에 DB를 생성하는 방식을 채택
   @Bean
   public PersistentTokenRepository persistentTokenRepository(DataSource dataSource) {
     JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -58,6 +59,7 @@ public class AuthConfig {
   }
 
   // RememberMeServies 정의
+  // 토큰을 브라우저에 저장하는 TokenBasedRememberMeServices보다 보안상 안정성이 높다고 판단
   @Bean
   public PersistentTokenBasedRememberMeServices rememberMeServices(
       UserDetailsService userDetailsService,

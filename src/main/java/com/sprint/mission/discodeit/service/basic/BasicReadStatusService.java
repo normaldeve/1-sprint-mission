@@ -92,7 +92,9 @@ public class BasicReadStatusService implements ReadStatusService {
     ReadStatus readStatus = readStatusRepository.findById(readStatusId)
         .orElseThrow(() -> ReadStatusNotFoundException.withId(readStatusId));
 
-    permissionValidator.validateCanCreateOrModifyReadStatus(readStatusId, auth);
+    UUID userId = readStatus.getUser().getId();
+
+    permissionValidator.validateCanCreateOrModifyReadStatus(userId, auth);
 
     readStatus.update(request.newLastReadAt());
     
