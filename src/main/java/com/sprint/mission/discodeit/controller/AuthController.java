@@ -47,7 +47,7 @@ public class AuthController {
     }
 
     UUID userId = userPrincipal.getUser().getId();
-    UserDto userDto = userService.getCurrentUser(userId);
+    UserDto userDto = userService.find(userId);
 
     log.info("인증된 사용자입니다. userId: {}, userDto: {}", userId, userDto);
 

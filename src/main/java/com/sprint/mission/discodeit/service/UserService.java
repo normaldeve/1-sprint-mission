@@ -19,8 +19,6 @@ public interface UserService {
 
   List<UserDto> findAll();
 
-  UserDto getCurrentUser(UUID userId);
-
   UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest);
 

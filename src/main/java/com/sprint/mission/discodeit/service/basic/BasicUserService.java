@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,7 @@ public class BasicUserService implements UserService {
   private final BinaryContentStorage binaryContentStorage;
   private final PasswordEncoder passwordEncoder;
   private final SessionRegistry sessionRegistry;
+  private final PersistentTokenRepository tokenRepository;
 
   @Transactional
   @Override
@@ -78,6 +80,7 @@ public class BasicUserService implements UserService {
     return userMapper.toDto(user);
   }
 
+  @Transactional(readOnly = true)
   @Override
   public UserDto find(UUID userId) {
     log.debug("사용자 조회 시작: id={}", userId);
@@ -88,6 +91,7 @@ public class BasicUserService implements UserService {
     return userDto;
   }
 
+  @Transactional(readOnly = true)
   @Override
   public List<UserDto> findAll() {
     log.debug("모든 사용자 조회 시작");
@@ -97,14 +101,6 @@ public class BasicUserService implements UserService {
         .toList();
     log.info("모든 사용자 조회 완료: 총 {}명", userDtos.size());
     return userDtos;
-  }
-
-  @Override
-  public UserDto getCurrentUser(UUID userId) {
-    User user = userRepository.findByIdWithDetails(userId)
-        .orElseThrow(() -> new UserNotFoundException().withId(userId));
-
-    return userMapper.toDto(user);
   }
 
   @Transactional
@@ -151,6 +147,7 @@ public class BasicUserService implements UserService {
     return userMapper.toDto(user);
   }
 
+  @Transactional
   @Override
   public UserDto updateUserRole(UserRoleUpdateRequest request) {
     User user = userRepository.findById(request.userId())
@@ -158,8 +155,11 @@ public class BasicUserService implements UserService {
 
     user.updateRole(request.newRole());
 
-    // 강제 로그아웃 처리
+    // 1. 세션 무효화
     sessionRegistry.invalidateSession(user.getId());
+
+    //2. remember-me 토큰 제거
+    tokenRepository.removeUserTokens(user.getUsername());
 
     return userMapper.toDto(user);
   }
