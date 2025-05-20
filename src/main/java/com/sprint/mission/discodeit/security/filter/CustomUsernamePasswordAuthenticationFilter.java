@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sprint.mission.discodeit.dto.request.LoginRequest;
 import com.sprint.mission.discodeit.dto.response.ErrorResponse;
 import com.sprint.mission.discodeit.dto.response.LoginResponse;
-import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.security.user.UserPrincipal;
+import com.sprint.mission.discodeit.security.session.SessionRegistry;
+import com.sprint.mission.discodeit.security.user.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,7 +16,10 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 /**
  * JSON 기반 로그인 요청을 처리하는 커스텀 인증 필터
@@ -29,14 +31,18 @@ public class CustomUsernamePasswordAuthenticationFilter extends
     UsernamePasswordAuthenticationFilter {
 
   private ObjectMapper objectMapper = new ObjectMapper();
+  private SessionRegistry sessionRegistry;
 
   /**
    * 생성자에서 인증 매니저를 설정하고 처리할 로그인 URL를 지정합니다.
    *
    * @param authenticationManager
    */
-  public CustomUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
+  public CustomUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
+      SessionRegistry sessionRegistry) {
+
     super.setAuthenticationManager(authenticationManager);
+    this.sessionRegistry = sessionRegistry;
     setFilterProcessesUrl("/api/auth/login");
   }
 
@@ -76,15 +82,21 @@ public class CustomUsernamePasswordAuthenticationFilter extends
    */
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-      FilterChain chain, Authentication authResult) throws IOException, ServletException {
-
+      FilterChain chain, Authentication authResult) throws IOException {
     log.info("✅ 인증 성공: principal = {}", authResult.getPrincipal());
+    log.info("✅ 로그인 사용자 권한 목록: {}", authResult.getAuthorities());
 
-    UserPrincipal userPrincipal = (UserPrincipal) authResult.getPrincipal();
-    User user = userPrincipal.getUser();
+    // SecurityContext 저장
+    SecurityContext context = SecurityContextHolder.createEmptyContext();
+    context.setAuthentication(authResult);
+    SecurityContextHolder.setContext(context);
+    request.getSession(true).setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 
-    LoginResponse responseDto = new LoginResponse(user.getId(), user.getUsername(),
-        user.getEmail());
+    // 로그인 응답
+    UserDetailsImpl userPrincipal = (UserDetailsImpl) authResult.getPrincipal();
+    LoginResponse responseDto = new LoginResponse(userPrincipal.getUser().getId(),
+        userPrincipal.getUsername(),
+        userPrincipal.getUser().getEmail());
     response.setContentType("application/json");
     response.getWriter().write(objectMapper.writeValueAsString(responseDto));
   }
