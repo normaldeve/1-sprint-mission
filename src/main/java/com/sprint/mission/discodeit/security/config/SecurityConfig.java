@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 @Configuration
@@ -24,7 +26,9 @@ public class SecurityConfig {
 
   private final RoleHierarchy roleHierarchy;
   private final SessionRegistry sessionRegistry;
+  private final PersistentTokenBasedRememberMeServices rememberMeServices;
   private final AuthenticationManager authenticationManager;
+  private final PersistentTokenRepository tokenRepository;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,10 +36,10 @@ public class SecurityConfig {
     log.info("✅ SecurityFilterChain 구성 시작");
 
     CustomUsernamePasswordAuthenticationFilter loginFilter =
-        new CustomUsernamePasswordAuthenticationFilter(authenticationManager, sessionRegistry);
+        new CustomUsernamePasswordAuthenticationFilter(authenticationManager, sessionRegistry, rememberMeServices);
     loginFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
 
-    CustomLogoutFilter logoutFilter = new CustomLogoutFilter();
+    CustomLogoutFilter logoutFilter = new CustomLogoutFilter(tokenRepository);
 
     DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
     expressionHandler.setRoleHierarchy(roleHierarchy);
@@ -45,11 +49,12 @@ public class SecurityConfig {
         .logout(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
-                "/api/auth/**", "/api/users",
+                "/api/auth/**",
                 "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
                 "/actuator/**", "/favicon.ico",
                 "/", "/assets/**", "/index.html"
             ).permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/channels/public").hasRole("CHANNEL_MANAGER")
             .requestMatchers(HttpMethod.PATCH, "/api/channels/**").hasRole("CHANNEL_MANAGER")
             .requestMatchers(HttpMethod.DELETE, "/api/channels/**").hasRole("CHANNEL_MANAGER")
@@ -57,7 +62,11 @@ public class SecurityConfig {
             .anyRequest().hasRole("USER")
         )
         .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
-        .addFilterAt(logoutFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterAt(logoutFilter, UsernamePasswordAuthenticationFilter.class)
+        .rememberMe(remember -> remember
+            .rememberMeServices(rememberMeServices)
+            .key("remember-me-key")
+        );
 
     return http.build();
   }

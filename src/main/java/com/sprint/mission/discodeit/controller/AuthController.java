@@ -8,6 +8,7 @@ import com.sprint.mission.discodeit.mapper.UserMapper;
 import com.sprint.mission.discodeit.security.user.UserDetailsImpl;
 import com.sprint.mission.discodeit.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +45,8 @@ public class AuthController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    User user = userPrincipal.getUser();
-    UserDto userDto = userMapper.toDto(user);
+    UUID userId = userPrincipal.getUser().getId();
+    UserDto userDto = userService.getCurrentUser(userId);
 
     return ResponseEntity.ok(userDto);
   }

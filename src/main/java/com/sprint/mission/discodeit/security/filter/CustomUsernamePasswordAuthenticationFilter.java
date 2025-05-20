@@ -19,12 +19,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 /**
- * JSON 기반 로그인 요청을 처리하는 커스텀 인증 필터
- * UsernamePasswordAuthenticationFilter를 확장하여
- * /api/auth/login 엔드포인트에서 JSON 본문으로 전달된 사용자명과 비밀번호를 추출하여 인증을 시도합니다.
+ * JSON 기반 로그인 요청을 처리하는 커스텀 인증 필터 UsernamePasswordAuthenticationFilter를 확장하여 /api/auth/login 엔드포인트에서
+ * JSON 본문으로 전달된 사용자명과 비밀번호를 추출하여 인증을 시도합니다.
  */
 @Slf4j
 public class CustomUsernamePasswordAuthenticationFilter extends
@@ -32,6 +32,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends
 
   private ObjectMapper objectMapper = new ObjectMapper();
   private SessionRegistry sessionRegistry;
+  private PersistentTokenBasedRememberMeServices rememberMeServices;
 
   /**
    * 생성자에서 인증 매니저를 설정하고 처리할 로그인 URL를 지정합니다.
@@ -39,10 +40,11 @@ public class CustomUsernamePasswordAuthenticationFilter extends
    * @param authenticationManager
    */
   public CustomUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
-      SessionRegistry sessionRegistry) {
+      SessionRegistry sessionRegistry, PersistentTokenBasedRememberMeServices rememberMeServices) {
 
     super.setAuthenticationManager(authenticationManager);
     this.sessionRegistry = sessionRegistry;
+    this.rememberMeServices = rememberMeServices;
     setFilterProcessesUrl("/api/auth/login");
   }
 
@@ -63,7 +65,12 @@ public class CustomUsernamePasswordAuthenticationFilter extends
       LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(),
           LoginRequest.class);
 
-      log.info("🔐 로그인 요청 - username: {}, password: {}", loginRequest.username(), loginRequest.password());
+      if (Boolean.TRUE.equals(loginRequest.rememberMe())) {
+        request.setAttribute("remember-me", true);
+      }
+
+      log.info("🔐 로그인 요청 - username: {}, password: {}", loginRequest.username(),
+          loginRequest.password());
 
       UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
           loginRequest.username(), loginRequest.password());
@@ -75,7 +82,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends
       throw new AuthenticationServiceException("잘못된 로그인 요청입니다. 이름과 비밀번호를 확인해주세요", e);
     }
   }
-
 
   /**
    * 인증 성공 시 사용자 정보를 JSON 형식으로 응답. SecurityContext 저장은 SecurityContextRepository가 담당.
@@ -90,7 +96,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends
     SecurityContext context = SecurityContextHolder.createEmptyContext();
     context.setAuthentication(authResult);
     SecurityContextHolder.setContext(context);
-    request.getSession(true).setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+    request.getSession(true)
+        .setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 
     // 로그인 응답
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authResult.getPrincipal();
@@ -99,6 +106,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends
         userPrincipal.getUser().getEmail());
     response.setContentType("application/json");
     response.getWriter().write(objectMapper.writeValueAsString(responseDto));
+
+    rememberMeServices.loginSuccess(request, response, authResult);
   }
 
   /**

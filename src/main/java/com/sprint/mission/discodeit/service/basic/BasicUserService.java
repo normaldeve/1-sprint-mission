@@ -34,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
 public class BasicUserService implements UserService {
 
   private final UserRepository userRepository;
-  private final UserStatusRepository userStatusRepository;
   private final UserMapper userMapper;
   private final BinaryContentRepository binaryContentRepository;
   private final BinaryContentStorage binaryContentStorage;
@@ -46,7 +45,7 @@ public class BasicUserService implements UserService {
   public UserDto create(UserCreateRequest userCreateRequest,
       Optional<BinaryContentCreateRequest> optionalProfileCreateRequest) {
     log.debug("사용자 생성 시작: {}", userCreateRequest);
-    
+
     String username = userCreateRequest.username();
     String email = userCreateRequest.email();
 
@@ -72,7 +71,8 @@ public class BasicUserService implements UserService {
     String encodePassword = passwordEncoder.encode(userCreateRequest.password());
     log.info("encodePassword: {}", encodePassword);
 
-    User user = new User(username, email, encodePassword, nullableProfile, Role.ROLE_USER); // 암호화된 password로 저장
+    User user = new User(username, email, encodePassword, nullableProfile,
+        Role.ROLE_USER); // 암호화된 password로 저장
     Instant now = Instant.now();
     UserStatus userStatus = new UserStatus(user, now);
 
@@ -102,12 +102,20 @@ public class BasicUserService implements UserService {
     return userDtos;
   }
 
+  @Override
+  public UserDto getCurrentUser(UUID userId) {
+    User user = userRepository.findByIdWithDetails(userId)
+        .orElseThrow(() -> new UserNotFoundException().withId(userId));
+
+    return userMapper.toDto(user);
+  }
+
   @Transactional
   @Override
   public UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> optionalProfileCreateRequest) {
     log.debug("사용자 수정 시작: id={}, request={}", userId, userUpdateRequest);
-    
+
     User user = userRepository.findById(userId)
         .orElseThrow(() -> {
           UserNotFoundException exception = UserNotFoundException.withId(userId);
@@ -116,11 +124,11 @@ public class BasicUserService implements UserService {
 
     String newUsername = userUpdateRequest.newUsername();
     String newEmail = userUpdateRequest.newEmail();
-    
+
     if (userRepository.existsByEmail(newEmail)) {
       throw UserAlreadyExistsException.withEmail(newEmail);
     }
-    
+
     if (userRepository.existsByUsername(newUsername)) {
       throw UserAlreadyExistsException.withUsername(newUsername);
     }
@@ -163,7 +171,7 @@ public class BasicUserService implements UserService {
   @Override
   public void delete(UUID userId) {
     log.debug("사용자 삭제 시작: id={}", userId);
-    
+
     if (!userRepository.existsById(userId)) {
       throw UserNotFoundException.withId(userId);
     }
