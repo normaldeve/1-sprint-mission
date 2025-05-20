@@ -11,20 +11,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class SessionRegistry {
 
-  private final Map<UUID, HttpSession> sessions = new ConcurrentHashMap<>();
+  private final Map<UUID, HttpSession> userSessions = new ConcurrentHashMap<>();
 
   public void registerSession(UUID userId, HttpSession session) {
-    sessions.put(userId, session);
+    invalidateSession(userId);
+
+    userSessions.put(userId, session);
     log.info("✅ 세션 등록됨: userId={}, sessionId={}", userId, session.getId());
   }
 
   public void invalidateSession(UUID userId) {
-    HttpSession session = sessions.remove(userId);
-    if (session != null) {
-      log.info("🚪 세션 무효화: userId={}, sessionId={}", userId, session.getId());
-      session.invalidate();
+    HttpSession oldSession = userSessions.remove(userId);
+    if (oldSession != null) {
+      log.info("🚪 세션 무효화: userId={}, sessionId={}", userId, oldSession.getId());
+      oldSession.invalidate();
     } else {
       log.info("⚠️ 세션 없음: userId={}", userId);
     }
+  }
+
+  public void unbindSession(HttpSession session) {
+    userSessions.values().removeIf(s -> s.getId().equals(session.getId()));
+  }
+
+  public boolean isUserOnline(UUID userId) {
+    HttpSession session = userSessions.get(userId);
+    return session != null && session.getAttribute("SPRING_SECURITY_CONTEXT") != null;
   }
 }

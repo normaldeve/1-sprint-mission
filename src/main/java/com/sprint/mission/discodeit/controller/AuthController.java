@@ -42,11 +42,14 @@ public class AuthController {
   @GetMapping("/me")
   public ResponseEntity<UserDto> me(@AuthenticationPrincipal UserDetailsImpl userPrincipal) {
     if (userPrincipal == null) {
+      log.info("인증된 사용자가 없습니다.");
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     UUID userId = userPrincipal.getUser().getId();
     UserDto userDto = userService.getCurrentUser(userId);
+
+    log.info("인증된 사용자입니다. userId: {}, userDto: {}", userId, userDto);
 
     return ResponseEntity.ok(userDto);
   }

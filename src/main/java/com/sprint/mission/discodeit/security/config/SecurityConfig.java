@@ -12,6 +12,7 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer.SessionFixationConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -36,10 +37,11 @@ public class SecurityConfig {
     log.info("✅ SecurityFilterChain 구성 시작");
 
     CustomUsernamePasswordAuthenticationFilter loginFilter =
-        new CustomUsernamePasswordAuthenticationFilter(authenticationManager, sessionRegistry, rememberMeServices);
+        new CustomUsernamePasswordAuthenticationFilter(authenticationManager, sessionRegistry,
+            rememberMeServices);
     loginFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
 
-    CustomLogoutFilter logoutFilter = new CustomLogoutFilter(tokenRepository);
+    CustomLogoutFilter logoutFilter = new CustomLogoutFilter(tokenRepository, sessionRegistry);
 
     DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
     expressionHandler.setRoleHierarchy(roleHierarchy);
@@ -66,7 +68,9 @@ public class SecurityConfig {
         .rememberMe(remember -> remember
             .rememberMeServices(rememberMeServices)
             .key("remember-me-key")
-        );
+        )
+        .sessionManagement(session -> session
+            .sessionFixation(SessionFixationConfigurer::migrateSession));
 
     return http.build();
   }

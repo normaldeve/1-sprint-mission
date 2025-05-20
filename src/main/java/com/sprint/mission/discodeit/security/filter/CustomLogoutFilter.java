@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.security.filter;
 
+import com.sprint.mission.discodeit.security.session.SessionRegistry;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -28,6 +29,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class CustomLogoutFilter extends OncePerRequestFilter {
 
   private final PersistentTokenRepository tokenRepository;
+  private final SessionRegistry sessionRegistry;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -58,7 +60,9 @@ public class CustomLogoutFilter extends OncePerRequestFilter {
     // 세션 무효화
     HttpSession session = request.getSession(false);
     if (session != null) {
+      sessionRegistry.unbindSession(session);
       session.invalidate();
+      log.info("세션 무효화 완료: sessionId = {}", session.getId());
     }
 
     // SecurityContext 초기화

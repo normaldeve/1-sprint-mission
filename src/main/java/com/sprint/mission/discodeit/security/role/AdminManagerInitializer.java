@@ -1,7 +1,6 @@
 package com.sprint.mission.discodeit.security.role;
 
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import java.time.Instant;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +40,6 @@ public class AdminManagerInitializer implements ApplicationRunner {
         .role(role)
         .build();
 
-    new UserStatus(user, Instant.now());
     userRepository.save(user);
 
     log.info("✅ {} 계정이 초기화되었습니다: {} / {}", role.name(), username, rawPassword);

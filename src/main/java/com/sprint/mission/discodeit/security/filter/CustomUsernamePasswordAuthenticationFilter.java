@@ -9,7 +9,9 @@ import com.sprint.mission.discodeit.security.user.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -65,12 +67,14 @@ public class CustomUsernamePasswordAuthenticationFilter extends
       LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(),
           LoginRequest.class);
 
+      log.info("🔐 로그인 요청 - username: {}, password: {}**",
+          loginRequest.username(),
+          loginRequest.password().substring(0, Math.min(2, loginRequest.password().length())));
+
+
       if (Boolean.TRUE.equals(loginRequest.rememberMe())) {
         request.setAttribute("remember-me", true);
       }
-
-      log.info("🔐 로그인 요청 - username: {}, password: {}", loginRequest.username(),
-          loginRequest.password());
 
       UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
           loginRequest.username(), loginRequest.password());
@@ -91,6 +95,15 @@ public class CustomUsernamePasswordAuthenticationFilter extends
       FilterChain chain, Authentication authResult) throws IOException {
     log.info("✅ 인증 성공: principal = {}", authResult.getPrincipal());
     log.info("✅ 로그인 사용자 권한 목록: {}", authResult.getAuthorities());
+
+    UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
+    UUID userId = userDetails.getUser().getId();
+    HttpSession session = request.getSession(true);
+
+    log.info("🔑 로그인 성공 - 세션 ID: {}", session.getId());
+
+    //동일 사용자로 등록된 기존에 세션을 삭제합니다.
+    sessionRegistry.registerSession(userId, session);
 
     // SecurityContext 저장
     SecurityContext context = SecurityContextHolder.createEmptyContext();
