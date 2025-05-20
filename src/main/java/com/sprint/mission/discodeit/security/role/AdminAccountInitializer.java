@@ -1,7 +1,9 @@
 package com.sprint.mission.discodeit.security.role;
 
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import java.time.Instant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -33,11 +35,13 @@ public class AdminAccountInitializer implements ApplicationRunner {
     User admin = User.builder()
         .username(adminUsername)
         .email(adminEmail)
-        .password(passwordEncoder.encode("Rlawnsdn12!")) // 초기 비밀번호
+        .password(passwordEncoder.encode("admin1234")) // 초기 비밀번호
         .role(Role.ROLE_ADMIN) // 관리자 권한 부여
         .build();
 
+    new UserStatus(admin, Instant.now());
+
     userRepository.save(admin);
-    log.info("✅ ROLE_ADMIN 계정이 초기화되었습니다: admin / Rlawnsdn12!");
+    log.info("✅ ROLE_ADMIN 계정이 초기화되었습니다: admin / admin1234!");
   }
 }

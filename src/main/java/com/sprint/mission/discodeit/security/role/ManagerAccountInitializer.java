@@ -1,7 +1,9 @@
 package com.sprint.mission.discodeit.security.role;
 
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import java.time.Instant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -36,6 +38,8 @@ public class ManagerAccountInitializer implements ApplicationRunner {
         .password(passwordEncoder.encode("Rlawnsdn12!")) // 초기 비밀번호
         .role(Role.ROLE_CHANNEL_MANAGER) // 관리자 권한 부여
         .build();
+
+    new UserStatus(manager, Instant.now());
 
     userRepository.save(manager);
     log.info("✅ ROLE_CHANNEL_MANAGER 계정이 초기화되었습니다: manager / Rlawnsdn12!");
