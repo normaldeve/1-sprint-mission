@@ -17,7 +17,6 @@ import com.sprint.mission.discodeit.security.session.SessionRegistry;
 import com.sprint.mission.discodeit.security.role.Role;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -72,11 +71,9 @@ public class BasicUserService implements UserService {
         })
         .orElse(null);
     String encodePassword = passwordEncoder.encode(userCreateRequest.password());
-    log.info("encodePassword: {}", encodePassword);
 
     User user = new User(username, email, encodePassword, nullableProfile,
         Role.ROLE_USER); // 암호화된 password로 저장
-    Instant now = Instant.now();
 
     userRepository.save(user);
     log.info("사용자 생성 완료: id={}, username={}", user.getId(), username);

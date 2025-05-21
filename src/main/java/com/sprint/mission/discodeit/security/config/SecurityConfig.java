@@ -119,9 +119,12 @@ public class SecurityConfig {
             .requestMatchers(StaticResources.SWAGGER_RESOURCES).permitAll()
             .requestMatchers(StaticResources.PUBLIC_RESOURCES).permitAll()
             .requestMatchers(HttpMethod.POST, ApiEndpoints.USERS).permitAll()
-            .requestMatchers(HttpMethod.POST, ApiEndpoints.CHANNELS_PUBLIC).hasRole(Roles.CHANNEL_MANAGER)
-            .requestMatchers(HttpMethod.PATCH, ApiEndpoints.CHANNELS_ALL).hasRole(Roles.CHANNEL_MANAGER)
-            .requestMatchers(HttpMethod.DELETE, ApiEndpoints.CHANNELS_ALL).hasRole(Roles.CHANNEL_MANAGER)
+            .requestMatchers(HttpMethod.POST, ApiEndpoints.CHANNELS_PUBLIC)
+            .hasRole(Roles.CHANNEL_MANAGER)
+            .requestMatchers(HttpMethod.PATCH, ApiEndpoints.CHANNELS_ALL)
+            .hasRole(Roles.CHANNEL_MANAGER)
+            .requestMatchers(HttpMethod.DELETE, ApiEndpoints.CHANNELS_ALL)
+            .hasRole(Roles.CHANNEL_MANAGER)
             .requestMatchers(HttpMethod.PUT, ApiEndpoints.AUTH_ROLE).hasRole(Roles.ADMIN)
             .anyRequest().hasRole(Roles.USER)
         )
@@ -136,7 +139,10 @@ public class SecurityConfig {
             RememberMeAuthenticationFilter.class)
         .rememberMe(this::configureRememberMe)
         .sessionManagement(session -> session
-            .sessionFixation(SessionFixationConfigurer::migrateSession));
+            .sessionFixation(SessionFixationConfigurer::migrateSession) // 세션 고정 공격 방지
+            .maximumSessions(1)                                         // 동시 로그인 1회 제한
+            .maxSessionsPreventsLogin(true)                             // 중복 로그인 시 새 로그인 차단
+        );
 
     return http.build();
   }

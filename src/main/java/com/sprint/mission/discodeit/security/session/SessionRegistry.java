@@ -7,6 +7,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * registerSession()은 이전 세션을 강제로 invalidate() 하여 기존 세션을 강제 로그아웃 시킴
+ * isUserOnline() 메서드를 통해 현재 로그인 중인지 확인할 수 있음
+ */
 @Slf4j
 @Component
 public class SessionRegistry {

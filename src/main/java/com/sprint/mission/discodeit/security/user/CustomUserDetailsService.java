@@ -1,7 +1,6 @@
-package com.sprint.mission.discodeit.security.service;
+package com.sprint.mission.discodeit.security.user;
 
 import com.sprint.mission.discodeit.repository.UserRepository;
-import com.sprint.mission.discodeit.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

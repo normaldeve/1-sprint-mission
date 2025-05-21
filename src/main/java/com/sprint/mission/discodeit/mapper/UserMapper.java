@@ -4,8 +4,6 @@ import com.sprint.mission.discodeit.dto.data.UserDto;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.security.session.SessionRegistry;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
 @Component

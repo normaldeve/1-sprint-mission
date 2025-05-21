@@ -24,6 +24,12 @@ public class AuthConfig {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * DB에서 사용자 정보를 로드하고 비밀번호를 비교하여 인증을 수행
+   * UserDetailsService와 PasswordEncode를 설정하여 사용자 인증을 처리할 수 있도록 구성
+   * @param userDetailsService
+   * @return
+   */
   @Bean
   public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -32,6 +38,15 @@ public class AuthConfig {
     return provider;
   }
 
+  /**
+   * AuthenticationFilter에서 로그인 인증을 처리할 때 사용하는 핵심 객체
+   * Spring security 인증 관리자를 직접 구성함
+   * DaoAuthenticationProvider를 등록하여 인증 로직에서 사용되도록 설정함
+   * @param http
+   * @param provider
+   * @return
+   * @throws Exception
+   */
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http, DaoAuthenticationProvider provider) throws Exception {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
