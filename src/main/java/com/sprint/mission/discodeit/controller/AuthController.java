@@ -30,9 +30,9 @@ public class AuthController {
   private final UserService userService;
 
   @GetMapping("/csrf-token")
-  public CsrfToken getCsrfToken(HttpServletRequest request) {
-    log.info("csrf-token: {}", request.getHeader("X-CSRF-TOKEN"));
-    return (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+  public CsrfToken getCsrfToken(CsrfToken token) {
+    log.info("csrf-token: {}", token);
+    return token;
   }
 
   /**

@@ -97,6 +97,9 @@ public class SecurityConfig {
 
     log.info("✅ SecurityFilterChain 구성 시작");
 
+    CookieCsrfTokenRepository repo = new CookieCsrfTokenRepository();
+    repo.setHeaderName("X-CSRF-TOKEN");
+
     CustomUsernamePasswordAuthenticationFilter loginFilter =
         new CustomUsernamePasswordAuthenticationFilter(authenticationManager, sessionRegistry,
             rememberMeServices, tokenRepository, objectMapper);
@@ -111,7 +114,7 @@ public class SecurityConfig {
 
     http
         .csrf(csrf -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())) // CustomCsrfToken 사용
+            .csrfTokenRepository(repo)) // CustomCsrfToken 사용
         .logout(AbstractHttpConfigurer::disable) // CustomLogoutFilter 사용
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
