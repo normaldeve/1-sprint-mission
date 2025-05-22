@@ -37,6 +37,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+discodeit.env
 
 ### Discodeit ###
 .discodeit

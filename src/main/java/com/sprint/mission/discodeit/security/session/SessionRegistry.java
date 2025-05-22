@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * registerSession()은 이전 세션을 강제로 invalidate() 하여 기존 세션을 강제 로그아웃 시킴
+ * Servlet API에는 특정 사용자의 세션을 찾는 기능이 없어서 해당 클래스를 구현했습니다.
+ * 동시 접속을 했을 경우 해당 사용자의 기존 세션을 무효화합니다.
  * isUserOnline() 메서드를 통해 현재 로그인 중인지 확인할 수 있음
  */
 @Slf4j
