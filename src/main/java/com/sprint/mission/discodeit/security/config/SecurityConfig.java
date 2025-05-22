@@ -3,11 +3,10 @@ package com.sprint.mission.discodeit.security.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sprint.mission.discodeit.security.filter.RememberMeSessionSynchronizationFilter;
 import com.sprint.mission.discodeit.security.session.SessionRegistry;
-//import com.sprint.mission.discodeit.security.filter.CustomLogoutFilter;
+import com.sprint.mission.discodeit.security.filter.CustomLogoutFilter;
 import com.sprint.mission.discodeit.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import com.sprint.mission.discodeit.security.handler.CustomAccessDeniedHandler;
 import com.sprint.mission.discodeit.security.handler.CustomAuthenticationEntryPoint;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +23,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @Slf4j
@@ -103,22 +103,16 @@ public class SecurityConfig {
 
     loginFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
 
-//    CustomLogoutFilter logoutFilter = new CustomLogoutFilter(tokenRepository, sessionRegistry);
+    CustomLogoutFilter logoutFilter = new CustomLogoutFilter(tokenRepository, sessionRegistry);
 
     // 인증/인가 실패 처리기 생성
     CustomAuthenticationEntryPoint authenticationEntryPoint = new CustomAuthenticationEntryPoint(objectMapper);
     CustomAccessDeniedHandler accessDeniedHandler = new CustomAccessDeniedHandler(objectMapper);
 
     http
-        .csrf(AbstractHttpConfigurer::disable)
-        .logout(logout -> logout
-            .logoutUrl("/api/auth/logout")
-            .logoutSuccessHandler((request, response, authentication) -> {
-              response.setStatus(HttpServletResponse.SC_OK);
-            })
-            .invalidateHttpSession(true)
-            .deleteCookies("remember-me")
-            .clearAuthentication(true))
+        .csrf(csrf -> csrf
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())) // CustomCsrfToken 사용
+        .logout(AbstractHttpConfigurer::disable) // CustomLogoutFilter 사용
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
                 ApiEndpoints.AUTH_ME,
@@ -142,7 +136,7 @@ public class SecurityConfig {
             .accessDeniedHandler(accessDeniedHandler)           // 권한 없는 사용자
         )
         .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
-//        .addFilterAfter(logoutFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(logoutFilter, UsernamePasswordAuthenticationFilter.class)
         .addFilterAt(new RememberMeSessionSynchronizationFilter(sessionRegistry),
             RememberMeAuthenticationFilter.class)
         .rememberMe(this::configureRememberMe)
