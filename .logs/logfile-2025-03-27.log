@@ -1,0 +1,60 @@
+25-03-27 18:39:54.558 [SpringApplicationShutdownHook] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+25-03-27 18:39:54.813 [tomcat-shutdown] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+25-03-27 18:39:54.818 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-03-27 18:39:54.820 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   - HikariPool-1 - Shutdown initiated...
+25-03-27 18:39:54.822 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   - HikariPool-1 - Shutdown completed.
+25-03-27 18:39:57.526 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+25-03-27 18:39:57.591 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication - Starting DiscodeitApplication using Java 17.0.14 with PID 9360 (C:\Users\junwo\IdeaProjects\1-sprint-mission\build\classes\java\main started by junwo in C:\Users\junwo\IdeaProjects\1-sprint-mission)
+25-03-27 18:39:57.592 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication - The following 1 profile is active: "dev"
+25-03-27 18:39:58.561 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+25-03-27 18:39:58.650 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 6 JPA repository interfaces.
+25-03-27 18:39:59.285 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
+25-03-27 18:39:59.313 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+25-03-27 18:39:59.316 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+25-03-27 18:39:59.316 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+25-03-27 18:39:59.392 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+25-03-27 18:39:59.393 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1755 ms
+25-03-27 18:39:59.425 [main] INFO  com.zaxxer.hikari.HikariDataSource   - HikariPool-1 - Starting...
+25-03-27 18:39:59.638 [main] INFO  com.zaxxer.hikari.pool.HikariPool    - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+25-03-27 18:39:59.640 [main] INFO  com.zaxxer.hikari.HikariDataSource   - HikariPool-1 - Start completed.
+25-03-27 18:39:59.650 [main] INFO  org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+25-03-27 18:39:59.834 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+25-03-27 18:39:59.904 [main] INFO  org.hibernate.Version                - HHH000412: Hibernate ORM core version 6.6.2.Final
+25-03-27 18:39:59.945 [main] INFO  org.hibernate.cache.internal.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+25-03-27 18:40:00.250 [main] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+25-03-27 18:40:00.331 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+25-03-27 18:40:01.513 [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+25-03-27 18:40:01.565 [main] DEBUG org.hibernate.SQL                    - 
+    alter table if exists read_statuses 
+       drop constraint if exists UKqttel343c4eq691kcxipoixr7
+25-03-27 18:40:01.566 [main] DEBUG org.hibernate.SQL                    - 
+    alter table if exists read_statuses 
+       add constraint UKqttel343c4eq691kcxipoixr7 unique (user_id, channel_id)
+25-03-27 18:40:01.572 [main] DEBUG org.hibernate.SQL                    - 
+    alter table if exists message_attachments 
+       add constraint FKj7twd218e2gqw9cmlhwvo1rth 
+       foreign key (message_id) 
+       references messages
+25-03-27 18:40:01.582 [main] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+25-03-27 18:40:01.908 [main] INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+25-03-27 18:40:02.596 [main] INFO  org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+25-03-27 18:40:03.051 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+25-03-27 18:40:03.072 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path '/'
+25-03-27 18:40:03.083 [main] INFO  com.sprint.mission.discodeit.DiscodeitApplication - Started DiscodeitApplication in 6.209 seconds (process running for 6.892)
+25-03-27 18:42:35.191 [http-nio-8081-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+25-03-27 18:42:35.192 [http-nio-8081-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+25-03-27 18:42:35.197 [http-nio-8081-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+25-03-27 19:59:22.162 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool    - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=58m52s69ms170µs200ns).
+25-03-27 21:48:38.094 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool    - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h48m11s842ms998µs900ns).
+25-03-27 21:57:24.070 [SpringApplicationShutdownHook] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+25-03-27 21:57:24.377 [tomcat-shutdown] INFO  org.springframework.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+25-03-27 21:57:24.390 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+25-03-27 21:57:24.404 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   - HikariPool-1 - Shutdown initiated...
+25-03-27 21:57:24.410 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource   - HikariPool-1 - Shutdown completed.
