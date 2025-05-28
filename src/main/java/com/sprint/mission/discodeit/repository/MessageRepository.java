@@ -28,7 +28,4 @@ public interface MessageRepository extends JpaRepository<Message, UUID> {
   Optional<Instant> findLastMessageAtByChannelId(@Param("channelId") UUID channelId);
 
   void deleteAllByChannelId(UUID channelId);
-
-  @Query("SELECT m.author.id FROM Message m WHERE m.id = :messageId")
-  Optional<UUID> findAuthorIdById(@Param("messageId") UUID messageId);
 }
