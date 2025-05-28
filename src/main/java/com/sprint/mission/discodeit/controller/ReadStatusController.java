@@ -11,7 +11,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +30,9 @@ public class ReadStatusController implements ReadStatusApi {
   private final ReadStatusService readStatusService;
 
   @PostMapping
-  public ResponseEntity<ReadStatusDto> create(
-      @RequestBody @Valid ReadStatusCreateRequest request,
-      Authentication auth
-  ) {
+  public ResponseEntity<ReadStatusDto> create(@RequestBody @Valid ReadStatusCreateRequest request) {
     log.info("읽음 상태 생성 요청: {}", request);
-    ReadStatusDto createdReadStatus = readStatusService.create(request, auth);
+    ReadStatusDto createdReadStatus = readStatusService.create(request);
     log.debug("읽음 상태 생성 응답: {}", createdReadStatus);
     return ResponseEntity
         .status(HttpStatus.CREATED)
@@ -45,11 +41,9 @@ public class ReadStatusController implements ReadStatusApi {
 
   @PatchMapping(path = "{readStatusId}")
   public ResponseEntity<ReadStatusDto> update(@PathVariable("readStatusId") UUID readStatusId,
-      @RequestBody @Valid ReadStatusUpdateRequest request,
-      Authentication auth
-  ) {
+      @RequestBody @Valid ReadStatusUpdateRequest request) {
     log.info("읽음 상태 수정 요청: id={}, request={}", readStatusId, request);
-    ReadStatusDto updatedReadStatus = readStatusService.update(readStatusId, request, auth);
+    ReadStatusDto updatedReadStatus = readStatusService.update(readStatusId, request);
     log.debug("읽음 상태 수정 응답: {}", updatedReadStatus);
     return ResponseEntity
         .status(HttpStatus.OK)
