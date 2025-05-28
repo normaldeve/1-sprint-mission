@@ -13,11 +13,6 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-# .gitignore
-.env
-discodeit.env
-
-
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -42,6 +37,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+discodeit.env
 
 ### Discodeit ###
 .discodeit
@@ -49,4 +45,7 @@ bin/
 ### 숨김 파일 ###
 .*
 !.gitignore
+
+
+### Github Actions ###
 !.github/

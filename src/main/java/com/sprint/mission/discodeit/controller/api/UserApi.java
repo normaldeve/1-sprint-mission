@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "User", description = "User API")
@@ -63,7 +64,8 @@ public interface UserApi {
   ResponseEntity<UserDto> update(
       @Parameter(description = "수정할 User ID") UUID userId,
       @Parameter(description = "수정할 User 정보") UserUpdateRequest userUpdateRequest,
-      @Parameter(description = "수정할 User 프로필 이미지") MultipartFile profile
+      @Parameter(description = "수정할 User 프로필 이미지") MultipartFile profile,
+      Authentication auth
   );
 
   @Operation(summary = "User 삭제")
@@ -79,7 +81,8 @@ public interface UserApi {
       )
   })
   ResponseEntity<Void> delete(
-      @Parameter(description = "삭제할 User ID") UUID userId
+      @Parameter(description = "삭제할 User ID") UUID userId,
+      Authentication auth
   );
 
   @Operation(summary = "전체 User 목록 조회")
@@ -90,20 +93,4 @@ public interface UserApi {
       )
   })
   ResponseEntity<List<UserDto>> findAll();
-
-  @Operation(summary = "User 온라인 상태 업데이트")
-  @ApiResponses(value = {
-      @ApiResponse(
-          responseCode = "200", description = "User 온라인 상태가 성공적으로 업데이트됨",
-          content = @Content(schema = @Schema(implementation = UserStatusDto.class))
-      ),
-      @ApiResponse(
-          responseCode = "404", description = "해당 User의 UserStatus를 찾을 수 없음",
-          content = @Content(examples = @ExampleObject(value = "UserStatus with userId {userId} not found"))
-      )
-  })
-  ResponseEntity<UserStatusDto> updateUserStatusByUserId(
-      @Parameter(description = "상태를 변경할 User ID") UUID userId,
-      @Parameter(description = "변경할 User 온라인 상태 정보") UserStatusUpdateRequest request
-  );
 }

@@ -9,7 +9,6 @@ import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.exception.ErrorCode;
 import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
 import com.sprint.mission.discodeit.exception.message.MessageNotFoundException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
@@ -19,23 +18,24 @@ import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import com.sprint.mission.discodeit.security.role.PermissionValidator;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class BasicMessageService implements MessageService {
 
   private final MessageRepository messageRepository;
@@ -45,27 +45,20 @@ public class BasicMessageService implements MessageService {
   private final BinaryContentStorage binaryContentStorage;
   private final BinaryContentRepository binaryContentRepository;
   private final PageResponseMapper pageResponseMapper;
+  private final PermissionValidator permissionValidator;
 
   @Transactional
   @Override
   public MessageDto create(MessageCreateRequest messageCreateRequest,
       List<BinaryContentCreateRequest> binaryContentCreateRequests) {
+    log.debug("메시지 생성 시작: request={}", messageCreateRequest);
     UUID channelId = messageCreateRequest.channelId();
     UUID authorId = messageCreateRequest.authorId();
 
     Channel channel = channelRepository.findById(channelId)
-        .orElseThrow(
-            () -> {
-              log.warn("[메시지 생성 오류] 채널을 찾을 수 없습니다");
-              return new ChannelNotFoundException(ErrorCode.CANNOT_FOUND_CHANNEL, Map.of("channelId", channelId));
-            });
-
+        .orElseThrow(() -> ChannelNotFoundException.withId(channelId));
     User author = userRepository.findById(authorId)
-        .orElseThrow(
-            () -> {
-              log.warn("[메시지 생성 오류] 작성자를 찾을 수 없습니다");
-              return new UserNotFoundException(ErrorCode.CANNOT_FOUND_USER, Map.of("authorId", authorId));
-            });
+        .orElseThrow(() -> UserNotFoundException.withId(authorId));
 
     List<BinaryContent> attachments = binaryContentCreateRequests.stream()
         .map(attachmentRequest -> {
@@ -90,7 +83,7 @@ public class BasicMessageService implements MessageService {
     );
 
     messageRepository.save(message);
-    log.info("[메시지 생성 성공] 생성된 메시지 id: {}", message.getId());
+    log.info("메시지 생성 완료: id={}, channelId={}", message.getId(), channelId);
     return messageMapper.toDto(message);
   }
 
@@ -99,11 +92,7 @@ public class BasicMessageService implements MessageService {
   public MessageDto find(UUID messageId) {
     return messageRepository.findById(messageId)
         .map(messageMapper::toDto)
-        .orElseThrow(
-            () -> {
-              log.warn("[메시지 조회 실패] 해당 메시지를 찾을 수 없습니다. id: {}", messageId);
-              return new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId));
-            });
+        .orElseThrow(() -> MessageNotFoundException.withId(messageId));
   }
 
   @Transactional(readOnly = true)
@@ -126,28 +115,30 @@ public class BasicMessageService implements MessageService {
 
   @Transactional
   @Override
-  public MessageDto update(UUID messageId, MessageUpdateRequest request) {
-    String newContent = request.newContent();
+  public MessageDto update(UUID messageId, MessageUpdateRequest request, Authentication auth) {
+    log.debug("메시지 수정 시작: id={}, request={}", messageId, request);
     Message message = messageRepository.findById(messageId)
-        .orElseThrow(
-            () -> {
-              log.warn("[메시지 업데이트 실패] 해당 메시지를 찾을 수 없습니다. id: {}", messageId);
-              return new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId));
-            });
-    message.update(newContent);
-    log.info("[메시지 업데이트 성공]");
+        .orElseThrow(() -> MessageNotFoundException.withId(messageId));
+
+    permissionValidator.validateCanModifyMessage(message, auth);
+
+    message.update(request.newContent());
+    log.info("메시지 수정 완료: id={}, channelId={}", messageId, message.getChannel().getId());
     return messageMapper.toDto(message);
   }
 
   @Transactional
   @Override
-  public void delete(UUID messageId) {
-    if (!messageRepository.existsById(messageId)) {
-      log.warn("[메시지 업데이트 실패] 해당 메시지를 찾을 수 없습니다. id: {}", messageId);
-      throw new MessageNotFoundException(ErrorCode.CANNOT_FOUND_MESSAGE, Map.of("messageId", messageId));
-    }
+  public void delete(UUID messageId, Authentication auth) {
+    log.debug("메시지 삭제 시작: id={}", messageId);
+
+    Message message = messageRepository.findById(messageId)
+        .orElseThrow(() -> MessageNotFoundException.withId(messageId));
+
+    // 작성자 혹은 관리자만 삭제 가능
+    permissionValidator.validateCanDeleteMessage(message, auth);
 
     messageRepository.deleteById(messageId);
-    log.info("[메시지 삭제 완료] 메시지를 삭제하였습니다 id: {}", messageId);
+    log.info("메시지 삭제 완료: id={}", messageId);
   }
 }
