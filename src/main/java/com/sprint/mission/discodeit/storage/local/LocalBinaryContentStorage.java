@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
@@ -112,7 +111,7 @@ public class LocalBinaryContentStorage implements BinaryContentStorage {
 
   @Recover
   public UUID recover(IOException e, UUID binaryContentId, byte[] bytes) {
-    String requestId = MDC.get("X-REQUEST-ID");
+    String requestId = MDC.get("requestId");
 
     AsyncTaskFailure failure = AsyncTaskFailure.builder()
         .taskName("LocalBinaryContentStorage")
