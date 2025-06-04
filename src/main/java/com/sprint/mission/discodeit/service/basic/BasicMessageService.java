@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.dto.request.MessageCreateRequest;
 import com.sprint.mission.discodeit.dto.request.MessageUpdateRequest;
 import com.sprint.mission.discodeit.dto.response.PageResponse;
 import com.sprint.mission.discodeit.entity.BinaryContent;
+import com.sprint.mission.discodeit.entity.BinaryContentUploadStatus;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
@@ -18,6 +19,7 @@ import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import java.time.Instant;
@@ -31,6 +33,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Slf4j
 @Service
@@ -44,6 +48,7 @@ public class BasicMessageService implements MessageService {
   private final BinaryContentStorage binaryContentStorage;
   private final BinaryContentRepository binaryContentRepository;
   private final PageResponseMapper pageResponseMapper;
+  private final BinaryContentService binaryContentService;
 
   @Transactional
   @Override
@@ -67,7 +72,7 @@ public class BasicMessageService implements MessageService {
           BinaryContent binaryContent = new BinaryContent(fileName, (long) bytes.length,
               contentType);
           binaryContentRepository.save(binaryContent);
-          binaryContentStorage.put(binaryContent.getId(), bytes);
+          registerAsyncUpload(binaryContent.getId(), bytes);
           return binaryContent;
         })
         .toList();
@@ -134,5 +139,21 @@ public class BasicMessageService implements MessageService {
     }
     messageRepository.deleteById(messageId);
     log.info("메시지 삭제 완료: id={}", messageId);
+  }
+
+  private void registerAsyncUpload(UUID binaryContentId, byte[] bytes) {
+    TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+      @Override
+      public void afterCommit() {
+        binaryContentStorage.put(binaryContentId, bytes)
+            .thenRun(() -> {
+              binaryContentService.updateStatus(binaryContentId, BinaryContentUploadStatus.SUCCESS);
+            })
+            .exceptionally(ex -> {
+              binaryContentService.updateStatus(binaryContentId, BinaryContentUploadStatus.FAILED);
+              return null;
+            });
+      }
+    });
   }
 }

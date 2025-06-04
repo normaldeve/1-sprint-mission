@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.dto.request.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.dto.request.UserCreateRequest;
 import com.sprint.mission.discodeit.dto.request.UserUpdateRequest;
 import com.sprint.mission.discodeit.entity.BinaryContent;
+import com.sprint.mission.discodeit.entity.BinaryContentUploadStatus;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.exception.user.UserAlreadyExistsException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
@@ -13,6 +14,7 @@ import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.security.jwt.JwtService;
 import com.sprint.mission.discodeit.security.jwt.JwtSession;
+import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import java.util.List;
@@ -26,6 +28,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,6 +42,7 @@ public class BasicUserService implements UserService {
   private final BinaryContentStorage binaryContentStorage;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
+  private final BinaryContentService binaryContentService;
 
   @Transactional
   @Override
@@ -63,7 +68,7 @@ public class BasicUserService implements UserService {
           BinaryContent binaryContent = new BinaryContent(fileName, (long) bytes.length,
               contentType);
           binaryContentRepository.save(binaryContent);
-          binaryContentStorage.put(binaryContent.getId(), bytes);
+          registerAsyncUpload(binaryContent.getId(), bytes);
           return binaryContent;
         })
         .orElse(null);
@@ -136,7 +141,7 @@ public class BasicUserService implements UserService {
           BinaryContent binaryContent = new BinaryContent(fileName, (long) bytes.length,
               contentType);
           binaryContentRepository.save(binaryContent);
-          binaryContentStorage.put(binaryContent.getId(), bytes);
+          registerAsyncUpload(binaryContent.getId(), bytes);
           return binaryContent;
         })
         .orElse(null);
@@ -162,5 +167,21 @@ public class BasicUserService implements UserService {
 
     userRepository.deleteById(userId);
     log.info("사용자 삭제 완료: id={}", userId);
+  }
+
+  private void registerAsyncUpload(UUID binaryContentId, byte[] bytes) {
+    TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+      @Override
+      public void afterCommit() {
+        binaryContentStorage.put(binaryContentId, bytes)
+            .thenRun(() -> {
+              binaryContentService.updateStatus(binaryContentId, BinaryContentUploadStatus.SUCCESS);
+            })
+            .exceptionally(ex -> {
+              binaryContentService.updateStatus(binaryContentId, BinaryContentUploadStatus.FAILED);
+              return null;
+            });
+      }
+    });
   }
 }
