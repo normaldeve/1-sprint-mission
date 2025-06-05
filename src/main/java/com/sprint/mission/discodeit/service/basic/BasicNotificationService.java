@@ -3,11 +3,14 @@ package com.sprint.mission.discodeit.service.basic;
 import com.sprint.mission.discodeit.dto.data.NotificationDto;
 import com.sprint.mission.discodeit.entity.AsyncTaskFailure;
 import com.sprint.mission.discodeit.entity.Notification;
+import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.entity.type.NotificationEvent;
 import com.sprint.mission.discodeit.exception.notification.NotificationNotFoundException;
+import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
 import com.sprint.mission.discodeit.mapper.NotificationMapper;
 import com.sprint.mission.discodeit.repository.AsyncTaskFailureRepository;
 import com.sprint.mission.discodeit.repository.NotificationRepository;
+import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.NotificationService;
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +37,7 @@ public class BasicNotificationService implements NotificationService {
   private final NotificationRepository notificationRepository;
   private final NotificationMapper notificationMapper;
   private final AsyncTaskFailureRepository asyncTaskFailureRepository;
+  private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
   @Override
@@ -64,8 +68,12 @@ public class BasicNotificationService implements NotificationService {
       backoff = @Backoff(delay = 1000))
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
   public void handleNotificationEvent(NotificationEvent event) {
+
+    User receiver = userRepository.findById(event.receiverId())
+        .orElseThrow(() -> new UserNotFoundException());
+
     Notification notification = new Notification(
-        event.receiver(),
+        receiver,
         event.title(),
         event.content(),
         event.type(),
@@ -73,7 +81,7 @@ public class BasicNotificationService implements NotificationService {
     );
     try {
       notificationRepository.save(notification);
-      log.info("알림 저장 완료: user={}, title={}", event.receiver().getUsername(), event.title());
+      log.info("알림 저장 완료: user={}, title={}", receiver.getUsername(), event.title());
     } catch (Exception e) {
       log.error("알림 저장 실패", e);
       throw e;
@@ -92,5 +100,4 @@ public class BasicNotificationService implements NotificationService {
 
     asyncTaskFailureRepository.save(failure);
   }
-
 }

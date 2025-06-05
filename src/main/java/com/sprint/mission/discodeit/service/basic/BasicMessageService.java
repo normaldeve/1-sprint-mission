@@ -96,8 +96,9 @@ public class BasicMessageService implements MessageService {
 
     List<ReadStatus> readStatuses = readStatusRepository.findAllByChannelIdAndNotificationEnabledTrue(channelId);
     for(ReadStatus readStatus : readStatuses) {
+      UUID receiverId = readStatus.getUser().getId();
       if (readStatus.getUser().getId().equals(authorId)) continue;
-      eventPublisher.publishEvent(new NotificationEvent(readStatus.getUser(), "새 메시지 알림",
+      eventPublisher.publishEvent(new NotificationEvent(receiverId, "새 메시지 알림",
           content.length() > 20 ? content.substring(0, 20) + "...." : content,
           NotificationType.NEW_MESSAGE, channel.getId()));
 
@@ -119,7 +120,7 @@ public class BasicMessageService implements MessageService {
             .exceptionally(ex -> {
               binaryContentService.updateStatus(binaryContent.getId(), BinaryContentUploadStatus.FAILED);
               eventPublisher.publishEvent(new NotificationEvent(
-                  author,
+                  author.getId(),
                   "프로필 업로드 실패",
                   "파일 업로드 중 오류가 발생했습니다.",
                   NotificationType.ASYNC_FAILED,

@@ -191,7 +191,7 @@ public class BasicUserService implements UserService {
             })
             .exceptionally(ex -> {
               binaryContentService.updateStatus(binaryContent.getId(), BinaryContentUploadStatus.FAILED);
-              eventPublisher.publishEvent(new NotificationEvent(user, "프로필 이미지 업로드 실패",
+              eventPublisher.publishEvent(new NotificationEvent(user.getId(), "프로필 이미지 업로드 실패",
                   "파일 업로드 중 오류가 발생했습니다.",
                   NotificationType.ASYNC_FAILED, null));
 

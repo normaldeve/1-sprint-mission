@@ -69,7 +69,7 @@ public class BasicAuthService implements AuthService {
     Role oldRole = user.getRole();
     user.updateRole(request.newRole());
 
-    eventPublisher.publishEvent(new NotificationEvent(user, "권한이 변경되었습니다.",
+    eventPublisher.publishEvent(new NotificationEvent(user.getId(), "권한이 변경되었습니다.",
         "이전 권한 : " + oldRole + " -> 새로운 권한: " + request.newRole(),
         NotificationType.ROLE_CHANGED, userId));
 
