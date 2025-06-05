@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
@@ -39,6 +41,7 @@ public class BasicNotificationService implements NotificationService {
   private final AsyncTaskFailureRepository asyncTaskFailureRepository;
   private final UserRepository userRepository;
 
+  @Cacheable(cacheNames = "notificationsByUser", key = "#receiverId")
   @Transactional(readOnly = true)
   @Override
   public List<NotificationDto> findAllByReceiverId(UUID receiverId) {
@@ -67,6 +70,7 @@ public class BasicNotificationService implements NotificationService {
       maxAttempts = 3,
       backoff = @Backoff(delay = 1000))
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+  @CacheEvict(cacheNames = "notificationsByUser", allEntries = true)
   public void handleNotificationEvent(NotificationEvent event) {
 
     User receiver = userRepository.findById(event.receiverId())

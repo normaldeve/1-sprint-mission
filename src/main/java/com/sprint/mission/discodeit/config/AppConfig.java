@@ -1,10 +1,15 @@
 package com.sprint.mission.discodeit.config;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.MDC;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskDecorator;
@@ -21,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableScheduling
 @EnableAsync
 @EnableRetry
+@EnableCaching
 public class AppConfig {
 
   @Bean
@@ -57,6 +63,15 @@ public class AppConfig {
   @Bean
   TimedAspect timedAspect(MeterRegistry meterRegistry){
     return new TimedAspect(meterRegistry);
+  }
+
+  @Bean
+  public CacheManager cashManager() {
+    Caffeine<Object, Object> caffeine = Caffeine.newBuilder()
+        .expireAfterWrite(10, TimeUnit.MINUTES)
+        .maximumSize(10000);
+
+    return new CaffeineCacheManager("channelsByUser", "notificationsByUser", "userList");
   }
 
 }
