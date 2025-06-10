@@ -73,5 +73,4 @@ public class AppConfig {
 
     return new CaffeineCacheManager("channelsByUser", "notificationsByUser", "userList");
   }
-
 }
