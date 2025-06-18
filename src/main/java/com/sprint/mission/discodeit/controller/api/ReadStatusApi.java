@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 
 @Tag(name = "ReadStatus", description = "Message 읽음 상태 API")
 public interface ReadStatusApi {
@@ -36,8 +35,7 @@ public interface ReadStatusApi {
       )
   })
   ResponseEntity<ReadStatusDto> create(
-      @Parameter(description = "Message 읽음 상태 생성 정보") ReadStatusCreateRequest request,
-      Authentication auth
+      @Parameter(description = "Message 읽음 상태 생성 정보") ReadStatusCreateRequest request
   );
 
   @Operation(summary = "Message 읽음 상태 수정")
@@ -53,8 +51,7 @@ public interface ReadStatusApi {
   })
   ResponseEntity<ReadStatusDto> update(
       @Parameter(description = "수정할 읽음 상태 ID") UUID readStatusId,
-      @Parameter(description = "수정할 읽음 상태 정보") ReadStatusUpdateRequest request,
-      Authentication auth
+      @Parameter(description = "수정할 읽음 상태 정보") ReadStatusUpdateRequest request
   );
 
   @Operation(summary = "User의 Message 읽음 상태 목록 조회")

@@ -1,67 +1,77 @@
 package com.sprint.mission.discodeit.controller;
 
-
+import com.sprint.mission.discodeit.controller.api.AuthApi;
 import com.sprint.mission.discodeit.dto.data.UserDto;
-import com.sprint.mission.discodeit.dto.request.UserRoleUpdateRequest;
-import com.sprint.mission.discodeit.mapper.UserMapper;
-import com.sprint.mission.discodeit.security.user.UserDetailsImpl;
-import com.sprint.mission.discodeit.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import java.util.UUID;
+import com.sprint.mission.discodeit.dto.request.RoleUpdateRequest;
+import com.sprint.mission.discodeit.security.jwt.JwtService;
+import com.sprint.mission.discodeit.security.jwt.JwtSession;
+import com.sprint.mission.discodeit.service.AuthService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthController implements AuthApi {
 
-  private final UserMapper userMapper;
-  private final UserService userService;
+  private final AuthService authService;
+  private final JwtService jwtService;
 
-  @GetMapping("/csrf-token")
-  public CsrfToken getCsrfToken(CsrfToken token) {
-    log.info("csrf-token: {}", token);
-    return token;
+  @GetMapping("csrf-token")
+  public ResponseEntity<CsrfToken> getCsrfToken(CsrfToken csrfToken) {
+    log.debug("CSRF 토큰 요청");
+    return ResponseEntity.status(HttpStatus.OK).body(csrfToken);
   }
 
-  /**
-   * 현재 인증된 사용자 정보를 반환하는 API 세션에 저장된 SecurityContext에서 Authentication -> Principal -> User 반환
-   */
-  @GetMapping("/me")
-  public ResponseEntity<UserDto> me(@AuthenticationPrincipal UserDetailsImpl userPrincipal) {
-    if (userPrincipal == null) {
-      log.info("인증된 사용자가 없습니다.");
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-
-    UUID userId = userPrincipal.getUser().getId();
-    UserDto userDto = userService.find(userId);
-
-    log.info("인증된 사용자입니다. userId: {}, userDto: {}", userId, userDto);
-
-    return ResponseEntity.ok(userDto);
+  @GetMapping("me")
+  public ResponseEntity<String> me(
+      @CookieValue(value = JwtService.REFRESH_TOKEN_COOKIE_NAME) String refreshToken) {
+    log.info("내 정보 조회 요청");
+    JwtSession jwtSession = jwtService.getJwtSession(refreshToken);
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(jwtSession.getAccessToken());
   }
 
-  /**
-   * 사용자 권한을 수정합니다. 권한이 수정된 사용자가 로그인 상태이면 강제 로그아웃 됩니다.
-   */
-  @PutMapping("/role")
-  public ResponseEntity<UserDto> updateUserRole(
-      @RequestBody UserRoleUpdateRequest request
+  @PutMapping("role")
+  public ResponseEntity<UserDto> role(@RequestBody RoleUpdateRequest request) {
+    log.info("권한 수정 요청");
+    UserDto userDto = authService.updateRole(request);
+
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(userDto);
+  }
+
+  @PostMapping("refresh")
+  public ResponseEntity<String> refresh(
+      @CookieValue(JwtService.REFRESH_TOKEN_COOKIE_NAME) String refreshToken,
+      HttpServletResponse response
   ) {
-    UserDto userDto = userService.updateUserRole(request);
+    log.info("토큰 재발급 요청");
+    JwtSession jwtSession = jwtService.refreshJwtSession(refreshToken);
 
-    return ResponseEntity.ok(userDto);
+    Cookie refreshTokenCookie = new Cookie(JwtService.REFRESH_TOKEN_COOKIE_NAME,
+        jwtSession.getRefreshToken());
+    refreshTokenCookie.setHttpOnly(true);
+    response.addCookie(refreshTokenCookie);
+
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(jwtSession.getAccessToken())
+        ;
   }
 }

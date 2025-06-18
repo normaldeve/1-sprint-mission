@@ -6,9 +6,14 @@ import com.sprint.mission.discodeit.dto.request.MessageCreateRequest;
 import com.sprint.mission.discodeit.dto.request.MessageUpdateRequest;
 import com.sprint.mission.discodeit.dto.response.PageResponse;
 import com.sprint.mission.discodeit.entity.BinaryContent;
+import com.sprint.mission.discodeit.entity.Notification;
+import com.sprint.mission.discodeit.entity.ReadStatus;
+import com.sprint.mission.discodeit.entity.type.BinaryContentUploadStatus;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.entity.type.NotificationEvent;
+import com.sprint.mission.discodeit.entity.type.NotificationType;
 import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
 import com.sprint.mission.discodeit.exception.message.MessageNotFoundException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
@@ -17,8 +22,10 @@ import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
+import com.sprint.mission.discodeit.repository.NotificationRepository;
+import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
-import com.sprint.mission.discodeit.security.role.PermissionValidator;
+import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import java.time.Instant;
@@ -26,12 +33,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Slf4j
 @Service
@@ -45,7 +55,9 @@ public class BasicMessageService implements MessageService {
   private final BinaryContentStorage binaryContentStorage;
   private final BinaryContentRepository binaryContentRepository;
   private final PageResponseMapper pageResponseMapper;
-  private final PermissionValidator permissionValidator;
+  private final BinaryContentService binaryContentService;
+  private final ReadStatusRepository readStatusRepository;
+  private final ApplicationEventPublisher eventPublisher;
 
   @Transactional
   @Override
@@ -69,7 +81,7 @@ public class BasicMessageService implements MessageService {
           BinaryContent binaryContent = new BinaryContent(fileName, (long) bytes.length,
               contentType);
           binaryContentRepository.save(binaryContent);
-          binaryContentStorage.put(binaryContent.getId(), bytes);
+          extractedTransaction(binaryContent, bytes, author);
           return binaryContent;
         })
         .toList();
@@ -82,9 +94,43 @@ public class BasicMessageService implements MessageService {
         attachments
     );
 
+    List<ReadStatus> readStatuses = readStatusRepository.findAllByChannelIdAndNotificationEnabledTrue(channelId);
+    for(ReadStatus readStatus : readStatuses) {
+      UUID receiverId = readStatus.getUser().getId();
+      if (readStatus.getUser().getId().equals(authorId)) continue;
+      eventPublisher.publishEvent(new NotificationEvent(receiverId, "새 메시지 알림",
+          content.length() > 20 ? content.substring(0, 20) + "...." : content,
+          NotificationType.NEW_MESSAGE, channel.getId()));
+
+    }
+
     messageRepository.save(message);
     log.info("메시지 생성 완료: id={}, channelId={}", message.getId(), channelId);
     return messageMapper.toDto(message);
+  }
+
+  private void extractedTransaction(BinaryContent binaryContent, byte[] bytes, User author) {
+    TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+      @Override
+      public void afterCommit() {
+        binaryContentStorage.put(binaryContent.getId(), bytes)
+            .thenRun(() -> {
+              binaryContentService.updateStatus(binaryContent.getId(), BinaryContentUploadStatus.SUCCESS);
+            })
+            .exceptionally(ex -> {
+              binaryContentService.updateStatus(binaryContent.getId(), BinaryContentUploadStatus.FAILED);
+              eventPublisher.publishEvent(new NotificationEvent(
+                  author.getId(),
+                  "프로필 업로드 실패",
+                  "파일 업로드 중 오류가 발생했습니다.",
+                  NotificationType.ASYNC_FAILED,
+                  null
+              ));
+
+              return null;
+            });
+      }
+    });
   }
 
   @Transactional(readOnly = true)
@@ -113,31 +159,27 @@ public class BasicMessageService implements MessageService {
     return pageResponseMapper.fromSlice(slice, nextCursor);
   }
 
+  @PreAuthorize("principal.userDto.id == @basicMessageService.find(#messageId).author.id")
   @Transactional
   @Override
-  public MessageDto update(UUID messageId, MessageUpdateRequest request, Authentication auth) {
+  public MessageDto update(UUID messageId, MessageUpdateRequest request) {
     log.debug("메시지 수정 시작: id={}, request={}", messageId, request);
     Message message = messageRepository.findById(messageId)
         .orElseThrow(() -> MessageNotFoundException.withId(messageId));
-
-    permissionValidator.validateCanModifyMessage(message, auth);
 
     message.update(request.newContent());
     log.info("메시지 수정 완료: id={}, channelId={}", messageId, message.getChannel().getId());
     return messageMapper.toDto(message);
   }
 
+  @PreAuthorize("hasRole('ADMIN') or principal.userDto.id == @basicMessageService.find(#messageId).author.id")
   @Transactional
   @Override
-  public void delete(UUID messageId, Authentication auth) {
+  public void delete(UUID messageId) {
     log.debug("메시지 삭제 시작: id={}", messageId);
-
-    Message message = messageRepository.findById(messageId)
-        .orElseThrow(() -> MessageNotFoundException.withId(messageId));
-
-    // 작성자 혹은 관리자만 삭제 가능
-    permissionValidator.validateCanDeleteMessage(message, auth);
-
+    if (!messageRepository.existsById(messageId)) {
+      throw MessageNotFoundException.withId(messageId);
+    }
     messageRepository.deleteById(messageId);
     log.info("메시지 삭제 완료: id={}", messageId);
   }

@@ -18,7 +18,6 @@ import java.util.UUID;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Message", description = "Message API")
@@ -59,8 +58,7 @@ public interface MessageApi {
   })
   ResponseEntity<MessageDto> update(
       @Parameter(description = "수정할 Message ID") UUID messageId,
-      @Parameter(description = "수정할 Message 내용") MessageUpdateRequest request,
-      Authentication auth
+      @Parameter(description = "수정할 Message 내용") MessageUpdateRequest request
   );
 
   @Operation(summary = "Message 삭제")
@@ -74,8 +72,7 @@ public interface MessageApi {
       ),
   })
   ResponseEntity<Void> delete(
-      @Parameter(description = "삭제할 Message ID") UUID messageId,
-      Authentication auth
+      @Parameter(description = "삭제할 Message ID") UUID messageId
   );
 
   @Operation(summary = "Channel의 Message 목록 조회")
