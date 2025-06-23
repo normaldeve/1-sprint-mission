@@ -1,0 +1,35 @@
+-- 1. 채널 생성
+INSERT INTO channels (id, name, description, type, created_at, updated_at)
+VALUES ('11111111-1111-1111-1111-111111111111', 'Test Channel', '테스트 채널입니다.', 'PUBLIC', NOW(), NOW());
+
+-- 2. 사용자 생성
+INSERT INTO users (id, username, email, password, profile_id, created_at, updated_at)
+VALUES ('22222222-2222-2222-2222-222222222222', 'junwo', 'junwo@email.com', 'testPassword123!', NULL, NOW(), NOW());
+
+-- 3. 사용자 상태 생성
+INSERT INTO user_statuses (id, user_id, last_active_at, created_at, updated_at)
+VALUES ('33333333-3333-3333-3333-333333333333', '22222222-2222-2222-2222-222222222222', NOW(), NOW(), NOW());
+
+-- 4. 메시지 20개 생성 (created_at/updated_at 각각 1분씩 다르게)
+INSERT INTO messages (id, content, author_id, channel_id, created_at, updated_at)
+VALUES
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001', 'Hello 1',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -20, NOW()), DATEADD(MINUTE, -20, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002', 'Hello 2',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -19, NOW()), DATEADD(MINUTE, -19, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003', 'Hello 3',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -18, NOW()), DATEADD(MINUTE, -18, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004', 'Hello 4',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -17, NOW()), DATEADD(MINUTE, -17, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005', 'Hello 5',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -16, NOW()), DATEADD(MINUTE, -16, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006', 'Hello 6',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -15, NOW()), DATEADD(MINUTE, -15, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007', 'Hello 7',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -14, NOW()), DATEADD(MINUTE, -14, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008', 'Hello 8',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -13, NOW()), DATEADD(MINUTE, -13, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009', 'Hello 9',  '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -12, NOW()), DATEADD(MINUTE, -12, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010', 'Hello 10', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -11, NOW()), DATEADD(MINUTE, -11, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011', 'Hello 11', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -10, NOW()), DATEADD(MINUTE, -10, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012', 'Hello 12', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -9, NOW()), DATEADD(MINUTE, -9, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013', 'Hello 13', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -8, NOW()), DATEADD(MINUTE, -8, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014', 'Hello 14', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -7, NOW()), DATEADD(MINUTE, -7, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015', 'Hello 15', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -6, NOW()), DATEADD(MINUTE, -6, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016', 'Hello 16', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -5, NOW()), DATEADD(MINUTE, -5, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017', 'Hello 17', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -4, NOW()), DATEADD(MINUTE, -4, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018', 'Hello 18', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -3, NOW()), DATEADD(MINUTE, -3, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019', 'Hello 19', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -2, NOW()), DATEADD(MINUTE, -2, NOW())),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020', 'Hello 20', '22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', DATEADD(MINUTE, -1, NOW()), DATEADD(MINUTE, -1, NOW()));
